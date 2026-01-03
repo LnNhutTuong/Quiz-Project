@@ -3,7 +3,7 @@ import React from "react";
 class AddUserInfor extends React.Component {
   state = {
     name: "",
-    age: ,
+    age: "",
   };
 
   handleClick(event) {
