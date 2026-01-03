@@ -1,10 +1,16 @@
 .display-infor-container {
   border: 1px solid black;
+  width: fit-content;
   .red {
     color: red;
   }
 
   .green {
     color: #008000;
+  }
+
+  img {
+    width: 400px;
+    height: 400px;
   }
 }
