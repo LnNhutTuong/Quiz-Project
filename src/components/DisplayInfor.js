@@ -1,4 +1,5 @@
 import React from "react";
+import "./DisplayInfor.scss";
 
 class DisplayInfor extends React.Component {
   state = {
@@ -17,9 +18,10 @@ class DisplayInfor extends React.Component {
     // sandwich fucking sandwich
 
     return (
-      <div>
+      <div className="display-infor-container">
         <div>
           <div>
+            {/* su dung nen () */}
             <span onClick={() => this.handleOnClick()}>
               {this.state.isShow === true
                 ? "Hide list users"

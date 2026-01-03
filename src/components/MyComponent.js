@@ -32,6 +32,7 @@ class MyComponent extends React.Component {
     //DRY: Don't repeat yourself
     return (
       <div>
+        {/* cha sang con ko can () */}
         <AddUserInfor AddNewUser={this.handleAddNewUser} />
         <br></br>
         <DisplayInfor listUsers={this.state.listUsers} />
