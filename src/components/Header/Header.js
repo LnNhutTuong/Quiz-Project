@@ -8,7 +8,9 @@ const BasicExample = () => {
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
-        <Navbar.Brand href="home">XimenT</Navbar.Brand>
+        <NavLink to="/" className="navbar-brand">
+          XimenT
+        </NavLink>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
@@ -24,10 +26,10 @@ const BasicExample = () => {
           </Nav>
           <Nav>
             <NavDropdown title="Settings" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Login</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">Logout</NavDropdown.Item>
+              <NavDropdown.Item>Login</NavDropdown.Item>
+              <NavDropdown.Item>Logout</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">User infor</NavDropdown.Item>
+              <NavDropdown.Item>User infor</NavDropdown.Item>
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>
