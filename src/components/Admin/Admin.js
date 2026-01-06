@@ -1,5 +1,5 @@
 import AdSidebar from "./Sidebar";
-import "./Admin.scss";
+import "../../assets/styles/Admin/Admin.scss";
 import { useState } from "react";
 import { FaBars } from "react-icons/fa";
 import { Outlet } from "react-router-dom";
