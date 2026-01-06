@@ -1,0 +1,59 @@
+.admin-container {
+  display: flex;
+
+  .admin-sidebar {
+    // padding-top: 10px;
+    height: 100vh;
+
+    aside.ps-sidebar-root.css-1wvake5 {
+      height: 100%;
+    }
+
+    hr {
+      margin: 0 50px 0 50px;
+    }
+
+    .css-dip3t8 {
+      background-color: rgba(249, 249, 249, 0.233);
+    }
+    .sidebar-header {
+      text-align: center;
+      height: fit;
+      .name {
+        font-size: 35px;
+        color: rgba(0, 0, 1, 0.831);
+        font-weight: 700;
+      }
+    }
+    .sidebar-body {
+      height: 90%;
+
+      span {
+        &.ps-menu-label {
+          &.css-12w9als {
+            font-weight: 500;
+          }
+        }
+      }
+
+      a {
+        &.ps-menu-button {
+          &:hover {
+            background-image: url("../../assets/img/bg-sidebar.png");
+          }
+        }
+      }
+      .ps-submenu-content {
+        background: transparent;
+        background-color: rgba(102, 181, 190, 0.546) !important;
+      }
+    }
+
+    .sidebar-footer {
+      text-align: center;
+      margin-top: -20px;
+    }
+  }
+  .admin-content {
+  }
+}
