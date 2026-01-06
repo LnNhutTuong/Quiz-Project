@@ -30,8 +30,10 @@ const AdSidebar = (props) => {
 
         <div className="sidebar-footer">
           <hr />
-          <div className="long-name">&#169; XimenT</div>
-          <div className="short-name">&#169; XT </div>
+          <div className="banchan">
+            <div className="long-name">&#169; XimenT</div>
+            <div className="short-name">&#169; XT </div>
+          </div>
         </div>
       </Sidebar>
     </>
