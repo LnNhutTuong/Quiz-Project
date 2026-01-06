@@ -2,6 +2,8 @@ import AdSidebar from "./Sidebar";
 import "./Admin.scss";
 import { useState } from "react";
 import { FaBars } from "react-icons/fa";
+import { Outlet } from "react-router-dom";
+
 const Admin = (props) => {
   const [collapsed, setCollapsed] = useState(false);
   return (
@@ -10,11 +12,12 @@ const Admin = (props) => {
         <AdSidebar collapsed={collapsed} />
       </div>
       <div className="admin-content">
-        <FaBars onClick={() => setCollapsed(!collapsed)} />
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sed, ducimus
-        magnam similique distinctio eos quo numquam necessitatibus sint in,
-        dicta fuga soluta tempore? Eveniet porro, nostrum est natus corporis
-        dolorum!
+        <div className="admin-header">
+          <FaBars onClick={() => setCollapsed(!collapsed)} />
+        </div>
+        <div className="admin-main">
+          <Outlet />
+        </div>
       </div>
     </div>
   );

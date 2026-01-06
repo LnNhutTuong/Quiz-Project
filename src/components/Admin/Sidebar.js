@@ -4,6 +4,7 @@ import bgSidebar from "../../assets/img/bg-sidebar1.png";
 import logo from "../../assets/img/logo.png";
 import { MdDashboard } from "react-icons/md";
 import { MdFeaturedPlayList } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const AdSidebar = (props) => {
   const { collapsed, toggled } = props;
@@ -19,9 +20,13 @@ const AdSidebar = (props) => {
         <hr />
         <div className="sidebar-body">
           <Menu>
-            <MenuItem icon={<MdDashboard />}>Dashboard</MenuItem>
+            <MenuItem icon={<MdDashboard />} component={<Link to="/admin" />}>
+              Dashboard
+            </MenuItem>
             <SubMenu label="Features" icon={<MdFeaturedPlayList />}>
-              <MenuItem> Manager User</MenuItem>
+              <MenuItem component={<Link to="manage-user" />}>
+                Manager User
+              </MenuItem>
               <MenuItem> Manager Quiz</MenuItem>
               <MenuItem> Manager Questions</MenuItem>
             </SubMenu>
