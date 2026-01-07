@@ -1,5 +1,13 @@
 .manageuser-container {
+  padding: 10px;
+  .manageuser-title {
+    font-weight: 500;
+    font-size: 20px;
+  }
   .manageuser-content {
+    .btn-add-new {
+      margin: 0 15px;
+    }
   }
 }
 
