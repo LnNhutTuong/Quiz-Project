@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-``;
+
 import { FcPlus } from "react-icons/fc";
 import axios from "axios";
 import { ToastContainer, toast, Flip } from "react-toastify";
@@ -77,6 +77,13 @@ const ModalCreateUser = (props) => {
     );
 
     console.log(">>>> check res:", res);
+    if (res.data && res.data.EC == 0) {
+      toast.success("Create a new user success!");
+      handleClose();
+    }
+    if (res.data && res.data.EC !== 0) {
+      toast.error("Create a new user fail!");
+    }
   };
 
   return (
