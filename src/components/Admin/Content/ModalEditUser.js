@@ -7,24 +7,26 @@ import { ToastContainer, toast, Flip } from "react-toastify";
 import { putUpdateUser } from "../../../services/apiServices";
 import _ from "lodash";
 
-const ModalViewUser = (props) => {
+const ModalUpdateUser = (props) => {
   const { show, setShow, dataupdate, currentPage } = props;
 
   // const [show, setShow] = useState(false);
 
-  const handleClose = () => {
+  const handleClose = (reset = true) => {
     setShow(false);
-    setEmail("");
-    setPassword("");
-    setUsername("");
-    setRole("USER");
-    setImage("");
-    setPreviewimg("");
-
-    props.setDataUpdate();
+    if (reset) {
+      setShow(false);
+      setEmail("");
+      setPassword("");
+      setUsername("");
+      setRole("USER");
+      setImage("");
+      setPreviewimg("");
+      setIsDisable(true);
+      setIsEditing(false);
+      props.setDataUpdate();
+    }
   };
-
-  // const handleShow = () => setShow(true);
 
   const [email, setEmail] = useState(``);
   const [password, setPassword] = useState(``);
@@ -33,10 +35,13 @@ const ModalViewUser = (props) => {
   const [image, setImage] = useState(``);
   const [previewimg, setPreviewimg] = useState(``);
 
+  const [isDisable, setIsDisable] = useState(true);
+  const [isEditing, setIsEditing] = useState(false);
+
   useEffect(() => {
     if (!_.isEmpty(dataupdate)) {
+      // setShow(false);
       setEmail(dataupdate.email);
-
       setUsername(dataupdate.username);
       setRole(dataupdate.role);
       setImage("");
@@ -106,21 +111,12 @@ const ModalViewUser = (props) => {
               />
             </div>
             <div className="col-md-6">
-              <label className="form-label">Password</label>
-              <input
-                type="password"
-                className="form-control"
-                value={password}
-                disabled
-                onChange={(event) => setPassword(event.target.value)}
-              />
-            </div>
-            <div className="col-md-6">
               <label className="form-label">Username</label>
               <input
                 type="text"
                 className="form-control"
                 value={username}
+                disabled={isDisable}
                 onChange={(event) => setUsername(event.target.value)}
               />
             </div>
@@ -130,6 +126,7 @@ const ModalViewUser = (props) => {
                 className="form-select"
                 onChange={(event) => setRole(event.target.value)}
                 value={role}
+                disabled={isDisable}
               >
                 <option value="USER">User</option>
                 <option selected value="ADMIN">
@@ -138,13 +135,18 @@ const ModalViewUser = (props) => {
               </select>
             </div>
             <div className="col-md-12">
-              <label className="form-label label-upload" htmlFor="labelUpload">
+              <label
+                className="form-label label-upload"
+                htmlFor="labelUpload"
+                style={{ cursor: isDisable ? "not-allowed" : "pointer" }}
+              >
                 <FcPlus /> Upload your image
               </label>
               <input
                 type="file"
                 id="labelUpload"
                 hidden
+                disabled={isDisable}
                 onChange={(event) => handleUploadImage(event)}
               />
             </div>
@@ -158,21 +160,61 @@ const ModalViewUser = (props) => {
           </form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button
-            variant="primary"
-            onClick={() => {
-              handleSubmit();
-            }}
-          >
-            Save Changes
-          </Button>
+          {!isEditing && (
+            <div className="btn-edit-delete">
+              <Button
+                className="btn-warning"
+                variant="primary"
+                onClick={() => {
+                  setIsEditing(true);
+                  setIsDisable(false);
+                }}
+              >
+                Edit
+              </Button>
+
+              <Button
+                className="btn-danger"
+                variant="primary"
+                onClick={() => {
+                  props.handleBtnDeleteUser(dataupdate.id, email);
+                  handleClose(false);
+                }}
+              >
+                Delete
+              </Button>
+            </div>
+          )}
+
+          {isEditing && (
+            <div className="btn-back-savechange">
+              <Button
+                variant="primary"
+                onClick={() => {
+                  {
+                    setIsEditing(false);
+                    setIsDisable(true);
+                  }
+                }}
+              >
+                Back
+              </Button>
+
+              <Button
+                className="btn-success"
+                variant="primary"
+                onClick={() => {
+                  handleSubmit();
+                }}
+              >
+                Save Changes
+              </Button>
+            </div>
+          )}
         </Modal.Footer>
       </Modal>
     </>
   );
 };
 
-export default ModalViewUser;
+export default ModalUpdateUser;

@@ -34,23 +34,17 @@ const TableUserPaginate = (props) => {
                   <td>{item.email}</td>
                   <td>{item.role}</td>
                   <td>
-                    <button
+                    {/* <button
                       className="btn btn-secondary"
                       onClick={() => props.handleBtnViewUser(item)}
                     >
                       View
-                    </button>
+                    </button> */}
                     <button
                       className="btn btn-warning"
-                      onClick={() => props.handleBtnUpdateUser(item)}
+                      onClick={() => props.handleBtnEditUser(item)}
                     >
-                      Update
-                    </button>
-                    <button
-                      className="btn btn-danger"
-                      onClick={() => props.handleBtnDeleteUser(item)}
-                    >
-                      Delete
+                      View
                     </button>
                   </td>
                 </tr>
