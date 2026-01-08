@@ -2,12 +2,13 @@ import ReactPaginate from "react-paginate";
 import { useState, useEffect } from "react";
 
 const TableUserPaginate = (props) => {
-  const { listuser } = props;
-
-  const [pageCount, setPageCount] = useState(0);
+  const { listuser, pageCount, currentPage, setCurrentPage } = props;
 
   const handlePageClick = (event) => {
-    console.log(`User requested page number ${event.selected}`);
+    const currentPage = event.selected;
+
+    setCurrentPage(currentPage);
+    props.fetchListUserPaginate(currentPage);
   };
 
   return (
@@ -33,7 +34,12 @@ const TableUserPaginate = (props) => {
                   <td>{item.email}</td>
                   <td>{item.role}</td>
                   <td>
-                    <button className="btn btn-secondary">View</button>
+                    <button
+                      className="btn btn-secondary"
+                      onClick={() => props.handleBtnViewUser(item)}
+                    >
+                      View
+                    </button>
                     <button
                       className="btn btn-warning"
                       onClick={() => props.handleBtnUpdateUser(item)}
@@ -57,27 +63,28 @@ const TableUserPaginate = (props) => {
           )}
         </tbody>
       </table>
-
-      <ReactPaginate
-        nextLabel="next >"
-        onPageChange={handlePageClick}
-        pageRangeDisplayed={3}
-        marginPagesDisplayed={2}
-        pageCount={5}
-        previousLabel="< previous"
-        pageClassName="page-item"
-        pageLinkClassName="page-link"
-        previousClassName="page-item"
-        previousLinkClassName="page-link"
-        nextClassName="page-item"
-        nextLinkClassName="page-link"
-        breakLabel="..."
-        breakClassName="page-item"
-        breakLinkClassName="page-link"
-        containerClassName="pagination"
-        activeClassName="active"
-        renderOnZeroPageCount={null}
-      />
+      <div className="user-pagination d-flex justify-content-center">
+        <ReactPaginate
+          nextLabel="Next >"
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={3}
+          marginPagesDisplayed={2}
+          pageCount={pageCount}
+          previousLabel="< Previous"
+          pageClassName="page-item"
+          pageLinkClassName="page-link"
+          previousClassName="page-item"
+          previousLinkClassName="page-link"
+          nextClassName="page-item"
+          nextLinkClassName="page-link"
+          breakLabel="..."
+          breakClassName="page-item"
+          breakLinkClassName="page-link"
+          containerClassName="pagination"
+          activeClassName="active"
+          renderOnZeroPageCount={null}
+        />
+      </div>
     </>
   );
 };
