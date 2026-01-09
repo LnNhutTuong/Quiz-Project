@@ -1,0 +1,32 @@
+.login-container {
+  .header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: -44px;
+    border: 1px solid red; // img {
+    //   max-width: 140px;
+    // }
+    .name {
+      font-size: 40px;
+      font-weight: 600;
+    }
+  }
+
+  .btn-login {
+    font-size: 16px;
+    border: 1px solid white;
+    color: rgb(255, 255, 255);
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 10px;
+    width: 145px;
+    height: 47px;
+    padding: 8px 48px;
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.289);
+      //   color: black;
+    }
+  }
+}
