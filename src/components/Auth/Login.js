@@ -1,4 +1,4 @@
-const Dashboard = (props) => {
+const Login = (props) => {
   return (
     <>
       <div>Dashboard</div>
@@ -6,4 +6,4 @@ const Dashboard = (props) => {
   );
 };
 
-export default Dashboard;
+export default Login;

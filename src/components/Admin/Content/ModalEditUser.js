@@ -83,7 +83,7 @@ const ModalUpdateUser = (props) => {
   };
 
   return (
-    <>
+    <div className="modal-edituser">
       {/* <Button variant="primary" onClick={handleShow}>
         Add new user
       </Button> */}
@@ -163,7 +163,7 @@ const ModalUpdateUser = (props) => {
           {!isEditing && (
             <div className="btn-edit-delete">
               <Button
-                className="btn-warning"
+                className="btn-warning "
                 variant="primary"
                 onClick={() => {
                   setIsEditing(true);
@@ -172,9 +172,8 @@ const ModalUpdateUser = (props) => {
               >
                 Edit
               </Button>
-
               <Button
-                className="btn-danger"
+                className="btn-danger "
                 variant="primary"
                 onClick={() => {
                   props.handleBtnDeleteUser(dataupdate.id, email);
@@ -213,7 +212,7 @@ const ModalUpdateUser = (props) => {
           )}
         </Modal.Footer>
       </Modal>
-    </>
+    </div>
   );
 };
 
