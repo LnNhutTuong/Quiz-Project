@@ -3,8 +3,13 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useState } from "react";
 
 const BasicExample = () => {
+  const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
+  const account = useSelector((state) => state.user.account);
+
   const navigate = useNavigate();
 
   const handleLogin = () => {
@@ -34,28 +39,32 @@ const BasicExample = () => {
             </NavLink>
           </Nav>
           <Nav>
-            <button
-              className="btn-login"
-              onClick={() => {
-                handleLogin();
-              }}
-            >
-              Login
-            </button>
-            <button
-              className=" btn-signup"
-              onClick={() => {
-                handleSignUp();
-              }}
-            >
-              Sign up
-            </button>
-            {/* <NavDropdown title="Settings" id="basic-nav-dropdown">
-              <NavDropdown.Item>Login</NavDropdown.Item>
-              <NavDropdown.Item>Logout</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item>User infor</NavDropdown.Item>
-            </NavDropdown> */}
+            {isAuthenticated === false ? (
+              <>
+                <button
+                  className="btn-login"
+                  onClick={() => {
+                    handleLogin();
+                  }}
+                >
+                  Login
+                </button>
+                <button
+                  className=" btn-signup"
+                  onClick={() => {
+                    handleSignUp();
+                  }}
+                >
+                  Sign up
+                </button>
+              </>
+            ) : (
+              <NavDropdown title="Settings" id="basic-nav-dropdown">
+                <NavDropdown.Item>Logout</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item>User infor</NavDropdown.Item>
+              </NavDropdown>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>
