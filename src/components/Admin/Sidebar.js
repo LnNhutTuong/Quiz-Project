@@ -5,13 +5,19 @@ import logo from "../../assets/img/logo.png";
 import { MdDashboard } from "react-icons/md";
 import { MdFeaturedPlayList } from "react-icons/md";
 import { Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 const AdSidebar = (props) => {
   const { collapsed, toggled } = props;
+
+  const navigate = new useNavigate();
+  const handleClick = () => {
+    navigate("/");
+  };
+
   return (
     <>
       <Sidebar collapsed={collapsed} toggled={toggled} image={bgSidebar}>
-        <div className="sidebar-header">
+        <div className="sidebar-header" onClick={() => handleClick()}>
           <div className="icon">
             <img src={logo} alt="logo" />
           </div>

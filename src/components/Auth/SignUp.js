@@ -21,6 +21,8 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const navigate = new useNavigate();
 
   useEffect(() => {
@@ -55,23 +57,22 @@ const SignUp = () => {
       return;
     }
 
-    // if (username.trim == NULL) {
-    //   toast.error("Minimum 8 characters");
-    //   return;
-    // }
     if (!password || password.trim().length < 8) {
       toast.error("Password is minimum 8 characters");
       return;
     }
 
+    setIsLoading(true);
     //APIs
     const data = await postSignUp(email, username, password);
 
     if (data && data.EC == 0) {
       toast.success("Welcome to XimenT!");
+      setIsLoading(false);
       navigate(`/login`);
     }
     if (data && data.EC !== 0) {
+      setIsLoading(false);
       toast.error("Email are ready exits!");
     }
   };
@@ -139,13 +140,13 @@ const SignUp = () => {
 
                   <div className="button-signup">
                     <button
-                      disabled
+                      disabled={isLoading}
                       className="btn btn-signup mb-3"
                       onClick={() => {
                         handleSignUp();
                       }}
                     >
-                      <ImSpinner2 className="loader" />
+                      {isLoading === true && <ImSpinner2 className="loader" />}
                       Sign up
                     </button>
                   </div>
