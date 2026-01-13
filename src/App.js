@@ -11,7 +11,7 @@ const App = () => {
       <div className="main-conainer">
         <div className="sidebar-container"></div>
         <div className="app-content">
-          <Outlet></Outlet>
+          <Outlet />
         </div>
       </div>
     </div>

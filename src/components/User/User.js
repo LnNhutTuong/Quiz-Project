@@ -1,5 +1,7 @@
+import ListQuiz from "./ListQuiz";
+
 const User = (props) => {
-  return <div>User Component</div>;
+  return <div className="user-container">asdsadsad</div>;
 };
 
 export default User;

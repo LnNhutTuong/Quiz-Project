@@ -9,6 +9,7 @@ import Dashboard from "./components/Admin/Content/Dashboard";
 import ManageUser from "./components/Admin/Content/ManageUser";
 import Login from "./components/Auth/Login";
 import SignUp from "./components/Auth/SignUp";
+import ListQuiz from "./components/User/ListQuiz";
 
 const Layout = (props) => {
   return (
@@ -16,7 +17,7 @@ const Layout = (props) => {
       <Routes>
         <Route path="/" element={<App />}>
           <Route index element={<HomePage />} />
-          <Route path="user" element={<User />} />
+          <Route path="user" element={<ListQuiz />} />
         </Route>
         <Route path="admin" element={<Admin />}>
           <Route index element={<Dashboard />} />
