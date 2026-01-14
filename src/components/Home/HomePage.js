@@ -1,10 +1,19 @@
 import videoHomePage from "../../assets/video/homepage.mp4";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
   const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
-  const account = useSelector((state) => state.user.account);
 
+  const navigate = new useNavigate();
+
+  const handleAuthenticatedClick = () => {
+    navigate(`/user`);
+  };
+
+  const handleNotAuthenticatedClick = () => {
+    navigate(`/login`);
+  };
   return (
     <div className="homepage-container">
       <div className="homepage-video">
@@ -19,9 +28,19 @@ const HomePage = () => {
           Thành công không đến từ việc bắt đầu, mà từ việc không bỏ cuộc. Mỗi
           bước nhỏ hôm nay đều đưa bạn tiến gần hơn tới mục tiêu hoặc không.
         </div>
-        <div className="btn-title">
-          <button>Tiếp tục</button>
-        </div>
+
+        {isAuthenticated === true ? (
+          <div className="btn-title" onClick={() => handleAuthenticatedClick()}>
+            <button>Tiếp tục</button>
+          </div>
+        ) : (
+          <div
+            className="btn-title"
+            onClick={() => handleNotAuthenticatedClick()}
+          >
+            <button>Tiếp tục</button>
+          </div>
+        )}
       </div>
     </div>
   );
