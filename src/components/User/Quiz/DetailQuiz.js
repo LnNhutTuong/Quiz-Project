@@ -1,9 +1,14 @@
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { getDataQuiz } from "../../../API/services/quiz.service";
+import "../../../assets/styles/Quiz/DetailQuiz.scss";
 import _ from "lodash";
 const DetailQuiz = (props) => {
   const params = new useParams();
+  const location = useLocation();
+
+  console.log("><>>>>location:", location);
+
   const id = params.id;
 
   const fetchQuestion = async () => {
@@ -36,9 +41,34 @@ const DetailQuiz = (props) => {
   useEffect(() => {
     fetchQuestion();
   }, [id]);
+
   return (
-    <div className="detail-quiz-container">
-      <div>dasdasdsadasdsa</div>
+    <div className="detail-quiz-container container">
+      <div className="left-content">
+        <div className="title">
+          Quiz {id}: {location?.state?.quiztitle?.title}
+        </div>
+        <hr />
+        <div className="question-body">
+          <img src="" alt="" />
+        </div>
+        <div className="question-content">
+          <div className="question">
+            Question 1: ai la nguoi manh nhat trai dat
+          </div>
+          <div className="answers">
+            <div className="choose">A. </div>
+            <div className="choose">B. </div>
+            <div className="choose">C. </div>
+          </div>
+        </div>
+
+        <div className="question-footer">
+          <button className="btn-prev">Prev</button>
+          <button className="btn-next">Next</button>
+        </div>
+      </div>
+      <div className="right-content">count down</div>
     </div>
   );
 };

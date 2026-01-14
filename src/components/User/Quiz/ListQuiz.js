@@ -7,9 +7,10 @@ const ListQuiz = (props) => {
   const [arrayQuiz, setArrayQuiz] = useState(``);
 
   const navigate = new useNavigate();
-  const handleClick = (id) => {
-    navigate(`/quiz/${id}`);
+  const handleClick = (id, title) => {
+    navigate(`/quiz/${id}`, { state: { quiztitle: { title } } });
   };
+
   useEffect(() => {
     getQuizData();
   }, []);
@@ -45,7 +46,7 @@ const ListQuiz = (props) => {
                 <button
                   className="btn"
                   onClick={() => {
-                    handleClick(quiz.id);
+                    handleClick(quiz.id, quiz.description);
                   }}
                 >
                   Start now
