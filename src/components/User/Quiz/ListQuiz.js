@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 
 const ListQuiz = (props) => {
   const [arrayQuiz, setArrayQuiz] = useState(``);
-
   const navigate = new useNavigate();
   const handleClick = (id, title) => {
     navigate(`/quiz/${id}`, { state: { quiztitle: { title } } });

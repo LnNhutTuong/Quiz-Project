@@ -1,15 +1,17 @@
-import { useEffect } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useParams, useLocation, data } from "react-router-dom";
 import { getDataQuiz } from "../../../API/services/quiz.service";
 import "../../../assets/styles/Quiz/DetailQuiz.scss";
 import _ from "lodash";
+import Questions from "./Questions";
 const DetailQuiz = (props) => {
   const params = new useParams();
   const location = useLocation();
 
-  console.log("><>>>>location:", location);
-
   const id = params.id;
+
+  const [dataQues, setDataQues] = useState([]);
+  const [index, setIndex] = useState(0);
 
   const fetchQuestion = async () => {
     const res = await getDataQuiz(id);
@@ -17,24 +19,23 @@ const DetailQuiz = (props) => {
     if (res && res.EC === 0) {
       let raw = res.DT;
       let data = _.chain(raw)
-        // Group the elements of Array based on `id` property
         .groupBy("id")
-        // `key` is group's name (id), `value` is the array of objects
         .map((value, key) => {
           let answer = [];
           let questionDescription,
-            image = null;
+            imageQuestion = null;
           value.forEach((item, index) => {
             if (index === 0) {
-              questionDescription = item.answers.dedescription;
-              image = item.answers.image;
+              questionDescription = item.description;
+              imageQuestion = item.image;
             }
             answer.push(item.answers);
           });
 
-          return { id: key, answer, questionDescription, image };
+          return { id: key, answer, questionDescription, imageQuestion };
         })
         .value();
+      setDataQues(data);
     }
   };
 
@@ -49,18 +50,11 @@ const DetailQuiz = (props) => {
           Quiz {id}: {location?.state?.quiztitle?.title}
         </div>
         <hr />
-        <div className="question-body">
-          <img src="" alt="" />
-        </div>
         <div className="question-content">
-          <div className="question">
-            Question 1: ai la nguoi manh nhat trai dat
-          </div>
-          <div className="answers">
-            <div className="choose">A. </div>
-            <div className="choose">B. </div>
-            <div className="choose">C. </div>
-          </div>
+          <Questions
+            index={index}
+            dataQues={dataQues && dataQues.length > 0 ? dataQues[index] : []}
+          />
         </div>
 
         <div className="question-footer">
@@ -68,6 +62,7 @@ const DetailQuiz = (props) => {
           <button className="btn-next">Next</button>
         </div>
       </div>
+
       <div className="right-content">count down</div>
     </div>
   );
