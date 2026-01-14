@@ -11,7 +11,7 @@ const instance = axios.create({
 instance.interceptors.request.use(
   function (config) {
     const accessToken = store?.getState()?.user?.account?.access_token;
-    config.headers["Authorization"] = "Bearer " + accessToken;
+    config.headers["Authorization"] = `Bearer  ${accessToken}`;
 
     nProgress.start();
     // Do something before request is sent
