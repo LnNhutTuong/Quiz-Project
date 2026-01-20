@@ -13,6 +13,7 @@ const Questions = (props) => {
     console.log(">>data pros: ", aId, qId);
     props.handleChoosen(aId, qId);
   };
+
   return (
     <>
       <div className="ques-img">
@@ -40,9 +41,13 @@ const Questions = (props) => {
                   onClick={() => {
                     handleChoose(
                       String.fromCharCode(64 + item.id),
-                      item.id,
-                      dataQues.id
+                      item.id, // id tra loi
+                      dataQues.id, // id cau hoi
                     );
+                  }}
+                  style={{
+                    backgroundColor: item.isSelected ? "#3b3bfe" : "",
+                    color: item.isSelected ? "white" : "",
                   }}
                 >
                   {String.fromCharCode(65 + index)}.

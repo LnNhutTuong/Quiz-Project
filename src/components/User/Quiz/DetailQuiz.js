@@ -36,7 +36,6 @@ const DetailQuiz = (props) => {
           return { id: key, answer, questionDescription, imageQuestion };
         })
         .value();
-      console.log(data);
       setDataQues(data);
     }
   };
@@ -44,10 +43,26 @@ const DetailQuiz = (props) => {
   const handleChoosen = (answerId, quesId) => {
     let dataQuesClone = _.cloneDeep(dataQues);
     let question = dataQuesClone.find((item) => +item.id === +quesId);
-    if (question) {
-      console.log("ques: ", question);
+
+    //update answer to question
+    if (question && question.answer) {
+      let ans = question.answer;
+      ans.forEach((item) => {
+        item.isSelected = false;
+      });
+      const selected = ans.find((item) => +item.id === +answerId);
+      if (selected) selected.isSelected = true;
+
+      console.log("ans: ", ans);
+    }
+
+    let index = dataQuesClone.findIndex((item) => +item.id === +quesId);
+    if (index > -1) {
+      dataQuesClone[index] = question;
+      setDataQues(dataQuesClone);
     }
   };
+
   useEffect(() => {
     fetchQuestion();
   }, [id]);
