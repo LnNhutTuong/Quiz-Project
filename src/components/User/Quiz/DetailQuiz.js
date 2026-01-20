@@ -1,20 +1,26 @@
 import { useEffect, useState } from "react";
 import { useParams, useLocation, data } from "react-router-dom";
-import { getDataQuiz } from "../../../API/services/quiz.service";
+import {
+  getDataQuiz,
+  postSubmitQuiz,
+} from "../../../API/services/quiz.service";
 import "../../../assets/styles/Quiz/DetailQuiz.scss";
 import _ from "lodash";
 import Questions from "./Questions";
+import ModalResult from "./ModalResult";
 const DetailQuiz = (props) => {
   const params = new useParams();
   const location = useLocation();
 
-  const id = params.id;
+  const quizId = params.id;
 
   const [dataQues, setDataQues] = useState([]);
   const [index, setIndex] = useState(0);
 
+  const [isShowModalResult, setIsShowModalResult] = useState(false);
+  const [dataRessult, setDataResult] = useState({});
   const fetchQuestion = async () => {
-    const res = await getDataQuiz(id);
+    const res = await getDataQuiz(quizId);
 
     if (res && res.EC === 0) {
       let raw = res.DT;
@@ -63,7 +69,7 @@ const DetailQuiz = (props) => {
 
   useEffect(() => {
     fetchQuestion();
-  }, [id]);
+  }, [quizId]);
 
   const handlePrev = () => {
     if (index - 1 < 0) return;
@@ -74,30 +80,48 @@ const DetailQuiz = (props) => {
     if (dataQues && dataQues.length > index + 1) setIndex(index + 1);
   };
 
-  const handleFinish = () => {
+  const handleFinish = async () => {
+    //Khai bao theo Backend
     let payload = {
-      id: +id,
-      answer: [],
+      quizId: +quizId,
+      answers: [],
     };
+
+    // tao 1 mang the than
     let answer = [];
+
     if (dataQues && dataQues.length > 0) {
       dataQues.forEach((item) => {
-        let questionId = item.id;
-        let userAnswer = [];
+        let questionId = +item.id;
+        let userAnswerId = [];
 
         item.answer.forEach((a) => {
           if (a && a.isSelected) {
-            userAnswer.push(a.id);
+            userAnswerId.push(a.id);
           }
         });
+
         answer.push({
-          questionId,
-          userAnswer,
+          questionId: +questionId,
+          userAnswerId,
         });
       });
 
-      payload.answer = answer;
-      console.log("finish: ", payload);
+      payload.answers = answer;
+
+      //submit api
+      let res = await postSubmitQuiz(payload);
+      console.log("res: ", res);
+      if (res && res.EC === 0) {
+        setDataResult({
+          countCorrect: res.DT.countCorrect,
+          countTotal: res.DT.countTotal,
+          quizData: res.DT.quizData,
+        });
+        setIsShowModalResult(true);
+      } else {
+        alert("Something went wrong...");
+      }
     }
   };
 
@@ -105,7 +129,7 @@ const DetailQuiz = (props) => {
     <div className="detail-quiz-container container">
       <div className="left-content">
         <div className="title">
-          Quiz {id}: {location?.state?.quiztitle?.title}
+          Quiz {quizId}: {location?.state?.quiztitle?.title}
         </div>
         <hr />
         <div className="question-content">
@@ -146,6 +170,11 @@ const DetailQuiz = (props) => {
       </div>
 
       <div className="right-content">count down</div>
+      <ModalResult
+        show={isShowModalResult}
+        setShow={setIsShowModalResult}
+        dataRessult={dataRessult}
+      />
     </div>
   );
 };
