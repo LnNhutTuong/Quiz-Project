@@ -52,8 +52,6 @@ const DetailQuiz = (props) => {
       });
       const selected = ans.find((item) => +item.id === +answerId);
       if (selected) selected.isSelected = true;
-
-      console.log("ans: ", ans);
     }
 
     let index = dataQuesClone.findIndex((item) => +item.id === +quesId);
@@ -74,6 +72,33 @@ const DetailQuiz = (props) => {
 
   const handleNext = () => {
     if (dataQues && dataQues.length > index + 1) setIndex(index + 1);
+  };
+
+  const handleFinish = () => {
+    let payload = {
+      id: +id,
+      answer: [],
+    };
+    let answer = [];
+    if (dataQues && dataQues.length > 0) {
+      dataQues.forEach((item) => {
+        let questionId = item.id;
+        let userAnswer = [];
+
+        item.answer.forEach((a) => {
+          if (a && a.isSelected) {
+            userAnswer.push(a.id);
+          }
+        });
+        answer.push({
+          questionId,
+          userAnswer,
+        });
+      });
+
+      payload.answer = answer;
+      console.log("finish: ", payload);
+    }
   };
 
   return (
@@ -107,6 +132,15 @@ const DetailQuiz = (props) => {
             }}
           >
             Next
+          </button>
+
+          <button
+            className="btn-finish"
+            onClick={() => {
+              handleFinish();
+            }}
+          >
+            Finish
           </button>
         </div>
       </div>

@@ -10,7 +10,6 @@ const Questions = (props) => {
   const answer = dataQues.answer;
 
   const handleChoose = (answer, aId, qId) => {
-    console.log(">>data pros: ", aId, qId);
     props.handleChoosen(aId, qId);
   };
 
