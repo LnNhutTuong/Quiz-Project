@@ -10,8 +10,6 @@ import _ from "lodash";
 const ModalUpdateUser = (props) => {
   const { show, setShow, dataupdate, currentPage } = props;
 
-  // const [show, setShow] = useState(false);
-
   const handleClose = (reset = true) => {
     setShow(false);
     if (reset) {
@@ -40,7 +38,6 @@ const ModalUpdateUser = (props) => {
 
   useEffect(() => {
     if (!_.isEmpty(dataupdate)) {
-      // setShow(false);
       setEmail(dataupdate.email);
       setUsername(dataupdate.username);
       setRole(dataupdate.role);
