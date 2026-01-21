@@ -1,14 +1,9 @@
 import { useState } from "react";
-import TableUser from "./TableUser";
-import { useNavigate } from "react-router-dom";
-
+import TableUser from "./TableQuiz";
+import ModalCreateQuiz from "./ModalCreateQuiz";
 const ManagerQuiz = (props) => {
+  //create new quiz
   const [showModalCreateQuiz, setShowModalCreateQuiz] = useState(false);
-
-  const handleCreateNewQuiz = () => {
-    setShowModalCreateQuiz(true);
-    alert("show");
-  };
 
   return (
     <div className="managequiz-container">
@@ -17,18 +12,19 @@ const ManagerQuiz = (props) => {
         <div
           className="btn btn-primary"
           onClick={() => {
-            handleCreateNewQuiz();
+            setShowModalCreateQuiz(true);
           }}
         >
           Create new quiz
         </div>
       </div>
       <div className="content">
-        <TableUser
-          show={showModalCreateQuiz}
-          setShow={setShowModalCreateQuiz}
-        />
+        <TableUser />
       </div>
+      <ModalCreateQuiz
+        show={showModalCreateQuiz}
+        setShow={setShowModalCreateQuiz}
+      />
     </div>
   );
 };

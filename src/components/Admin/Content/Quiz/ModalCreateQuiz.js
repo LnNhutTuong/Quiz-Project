@@ -1,51 +1,63 @@
-import { useState } from "react";
-import Button from "react-bootstrap/Button";
+import { Button } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
 import { FcPlus } from "react-icons/fc";
-import axios from "axios";
-import { ToastContainer, toast, Flip } from "react-toastify";
-import { postCreateNewUser } from "../../../API/services/admin.service";
+import { useState } from "react";
+import { postCreateNewQuiz } from "../../../../API/services/admin.service";
+import { toast } from "react-toastify";
 
-const ModalCreateUser = (props) => {
+const ModalCreateQuiz = (props) => {
   const { show, setShow } = props;
 
-  // const handleClose = () => {
-  //   setShow(false);
-  //   setEmail("");
-  //   setPassword("");
-  //   setUsername("");
-  //   setRole("USER");
-  //   setImage("");
-  //   setPreviewimg("");
-  // };
+  const [name, setName] = useState(``);
+  const [description, setDescription] = useState(``);
+  const [difficulty, setDifficulty] = useState(``);
+  const [quizImage, setQuizImage] = useState(``);
+  const [previewimg, setPreviewimg] = useState(``);
 
-  // const [email, setEmail] = useState(``);
-  // const [password, setPassword] = useState(``);
-  // const [username, setUsername] = useState(``);
-  // const [role, setRole] = useState(`USER`);
-  // const [image, setImage] = useState(``);
-  // const [previewimg, setPreviewimg] = useState(``);
+  const handleClose = () => {
+    setShow(false);
+    setName(``);
+    setDescription(``);
+    setDifficulty(``);
+    setQuizImage(``);
+    setPreviewimg(``);
+  };
 
-  // const handleUploadImage = (event) => {
-  //   if (event.target && event.target.files && event.target.files[0]) {
-  //     setPreviewimg(URL.createObjectURL(event.target.files[0]));
-  //     setImage(event.target.files[0]);
-  //   } else {
-  //     setPreviewimg(``);
-  //   }
-  // };
+  const handleUploadImage = (event) => {
+    if (event.target && event.target.files && event.target.files[0]) {
+      setPreviewimg(URL.createObjectURL(event.target.files[0]));
+      setQuizImage(event.target.files[0]);
+    } else {
+      setPreviewimg(``);
+    }
+  };
 
-  // const handleSubmit = async () => {
-  //   let data = await postCreateNewUser(email, password, username, role, image);
-  //   if (data && data.EC == 0) {
-  //     toast.success("Create a new user success!");
-  //     handleClose();
-  //     await props.fetchListUserPaginate(0);
-  //   }
-  //   if (data && data.EC !== 0) {
-  //     toast.error("Create a new user fail!");
-  //   }
-  // };
+  const handleSubmit = async () => {
+    //validate
+    if (!name || !description) {
+      toast.error("Name/Description is required");
+      return;
+    }
+    if (!quizImage) {
+      toast.error("Image is required");
+      return;
+    }
+
+    const res = await postCreateNewQuiz(
+      description,
+      name,
+      difficulty,
+      quizImage,
+    );
+
+    if (res && res.EC == 0) {
+      toast.success(res.EM);
+      handleClose();
+    }
+    if (res && res.EC !== 0) {
+      toast.error(res.EM);
+    }
+  };
 
   return (
     <>
@@ -62,45 +74,43 @@ const ModalCreateUser = (props) => {
         <Modal.Body>
           <form className="row g-3">
             <div className="col-md-6">
-              <label className="form-label">Email</label>
-              <input
-                type="email"
-                className="form-control"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-              />
-            </div>
-            <div className="col-md-6">
-              <label className="form-label">Password</label>
-              <input
-                type="password"
-                className="form-control"
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-              />
-            </div>
-            <div className="col-md-6">
-              <label className="form-label">Username</label>
+              <label className="form-label">Name quiz</label>
               <input
                 type="text"
                 className="form-control"
-                value={username}
-                onChange={(event) => setUsername(event.target.value)}
+                value={name}
+                onChange={(event) => {
+                  setName(event.target.value);
+                }}
+              />
+            </div>
+            <div className="col-md-6">
+              <label className="form-label">Description</label>
+              <input
+                type="text"
+                className="form-control"
+                value={description}
+                onChange={(event) => {
+                  setDescription(event.target.value);
+                }}
               />
             </div>
             <div className="col-md-4">
-              <label className="form-label">Role</label>
+              <label className="form-label">Difficult</label>
               <select
                 className="form-select"
-                onChange={(event) => setRole(event.target.value)}
-                value={role}
+                value={difficulty}
+                onChange={(event) => {
+                  setDifficulty(event.target.value);
+                }}
               >
-                <option value="USER">User</option>
-                <option selected value="ADMIN">
-                  Admin
+                <option value="Easy">Easy</option>
+                <option selected value="Hard">
+                  Hard
                 </option>
               </select>
             </div>
+
             <div className="col-md-12">
               <label className="form-label label-upload" htmlFor="labelUpload">
                 <FcPlus /> Upload your image
@@ -139,4 +149,4 @@ const ModalCreateUser = (props) => {
   );
 };
 
-export default ModalCreateUser;
+export default ModalCreateQuiz;

@@ -16,7 +16,6 @@ const ListQuiz = (props) => {
 
   const getQuizData = async () => {
     const data = await getQuizByUsers();
-    console.log(">>>Total Quiz: ", data.DT);
 
     if (data && data.EC === 0) {
       setArrayQuiz(data.DT);

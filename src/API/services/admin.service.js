@@ -48,9 +48,17 @@ const putViewUser = (id, username, role, image) => {
 };
 
 //Quiz
-const getAllQuiz = () => {
-  return axios.get(`/api/v1/participant/all`);
+const postCreateNewQuiz = (description, name, difficulty, quizImage) => {
+  const data = new FormData();
+
+  data.append(`description`, description);
+  data.append(`name`, name);
+  data.append(`difficulty`, difficulty);
+  data.append(`quizImage`, quizImage);
+
+  return axios.post(`/api/v1/quiz`, data);
 };
+
 export {
   postCreateNewUser,
   getAllUser,
@@ -58,4 +66,5 @@ export {
   deleteUser,
   getUserWithPaginate,
   putViewUser,
+  postCreateNewQuiz,
 };
