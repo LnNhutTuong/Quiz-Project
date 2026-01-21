@@ -1,6 +1,7 @@
 import { data } from "react-router-dom";
 import axios from "../axiosCustomize";
 
+//User
 const postCreateNewUser = (email, password, username, role, image) => {
   const data = new FormData();
   data.append(`email`, email);
@@ -46,6 +47,10 @@ const putViewUser = (id, username, role, image) => {
   return axios.put(`/api/v1/participant`, data);
 };
 
+//Quiz
+const getAllQuiz = () => {
+  return axios.get(`/api/v1/participant/all`);
+};
 export {
   postCreateNewUser,
   getAllUser,
