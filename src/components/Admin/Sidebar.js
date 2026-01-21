@@ -33,7 +33,10 @@ const AdSidebar = (props) => {
               <MenuItem component={<Link to="manage-user" />}>
                 Manager User
               </MenuItem>
-              <MenuItem> Manager Quiz</MenuItem>
+              <MenuItem component={<Link to="manage-quiz" />}>
+                {" "}
+                Manager Quiz
+              </MenuItem>
               <MenuItem> Manager Questions</MenuItem>
             </SubMenu>
           </Menu>

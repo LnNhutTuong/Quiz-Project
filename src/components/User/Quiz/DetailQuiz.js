@@ -87,7 +87,8 @@ const DetailQuiz = (props) => {
       answers: [],
     };
 
-    // tao 1 mang the than
+    // tao 1 mang nhung cau tra loi theo tung cau hoi
+    // theo Backend
     let answer = [];
 
     if (dataQues && dataQues.length > 0) {

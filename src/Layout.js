@@ -7,15 +7,14 @@ import User from "./components/User/User";
 import HomePage from "./components/Home/HomePage";
 import Dashboard from "./components/Admin/Content/Dashboard";
 import ManageUser from "./components/Admin/Content/ManageUser";
+import ManageQuiz from "./components/Admin/Content/Quiz/ManageQuiz";
 import Login from "./components/Auth/Login";
 import SignUp from "./components/Auth/SignUp";
 import ListQuiz from "./components/User/Quiz/ListQuiz";
 import DetailQuiz from "./components/User/Quiz/DetailQuiz";
 
 const NotFound = () => {
-  return (
-    <div className="container mt-5 alert alert-danger">404 Not Foud. :(</div>
-  );
+  return <div className="container mt-5 alert alert-danger">404 Not Foud</div>;
 };
 
 const Layout = (props) => {
@@ -30,6 +29,7 @@ const Layout = (props) => {
         <Route path="admin" element={<Admin />}>
           <Route index element={<Dashboard />} />
           <Route path="manage-user" element={<ManageUser />} />
+          <Route path="manage-quiz" element={<ManageQuiz />} />
         </Route>
         <Route path="login" element={<Login />}></Route>
         <Route path="signup" element={<SignUp />}></Route>
