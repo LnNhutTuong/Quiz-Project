@@ -12,6 +12,7 @@ import Login from "./components/Auth/Login";
 import SignUp from "./components/Auth/SignUp";
 import ListQuiz from "./components/User/Quiz/ListQuiz";
 import DetailQuiz from "./components/User/Quiz/DetailQuiz";
+import ManageQuestion from "./components/Admin/Content/Question/ManageQuestion";
 
 const NotFound = () => {
   return <div className="container mt-5 alert alert-danger">404 Not Foud</div>;
@@ -30,6 +31,7 @@ const Layout = (props) => {
           <Route index element={<Dashboard />} />
           <Route path="manage-user" element={<ManageUser />} />
           <Route path="manage-quiz" element={<ManageQuiz />} />
+          <Route path="manage-question" element={<ManageQuestion />} />
         </Route>
         <Route path="login" element={<Login />}></Route>
         <Route path="signup" element={<SignUp />}></Route>
