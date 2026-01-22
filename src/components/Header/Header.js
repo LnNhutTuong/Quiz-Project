@@ -19,6 +19,11 @@ const BasicExample = () => {
   const handleSignUp = () => {
     navigate("/signup");
   };
+
+  const handleLogout = () => {
+    localStorage.clear();
+  };
+
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
@@ -60,7 +65,13 @@ const BasicExample = () => {
               </>
             ) : (
               <NavDropdown title="Settings" id="basic-nav-dropdown">
-                <NavDropdown.Item>Logout</NavDropdown.Item>
+                <NavDropdown.Item
+                  onClick={() => {
+                    handleLogout();
+                  }}
+                >
+                  Logout
+                </NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item>User infor</NavDropdown.Item>
               </NavDropdown>
