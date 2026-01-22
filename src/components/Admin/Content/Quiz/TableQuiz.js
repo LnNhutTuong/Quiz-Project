@@ -25,7 +25,12 @@ const TableUser = (props) => {
                     {new Date(item.createdAt).toLocaleDateString("vi-VN")}
                   </td>
                   <td>
-                    <button onClick={() => handleViewQuiz(item)}>View</button>
+                    <button
+                      className="btn btn-warning"
+                      onClick={() => handleViewQuiz(item)}
+                    >
+                      View
+                    </button>
                   </td>
                 </tr>
               );

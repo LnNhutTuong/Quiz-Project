@@ -6,6 +6,7 @@ import { deleteUser } from "../../../API/services/admin.service";
 
 const ModalDeleteUser = (props) => {
   const { show, setShow, datadelete, currentPage, setShowModalEdit } = props;
+
   console.log(">>>>id:", datadelete.userId);
   console.log(">>>>email: ", datadelete.userEmail);
 

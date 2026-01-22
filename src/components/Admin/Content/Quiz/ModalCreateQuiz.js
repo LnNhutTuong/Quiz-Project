@@ -53,6 +53,7 @@ const ModalCreateQuiz = (props) => {
     if (res && res.EC == 0) {
       toast.success(res.EM);
       handleClose();
+      props.fetchAllQuiz();
     }
     if (res && res.EC !== 0) {
       toast.error(res.EM);

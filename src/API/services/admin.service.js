@@ -63,7 +63,13 @@ const getAllQuiz = () => {
   return axios.get(`/api/v1/quiz/all`, data);
 };
 
-const putQuiz = (id, description, name, difficulty, quizImage) => {
+const deleteQuiz = (quizId) => {
+  return axios.delete(`/api/v1/quiz/${quizId}`, {
+    data: { id: quizId },
+  });
+};
+
+const putUpdateQuiz = (id, description, name, difficulty, quizImage) => {
   const data = new FormData();
 
   data.append(`id`, id);
@@ -72,7 +78,7 @@ const putQuiz = (id, description, name, difficulty, quizImage) => {
   data.append(`difficulty`, difficulty);
   data.append(`quizImage`, quizImage);
 
-  return axios.put(`/api/v1/participant`, data);
+  return axios.put(`/api/v1/quiz`, data);
 };
 
 export {
@@ -84,5 +90,6 @@ export {
   putViewUser,
   postCreateNewQuiz,
   getAllQuiz,
-  putQuiz,
+  deleteQuiz,
+  putUpdateQuiz,
 };

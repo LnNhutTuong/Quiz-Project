@@ -3,6 +3,8 @@ import TableUser from "./TableQuiz";
 import { getAllQuiz } from "../../../../API/services/admin.service";
 import ModalCreateQuiz from "./ModalCreateQuiz";
 import ModalEditQuiz from "./ModalEditQuiz";
+import ModalDeleteQuiz from "./ModalDeleteQuiz";
+
 const ManagerQuiz = (props) => {
   const [listQuiz, setListQuiz] = useState([]);
 
@@ -14,6 +16,10 @@ const ManagerQuiz = (props) => {
 
   //data view
   const [dataView, setDataView] = useState(``);
+
+  //data delete
+  const [datadelete, setDataDelete] = useState({});
+  const [showModalDeleteQuiz, setShowModalDeleteQuiz] = useState(false);
 
   useEffect(() => {
     fetchAllQuiz();
@@ -29,6 +35,12 @@ const ManagerQuiz = (props) => {
   const handleViewQuiz = (quiz) => {
     setShowModalEditQuiz(true);
     setDataView(quiz);
+  };
+
+  const handleDeleteQuiz = (quizId, quizName) => {
+    setDataDelete({ quizId, quizName });
+    setShowModalEditQuiz(false);
+    setShowModalDeleteQuiz(true);
   };
 
   return (
@@ -54,12 +66,23 @@ const ManagerQuiz = (props) => {
       <ModalCreateQuiz
         show={showModalCreateQuiz}
         setShow={setShowModalCreateQuiz}
+        fetchAllQuiz={fetchAllQuiz}
       />
       <ModalEditQuiz
         show={showModalEditQuiz}
         setShow={setShowModalEditQuiz}
         dataView={dataView}
         setDataView={setDataView}
+        handleDeleteQuiz={handleDeleteQuiz}
+        fetchAllQuiz={fetchAllQuiz}
+      />
+      <ModalDeleteQuiz
+        show={showModalDeleteQuiz}
+        setShow={setShowModalDeleteQuiz}
+        datadelete={datadelete}
+        setDataDelete={setDataDelete}
+        setShowEdit={setShowModalEditQuiz}
+        fetchAllQuiz={fetchAllQuiz}
       />
     </div>
   );

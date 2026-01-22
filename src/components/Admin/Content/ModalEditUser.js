@@ -81,10 +81,6 @@ const ModalUpdateUser = (props) => {
 
   return (
     <div className="modal-edituser">
-      {/* <Button variant="primary" onClick={handleShow}>
-        Add new user
-      </Button> */}
-
       <Modal
         show={show}
         onHide={handleClose}
