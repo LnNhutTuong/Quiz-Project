@@ -1,3 +1,4 @@
+// import ReactPaginate from "react-paginate";
 const TableUser = (props) => {
   const { listQuiz, setListQuiz, handleViewQuiz } = props;
 
@@ -36,7 +37,34 @@ const TableUser = (props) => {
               );
             })}
         </tbody>
+        {listQuiz && listQuiz.length === 0 && (
+          <tr>
+            <td colSpan={"4"}>Not found data</td>
+          </tr>
+        )}
       </table>
+      {/* <div className="user-pagination d-flex justify-content-center">
+        <ReactPaginate
+          nextLabel="Next >"
+          // onPageChange={handlePageClick}
+          pageRangeDisplayed={3}
+          marginPagesDisplayed={2}
+          // pageCount={pageCount}
+          previousLabel="< Previous"
+          pageClassName="page-item"
+          pageLinkClassName="page-link"
+          previousClassName="page-item"
+          previousLinkClassName="page-link"
+          nextClassName="page-item"
+          nextLinkClassName="page-link"
+          breakLabel="..."
+          breakClassName="page-item"
+          breakLinkClassName="page-link"
+          containerClassName="pagination"
+          activeClassName="active"
+          renderOnZeroPageCount={null}
+        />
+      </div> */}
     </>
   );
 };

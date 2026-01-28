@@ -1,19 +1,24 @@
-body {
-  // overflow: hidden;
-}
-
 .admin-container {
   display: flex;
-  svg {
+  // flex-direction: column;
+  margin: 22px;
+  height: 690px;
+
+  m svg {
     width: 26px;
     height: 26px;
   }
-  .admin-sidebar {
-    // padding-top: 10px;
-    height: 100vh;
 
+  .admin-sidebar {
     aside.ps-sidebar-root.css-1wvake5 {
       height: 100%;
+      border-radius: 22px;
+      box-shadow:
+        rgba(0, 0, 0, 0.25) 0px 54px 55px,
+        rgba(0, 0, 0, 0.12) 0px -12px 30px,
+        rgba(0, 0, 0, 0.12) 0px 4px 6px,
+        rgba(0, 0, 0, 0.17) 0px 12px 13px,
+        rgba(0, 0, 0, 0.09) 0px -3px 5px;
     }
 
     hr {
@@ -63,7 +68,7 @@ body {
 
       .ps-submenu-content {
         background: transparent;
-        background-color: rgba(102, 181, 190, 0.546) !important;
+        background-color: rgba(255, 255, 255, 0.546) !important;
       }
     }
     // ------------------------------------------------
@@ -124,12 +129,32 @@ body {
   }
 
   .admin-content {
+    // border: 1px solid red;
+    height: 100%;
+    margin-left: 22px;
     width: 100%;
     .admin-header {
-      height: 40px;
-      border: 1px solid green;
+      height: 66px;
+      border-radius: 22px;
+      box-shadow:
+        // rgba(0, 0, 0, 0.25) 0px 54px 55px,
+        rgba(0, 0, 0, 0.12) 0px -12px 30px,
+        rgba(0, 0, 0, 0.12) 0px 4px 6px,
+        rgba(0, 0, 0, 0.17) 0px 12px 13px,
+        rgba(0, 0, 0, 0.09) 0px -3px 5px;
     }
     .admin-main {
+      height: calc(100% - 88px);
+      border-radius: 22px;
+      box-shadow:
+        rgba(0, 0, 0, 0.25) 0px 54px 55px,
+        rgba(0, 0, 0, 0.12) 0px -12px 30px,
+        rgba(0, 0, 0, 0.12) 0px 4px 6px,
+        rgba(0, 0, 0, 0.17) 0px 12px 13px;
+      // rgba(0, 0, 0, 0.09) 0px -3px 5px;
+
+      margin-top: 22px;
+      // border: 1px solid red;
     }
   }
 }

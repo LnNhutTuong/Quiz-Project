@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import TableUser from "./TableQuiz";
 import { getAllQuiz } from "../../../../API/services/admin.service";
+import { FcPlus } from "react-icons/fc";
+
 import ModalCreateQuiz from "./ModalCreateQuiz";
 import ModalEditQuiz from "./ModalEditQuiz";
 import ModalDeleteQuiz from "./ModalDeleteQuiz";
-
+import "../../../../assets/styles/Manage/ManageQuiz.scss";
 const ManagerQuiz = (props) => {
   const [listQuiz, setListQuiz] = useState([]);
 
@@ -46,22 +48,24 @@ const ManagerQuiz = (props) => {
   return (
     <div className="managequiz-container">
       <div className="title">Manage Quiz</div>
-      <div className="button-add">
-        <div
-          className="btn btn-primary"
-          onClick={() => {
-            setShowModalCreateQuiz(true);
-          }}
-        >
-          Create new quiz
-        </div>
-      </div>
+
       <div className="content">
-        <TableUser
-          listQuiz={listQuiz}
-          setListQuiz={setListQuiz}
-          handleViewQuiz={handleViewQuiz}
-        />
+        <div className="btn-create btn btn-dark">
+          <div
+            onClick={() => {
+              setShowModalCreateQuiz(true);
+            }}
+          >
+            <FcPlus /> Create new user
+          </div>
+        </div>
+        <div className="table-quiz">
+          <TableUser
+            listQuiz={listQuiz}
+            setListQuiz={setListQuiz}
+            handleViewQuiz={handleViewQuiz}
+          />
+        </div>
       </div>
       <ModalCreateQuiz
         show={showModalCreateQuiz}

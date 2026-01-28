@@ -16,7 +16,7 @@ const AdSidebar = (props) => {
 
   return (
     <>
-      <Sidebar collapsed={collapsed} toggled={toggled} image={bgSidebar}>
+      <Sidebar>
         <div className="sidebar-header" onClick={() => handleClick()}>
           <div className="icon">
             <img src={logo} alt="logo" />
