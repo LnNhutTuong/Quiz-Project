@@ -4,6 +4,7 @@ import { FcPlus } from "react-icons/fc";
 import { useState } from "react";
 import { postCreateNewQuiz } from "../../../../API/services/admin.service";
 import { toast } from "react-toastify";
+import "../../../../assets/styles/Manage/ManageQuiz.scss";
 
 const ModalCreateQuiz = (props) => {
   const { show, setShow } = props;

@@ -1,8 +1,8 @@
 .admin-container {
   display: flex;
   // flex-direction: column;
-  margin: 22px;
-  height: 690px;
+  // margin: 22px;
+  height: 750px;
 
   m svg {
     width: 26px;
@@ -12,7 +12,7 @@
   .admin-sidebar {
     aside.ps-sidebar-root.css-1wvake5 {
       height: 100%;
-      border-radius: 22px;
+      // border-radius: 22px;
       box-shadow:
         rgba(0, 0, 0, 0.25) 0px 54px 55px,
         rgba(0, 0, 0, 0.12) 0px -12px 30px,
@@ -131,7 +131,8 @@
   .admin-content {
     // border: 1px solid red;
     height: 100%;
-    margin-left: 22px;
+    // margin-left: 22px;
+    margin: 10px 22px 0px 22px;
     width: 100%;
     .admin-header {
       height: 66px;
@@ -153,7 +154,7 @@
         rgba(0, 0, 0, 0.17) 0px 12px 13px;
       // rgba(0, 0, 0, 0.09) 0px -3px 5px;
 
-      margin-top: 22px;
+      margin-top: 16px;
       // border: 1px solid red;
     }
   }

@@ -36,7 +36,7 @@ const ModalDeleteQuiz = (props) => {
         </Modal.Header>
         <Modal.Body>
           Are you sure to delete this Quiz: <br />
-          <b>{datadelete.quizName}</b>
+          Id: <b>{datadelete.quizId}</b>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleBack}>

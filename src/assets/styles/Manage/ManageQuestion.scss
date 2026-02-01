@@ -1,0 +1,15 @@
+.managequestion-container {
+  .title {
+    font-weight: 500;
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+  .content {
+    .quiz-content {
+      border: 1px solid red;
+    }
+    .qa-content {
+      border: 1px solid green;
+    }
+  }
+}
