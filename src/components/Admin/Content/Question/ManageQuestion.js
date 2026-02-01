@@ -1,4 +1,7 @@
 import { FcPlus } from "react-icons/fc";
+import { FcUpload } from "react-icons/fc";
+import { FaTimesCircle } from "react-icons/fa";
+
 import Select from "react-select";
 import { useState } from "react";
 import "../../../../assets/styles/Manage/ManageQuestion.scss";
@@ -12,11 +15,6 @@ const ManageQuestion = () => {
 
   const [selectedOption, setSelectedOption] = useState(null);
 
-  const [isAdd, setIsAdd] = useState(true);
-
-  // if isAdd show button add
-  // else !isAdd show button view or delete
-
   return (
     <>
       <div className="managequestion-container">
@@ -24,52 +22,67 @@ const ManageQuestion = () => {
 
         <div className="content">
           <div className="add-new-quiz">
-            <div className="quiz-content col-9 ms-3 form-group">
-              <label>Create new Quiz:</label>
-              <Select
-                defaultValue={selectedOption}
-                onChange={setSelectedOption}
-                options={options}
-              />
+            <div className="quiz-content row form-group ms-3">
+              <div className="col-7">
+                <label>Create new Quiz:</label>
+                <Select
+                  defaultValue={selectedOption}
+                  onChange={setSelectedOption}
+                  options={options}
+                />
+              </div>
             </div>
             <div className="qa-content mt-3 ms-5 col-8 ">
               <div className="question row">
-                <div className="col-7">
-                  <label class="form-label"> Question 1: </label>
+                <div className="col-9">
+                  <label class="form-label"> Question index: </label>
                   <input
                     type="text"
                     className="form-control"
-                    placeholder="Name"
+                    placeholder="Enter the question here"
                   />
                 </div>
-                <div className="col-3">
+                <div className="col-2 upload-img">
                   <label
                     className="form-label label-upload"
                     htmlFor="labelUpload"
                   >
-                    <FcPlus /> Upload your image
+                    Upload image
+                    <br />
+                    <FcUpload />
                   </label>
                   <input type="file" id="labelUpload" hidden />
                 </div>
-                <div className=" btn-feature col-2">
-                  <button>Ok</button>
-                  <button>No</button>
+                <div className="col-1 button">
+                  <div className="btn-add">
+                    <FcPlus />
+                  </div>
+                  <div className="btn-delete">
+                    <FaTimesCircle />
+                  </div>
                 </div>
               </div>
 
-              <div className="answers row ms-5">
-                <div className="col-9">
-                  <label class="form-label"> Answer 1: </label>
+              <div className="answers row ms-5 mt-2">
+                <div className="col-7">
+                  <label class="form-label"> Answer index: </label>
                   <input
                     type="text"
                     className="form-control"
-                    placeholder="Name"
+                    placeholder="Enter the answer content"
                   />
                 </div>
-                <div className=" btn-feature col-3 ">
-                  <button>Ok</button>
-                  <button>No</button>
+                <div className="col-1 button">
+                  <div className="btn-add">
+                    <FcPlus />
+                  </div>
+                  <div className="btn-delete">
+                    <FaTimesCircle />
+                  </div>
                 </div>
+              </div>
+              <div className="btn-save btn btn-primary mt-3">
+                Save questions
               </div>
             </div>
           </div>

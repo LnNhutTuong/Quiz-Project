@@ -6,10 +6,62 @@
   }
   .content {
     .quiz-content {
-      border: 1px solid red;
+      // border: 1px solid red;
     }
     .qa-content {
-      border: 1px solid green;
+      .question {
+        .col-2 {
+          &.upload-img {
+            padding: 25px 0 0 0;
+            text-align: center;
+            svg {
+              font-size: 26px;
+              margin-left: 10px;
+            }
+          }
+        }
+
+        .button {
+          cursor: pointer;
+          padding: 0;
+          display: flex;
+          // flex-direction: column;
+          font-size: 38px;
+          .btn-add {
+            padding-top: 12px;
+            text-align: center;
+          }
+          .btn-delete {
+            font-size: 34px;
+            padding-top: 14px;
+            text-align: center;
+            svg {
+              color: red;
+            }
+          }
+        }
+      }
+      .answers {
+        .button {
+          cursor: pointer;
+          padding: 0;
+          display: flex;
+          // flex-direction: column;
+          font-size: 38px;
+          .btn-add {
+            padding-top: 12px;
+            text-align: center;
+          }
+          .btn-delete {
+            font-size: 34px;
+            padding-top: 14px;
+            text-align: center;
+            svg {
+              color: red;
+            }
+          }
+        }
+      }
     }
   }
 }
