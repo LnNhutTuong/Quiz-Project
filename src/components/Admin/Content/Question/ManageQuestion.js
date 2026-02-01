@@ -1,4 +1,4 @@
-import { FcPlus } from "react-icons/fc";
+import { FaPlusCircle } from "react-icons/fa";
 import { FcUpload } from "react-icons/fc";
 import { FaTimesCircle } from "react-icons/fa";
 
@@ -55,7 +55,7 @@ const ManageQuestion = () => {
                 </div>
                 <div className="col-1 button">
                   <div className="btn-add">
-                    <FcPlus />
+                    <FaPlusCircle />
                   </div>
                   <div className="btn-delete">
                     <FaTimesCircle />
@@ -74,7 +74,7 @@ const ManageQuestion = () => {
                 </div>
                 <div className="col-1 button">
                   <div className="btn-add">
-                    <FcPlus />
+                    <FaPlusCircle />
                   </div>
                   <div className="btn-delete">
                     <FaTimesCircle />

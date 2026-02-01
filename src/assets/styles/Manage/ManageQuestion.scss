@@ -6,7 +6,6 @@
   }
   .content {
     .quiz-content {
-      // border: 1px solid red;
     }
     .qa-content {
       .question {
@@ -25,18 +24,25 @@
           cursor: pointer;
           padding: 0;
           display: flex;
-          // flex-direction: column;
-          font-size: 38px;
+          font-size: 34px;
+          padding-top: 19px;
           .btn-add {
-            padding-top: 12px;
-            text-align: center;
-          }
-          .btn-delete {
-            font-size: 34px;
-            padding-top: 14px;
             text-align: center;
             svg {
-              color: red;
+              color: rgba(76, 175, 79, 0.77);
+              &:hover {
+                color: rgb(76, 175, 79);
+              }
+            }
+          }
+          .btn-delete {
+            text-align: center;
+            svg {
+              color: rgba(251, 2, 2, 0.736);
+
+              &:hover {
+                color: red;
+              }
             }
           }
         }
@@ -46,18 +52,25 @@
           cursor: pointer;
           padding: 0;
           display: flex;
-          // flex-direction: column;
-          font-size: 38px;
+          font-size: 34px;
+          padding-top: 19px;
           .btn-add {
-            padding-top: 12px;
-            text-align: center;
-          }
-          .btn-delete {
-            font-size: 34px;
-            padding-top: 14px;
             text-align: center;
             svg {
-              color: red;
+              color: rgba(76, 175, 79, 0.77);
+              &:hover {
+                color: rgb(76, 175, 79);
+              }
+            }
+          }
+          .btn-delete {
+            text-align: center;
+            svg {
+              color: rgba(251, 2, 2, 0.736);
+
+              &:hover {
+                color: red;
+              }
             }
           }
         }
