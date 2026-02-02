@@ -90,19 +90,24 @@ const ManageQuestion = () => {
     if (type === add) {
       const newAnswer = {
         id: uuidv4(),
-        description: "answer 1 of 1",
+        description: "",
         isCorrect: false,
       };
 
       let index = cloneQuestions.findIndex((item) => item.id === questionID);
-      console.log(">>>index: ", index + 1);
-      // let in setQuestions([...questions, newQuestion]);
-      // console.log(">>>Check question after add: ", questions);
+      cloneQuestions[index].answers.push(newAnswer);
+      setQuestions(cloneQuestions);
     }
-    // if (type === remove) {
-    //   cloneQuestions = cloneQuestions.filter((item) => item.id !== id);
-    //   setQuestions(cloneQuestions);
-    // }
+
+    if (type === remove) {
+      let index = cloneQuestions.findIndex((item) => item.id === questionID);
+
+      cloneQuestions[index].answers = cloneQuestions[index].answers.filter(
+        (item) => item.id !== answerId,
+      );
+
+      setQuestions(cloneQuestions);
+    }
   };
   return (
     <>
@@ -182,17 +187,23 @@ const ManageQuestion = () => {
                                 key={answer.id}
                                 className="answers row ms-5 "
                               >
-                                <div className="col-7">
+                                <div className="col-7 form-check">
                                   <label class="form-label">
                                     Answer {index + 1}:
                                   </label>
+
                                   <input
                                     value={answer.description}
                                     type="text"
                                     className="form-control"
                                     placeholder="describe this answer"
                                   />
+                                  <input
+                                    class="form-check-input"
+                                    type="checkbox"
+                                  />
                                 </div>
+
                                 <div className="col-1 button">
                                   <div
                                     className="btn-add"

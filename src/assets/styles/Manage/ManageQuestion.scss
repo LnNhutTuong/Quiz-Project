@@ -51,7 +51,12 @@
       .answers {
         margin-top: -17px;
         margin-bottom: 17px;
-        // border: 1px solid red;
+
+        input {
+          &.form-check-input {
+            margin-top: -30px;
+          }
+        }
         .button {
           cursor: pointer;
           padding: 0;
