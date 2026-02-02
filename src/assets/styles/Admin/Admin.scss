@@ -1,8 +1,6 @@
 .admin-container {
   display: flex;
-  // flex-direction: column;
-  // margin: 22px;
-  height: 750px;
+  height: 100vh;
 
   m svg {
     width: 26px;
@@ -129,33 +127,25 @@
   }
 
   .admin-content {
-    // border: 1px solid red;
     height: 100%;
-    // margin-left: 22px;
-    margin: 10px 22px 0px 22px;
+    margin: 10px 22px 10px 22px;
     width: 100%;
+    border-radius: 22px;
+    overflow-y: auto;
+    scrollbar-width: none;
+
+    box-shadow:
+      rgba(0, 0, 0, 0.25) 0px 54px 55px,
+      rgba(0, 0, 0, 0.12) 0px -12px 30px,
+      rgba(0, 0, 0, 0.12) 0px 4px 6px,
+      rgba(0, 0, 0, 0.17) 0px 12px 13px;
     .admin-header {
       height: 66px;
       border-radius: 22px;
-      box-shadow:
-        // rgba(0, 0, 0, 0.25) 0px 54px 55px,
-        rgba(0, 0, 0, 0.12) 0px -12px 30px,
-        rgba(0, 0, 0, 0.12) 0px 4px 6px,
-        rgba(0, 0, 0, 0.17) 0px 12px 13px,
-        rgba(0, 0, 0, 0.09) 0px -3px 5px;
+      box-shadow: rgba(0, 0, 0, 0.25) 0px 7px 55px;
     }
     .admin-main {
-      height: calc(100% - 88px);
-      border-radius: 22px;
-      box-shadow:
-        rgba(0, 0, 0, 0.25) 0px 54px 55px,
-        rgba(0, 0, 0, 0.12) 0px -12px 30px,
-        rgba(0, 0, 0, 0.12) 0px 4px 6px,
-        rgba(0, 0, 0, 0.17) 0px 12px 13px;
-      // rgba(0, 0, 0, 0.09) 0px -3px 5px;
-
-      margin-top: 16px;
-      // border: 1px solid red;
+      padding-top: 10px;
     }
   }
 }

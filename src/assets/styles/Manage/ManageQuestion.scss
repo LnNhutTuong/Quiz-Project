@@ -47,7 +47,11 @@
           }
         }
       }
+
       .answers {
+        margin-top: -17px;
+        margin-bottom: 17px;
+        // border: 1px solid red;
         .button {
           cursor: pointer;
           padding: 0;

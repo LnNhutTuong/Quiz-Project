@@ -6,6 +6,10 @@ import Select from "react-select";
 import { useState } from "react";
 import "../../../../assets/styles/Manage/ManageQuestion.scss";
 
+import { v4 as uuidv4 } from "uuid";
+import { add, filter, remove } from "lodash";
+
+import _ from "lodash";
 const ManageQuestion = () => {
   const options = [
     { value: "chocolate", label: "Chocolate" },
@@ -13,8 +17,93 @@ const ManageQuestion = () => {
     { value: "vanilla", label: "Vanilla" },
   ];
 
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedOption, setSelectedOption] = useState({});
 
+  const [questions, setQuestions] = useState([
+    {
+      id: uuidv4(),
+      description: "question 1",
+      imageFile: "",
+      imageName: "",
+      answers: [
+        {
+          id: uuidv4(),
+          description: "answer 1 of 1",
+          isCorrect: false,
+        },
+        {
+          id: uuidv4(),
+          description: "answer 2 of 1",
+          isCorrect: false,
+        },
+      ],
+    },
+    {
+      id: uuidv4(),
+      description: "question 2",
+      imageFile: "",
+      imageName: "",
+      answers: [
+        {
+          id: uuidv4(),
+          description: "answer 1 of 2",
+          isCorrect: false,
+        },
+        {
+          id: uuidv4(),
+          description: "answer 2 of 2",
+          isCorrect: false,
+        },
+      ],
+    },
+  ]);
+
+  const handleAddRemoveQuestion = (type, id) => {
+    if (type === add) {
+      const newQuestion = {
+        id: uuidv4(),
+        description: "question 1",
+        imageFile: "",
+        imageName: "",
+        answers: [
+          {
+            id: uuidv4(),
+            description: "answer 1 of 1",
+            isCorrect: false,
+          },
+        ],
+      };
+
+      setQuestions([...questions, newQuestion]);
+      console.log(">>>Check question after add: ", questions);
+    }
+    if (type === remove) {
+      let cloneQuestions = _.cloneDeep(questions);
+      cloneQuestions = cloneQuestions.filter((item) => item.id !== id);
+      setQuestions(cloneQuestions);
+    }
+  };
+
+  const handleAddRemoveAnswer = (type, questionID, answerId) => {
+    let cloneQuestions = _.cloneDeep(questions);
+
+    if (type === add) {
+      const newAnswer = {
+        id: uuidv4(),
+        description: "answer 1 of 1",
+        isCorrect: false,
+      };
+
+      let index = cloneQuestions.findIndex((item) => item.id === questionID);
+      console.log(">>>index: ", index + 1);
+      // let in setQuestions([...questions, newQuestion]);
+      // console.log(">>>Check question after add: ", questions);
+    }
+    // if (type === remove) {
+    //   cloneQuestions = cloneQuestions.filter((item) => item.id !== id);
+    //   setQuestions(cloneQuestions);
+    // }
+  };
   return (
     <>
       <div className="managequestion-container">
@@ -32,59 +121,115 @@ const ManageQuestion = () => {
                 />
               </div>
             </div>
-            <div className="qa-content mt-3 ms-5 col-8 ">
-              <div className="question row">
-                <div className="col-9">
-                  <label class="form-label"> Question index: </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Enter the question here"
-                  />
-                </div>
-                <div className="col-2 upload-img">
-                  <label
-                    className="form-label label-upload"
-                    htmlFor="labelUpload"
-                  >
-                    Upload image
-                    <br />
-                    <FcUpload />
-                  </label>
-                  <input type="file" id="labelUpload" hidden />
-                </div>
-                <div className="col-1 button">
-                  <div className="btn-add">
-                    <FaPlusCircle />
-                  </div>
-                  <div className="btn-delete">
-                    <FaTimesCircle />
-                  </div>
-                </div>
-              </div>
 
-              <div className="answers row ms-5 mt-2">
-                <div className="col-7">
-                  <label class="form-label"> Answer index: </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Enter the answer content"
-                  />
-                </div>
-                <div className="col-1 button">
-                  <div className="btn-add">
-                    <FaPlusCircle />
-                  </div>
-                  <div className="btn-delete">
-                    <FaTimesCircle />
-                  </div>
-                </div>
-              </div>
-              <div className="btn-save btn btn-primary mt-3">
-                Save questions
-              </div>
-            </div>
+            {questions &&
+              questions.length > 0 &&
+              questions.map((question, index) => {
+                return (
+                  <>
+                    <div
+                      key={question.id}
+                      className="qa-content mt-3 ms-5 col-8 "
+                    >
+                      <div className="question row">
+                        <div className="col-9">
+                          <label class="form-label">
+                            Question {index + 1}:
+                          </label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            placeholder={question.description}
+                          />
+                        </div>
+                        <div className="col-2 upload-img">
+                          <label
+                            className="form-label label-upload"
+                            htmlFor="labelUpload"
+                          >
+                            Upload image
+                            <br />
+                            <FcUpload />
+                          </label>
+                          <input type="file" id="labelUpload" hidden />
+                        </div>
+                        <div className="col-1 button">
+                          <div
+                            className="btn-add"
+                            onClick={() => handleAddRemoveQuestion(add, "")}
+                          >
+                            <FaPlusCircle />
+                          </div>
+                          {questions.length > 1 && (
+                            <div
+                              className="btn-delete"
+                              onClick={() =>
+                                handleAddRemoveQuestion(remove, question.id)
+                              }
+                            >
+                              <FaTimesCircle />
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      {question.answers &&
+                        question.answers.length > 0 &&
+                        question.answers.map((answer, index) => {
+                          return (
+                            <>
+                              <div
+                                key={answer.id}
+                                className="answers row ms-5 "
+                              >
+                                <div className="col-7">
+                                  <label class="form-label">
+                                    Answer {index + 1}:
+                                  </label>
+                                  <input
+                                    value={answer.description}
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="describe this answer"
+                                  />
+                                </div>
+                                <div className="col-1 button">
+                                  <div
+                                    className="btn-add"
+                                    onClick={() =>
+                                      handleAddRemoveAnswer(
+                                        add,
+                                        question.id,
+                                        "",
+                                      )
+                                    }
+                                  >
+                                    <FaPlusCircle />
+                                  </div>
+                                  {question.answers.length > 1 && (
+                                    <div
+                                      className="btn-delete"
+                                      onClick={() =>
+                                        handleAddRemoveAnswer(
+                                          remove,
+                                          question.id,
+                                          answer.id,
+                                        )
+                                      }
+                                    >
+                                      <FaTimesCircle />
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                            </>
+                          );
+                        })}
+                    </div>
+                  </>
+                );
+              })}
+            <div className="btn-save btn btn-primary mt-3">Save questions</div>
           </div>
         </div>
       </div>

@@ -1,18 +1,15 @@
 import AdSidebar from "./Sidebar";
 import "../../assets/styles/Admin/Admin.scss";
-import { useState } from "react";
-import { FaBars } from "react-icons/fa";
 import { Outlet } from "react-router-dom";
 
 const Admin = (props) => {
-  const [collapsed, setCollapsed] = useState(false);
   return (
     <div className="admin-container">
       <div className="admin-sidebar">
         <AdSidebar />
       </div>
       <div className="admin-content">
-        <div className="admin-header">Header</div>
+        <div className="admin-header"></div>
         <div className="admin-main">
           <Outlet />
         </div>
