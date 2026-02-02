@@ -109,6 +109,38 @@ const ManageQuestion = () => {
       setQuestions(cloneQuestions);
     }
   };
+
+  const handleOnChange = (type, questionId, value) => {
+    if (type === "q") {
+      let cloneQuestions = _.cloneDeep(questions);
+
+      let index = cloneQuestions.findIndex((item) => item.id === questionId);
+      if (index > -1) {
+        cloneQuestions[index].description = value;
+        setQuestions(cloneQuestions);
+      }
+    }
+  };
+
+  const handleOnChangeFileQuestion = (questionId, event) => {
+    let cloneQuestions = _.cloneDeep(questions);
+
+    let index = cloneQuestions.findIndex((item) => item.id === questionId);
+
+    if (
+      index > -1 &&
+      event.target &&
+      event.target.files &&
+      event.target.files[0]
+    ) {
+      let file = event.target.files[0];
+      console.log(">>>>check file", file);
+
+      // cloneQuestions[index].imageFile = file;
+      setQuestions(cloneQuestions);
+    }
+  };
+
   return (
     <>
       <div className="managequestion-container">
@@ -145,19 +177,36 @@ const ManageQuestion = () => {
                             type="text"
                             className="form-control"
                             placeholder={question.description}
+                            onChange={(event) =>
+                              handleOnChange(
+                                "q",
+                                question.id,
+                                event.target.value,
+                              )
+                            }
                           />
                         </div>
-                        <div className="col-2 upload-img">
-                          <label
-                            className="form-label label-upload"
-                            htmlFor="labelUpload"
-                          >
-                            Upload image
-                            <br />
-                            <FcUpload />
-                          </label>
-                          <input type="file" id="labelUpload" hidden />
-                        </div>
+                        {!question.imageFile && (
+                          <div className="col-2 upload-img">
+                            <label
+                              className="form-label label-upload"
+                              htmlFor="labelUpload"
+                            >
+                              Upload image
+                              <br />
+                              <FcUpload />
+                            </label>
+                            <input
+                              type="file"
+                              id="labelUpload"
+                              hidden
+                              onChange={(event) =>
+                                handleOnChangeFileQuestion(question.id, event)
+                              }
+                            />
+                          </div>
+                        )}
+
                         <div className="col-1 button">
                           <div
                             className="btn-add"
@@ -191,7 +240,6 @@ const ManageQuestion = () => {
                                   <label class="form-label">
                                     Answer {index + 1}:
                                   </label>
-
                                   <input
                                     value={answer.description}
                                     type="text"
