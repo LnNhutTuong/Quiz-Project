@@ -3,22 +3,41 @@ import { FcUpload } from "react-icons/fc";
 import { FaTimesCircle } from "react-icons/fa";
 
 import Select from "react-select";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../../../../assets/styles/Manage/ManageQuestion.scss";
 
 import { v4 as uuidv4 } from "uuid";
+
 import { add, filter, remove } from "lodash";
-
 import _ from "lodash";
-import ModalPreviewImg from "./ModalPreviewImg";
-const ManageQuestion = () => {
-  const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-  ];
 
-  const [selectedOption, setSelectedOption] = useState({});
+import ModalPreviewImg from "./ModalPreviewImg";
+import {
+  getAllQuiz,
+  postNewQuestion,
+  postNewAnswer,
+} from "../../../../API/services/admin.service";
+
+const ManageQuestion = () => {
+  const [selectedQuiz, setselectedQuiz] = useState({});
+  const [listQuiz, setListQuiz] = useState([]);
+
+  useEffect(() => {
+    fetchAllQuiz();
+  }, []);
+
+  const fetchAllQuiz = async () => {
+    const res = await getAllQuiz();
+    if (res && res.EC === 0) {
+      let newQuiz = res.DT.map((item) => {
+        return {
+          value: item.id,
+          label: `${item.id} - ${item.description}`,
+        };
+      });
+      setListQuiz(newQuiz);
+    }
+  };
 
   const [showModalPreviewImg, setShowModalPreviewImg] = useState(false);
   const [dataPreviewImg, setDataPreviewimg] = useState();
@@ -156,10 +175,21 @@ const ManageQuestion = () => {
     }
   };
 
-  const hanldeSave = () => {
-    console.log(">>>>Check question: ", questions);
-  };
+  const hanldeSave = async () => {
+    //validate
+    for (let question of questions) {
+      let q = await postNewQuestion(
+        +selectedQuiz.value,
+        question.description,
+        question.imageFile,
+      );
 
+      for (let answer of question.answers) {
+        await postNewAnswer(answer.description, answer.isCorrect, q.DT.id);
+      }
+    }
+    console.log(">>>>Check ques: ", listQuiz);
+  };
   return (
     <>
       <div className="managequestion-container">
@@ -171,9 +201,11 @@ const ManageQuestion = () => {
               <div className="col-7">
                 <label>Create new Quiz:</label>
                 <Select
-                  defaultValue={selectedOption}
-                  onChange={setSelectedOption}
-                  options={options}
+                  defaultValue={selectedQuiz}
+                  onChange={(option) => {
+                    setselectedQuiz(option);
+                  }}
+                  options={listQuiz}
                 />
               </div>
             </div>
