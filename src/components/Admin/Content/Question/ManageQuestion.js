@@ -26,36 +26,18 @@ const ManageQuestion = () => {
   const [questions, setQuestions] = useState([
     {
       id: uuidv4(),
-      description: "question 1",
+      description: "",
       imageFile: "",
       imageName: "",
       answers: [
         {
           id: uuidv4(),
-          description: "answer 1 of 1",
+          description: "",
           isCorrect: false,
         },
         {
           id: uuidv4(),
-          description: "answer 2 of 1",
-          isCorrect: false,
-        },
-      ],
-    },
-    {
-      id: uuidv4(),
-      description: "question 2",
-      imageFile: "",
-      imageName: "",
-      answers: [
-        {
-          id: uuidv4(),
-          description: "answer 1 of 2",
-          isCorrect: false,
-        },
-        {
-          id: uuidv4(),
-          description: "answer 2 of 2",
+          description: "",
           isCorrect: false,
         },
       ],
@@ -66,13 +48,13 @@ const ManageQuestion = () => {
     if (type === add) {
       const newQuestion = {
         id: uuidv4(),
-        description: "question 1",
+        description: "describe this question",
         imageFile: "",
         imageName: "",
         answers: [
           {
             id: uuidv4(),
-            description: "answer 1 of 1",
+            description: "",
             isCorrect: false,
           },
         ],
@@ -149,6 +131,33 @@ const ManageQuestion = () => {
 
       setQuestions(cloneQuestions);
     }
+  };
+
+  const handleAnswerQuestion = (type, answerId, questionId, event) => {
+    let cloneQuestions = _.cloneDeep(questions);
+    let index = cloneQuestions.findIndex((item) => item.id === questionId);
+
+    if (index > -1) {
+      cloneQuestions[index].answers = cloneQuestions[index].answers.map(
+        (answer) => {
+          if (answer.id === answerId) {
+            if (type === "checkbox") {
+              answer.isCorrect = event;
+            }
+            if (type === "input") {
+              answer.description = event;
+            }
+          }
+          return answer;
+        },
+      );
+
+      setQuestions(cloneQuestions);
+    }
+  };
+
+  const hanldeSave = () => {
+    console.log(">>>>Check question: ", questions);
   };
 
   return (
@@ -282,10 +291,27 @@ const ManageQuestion = () => {
                                     type="text"
                                     className="form-control"
                                     placeholder="describe this answer"
+                                    onChange={(event) =>
+                                      handleAnswerQuestion(
+                                        "input",
+                                        answer.id,
+                                        question.id,
+                                        event.target.value,
+                                      )
+                                    }
                                   />
                                   <input
                                     class="form-check-input"
                                     type="checkbox"
+                                    check={answer.isCorrect}
+                                    onChange={(event) =>
+                                      handleAnswerQuestion(
+                                        "checkbox",
+                                        answer.id,
+                                        question.id,
+                                        event.target.checked,
+                                      )
+                                    }
                                   />
                                 </div>
 
@@ -325,7 +351,13 @@ const ManageQuestion = () => {
                   </>
                 );
               })}
-            <div className="btn-save btn btn-primary mt-3">Save questions</div>
+
+            <div
+              className="btn-save btn btn-primary mt-3"
+              onClick={() => hanldeSave()}
+            >
+              Save questions
+            </div>
           </div>
         </div>
       </div>

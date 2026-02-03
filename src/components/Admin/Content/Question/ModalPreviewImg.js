@@ -9,7 +9,6 @@ const ModalPreviewImg = (props) => {
     setShow(false);
   };
 
-  console.log(">>data img: ", data);
   return (
     <>
       <Modal
