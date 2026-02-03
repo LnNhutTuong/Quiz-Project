@@ -11,6 +11,8 @@
       .question {
         .col-2 {
           &.upload-img {
+            max-width: fit-content;
+
             padding: 25px 0 0 0;
             text-align: center;
             svg {
@@ -19,6 +21,21 @@
               &:hover {
                 background-color: rgb(227, 227, 227);
                 border-radius: 3px;
+              }
+            }
+            .preview {
+              overflow: hidden;
+              // border: 1px solid black;
+              text-overflow: ellipsis;
+              border-radius: 17px;
+              padding: 3px;
+              &:hover {
+                box-shadow:
+                  rgba(0, 0, 0, 0.25) 0px 54px 55px,
+                  rgba(0, 0, 0, 0.12) 0px -12px 30px,
+                  rgba(0, 0, 0, 0.12) 0px 4px 6px,
+                  rgba(0, 0, 0, 0.17) 0px 12px 13px,
+                  rgba(0, 0, 0, 0.09) 0px -3px 5px;
               }
             }
           }
@@ -90,4 +107,9 @@
       }
     }
   }
+}
+
+.PreviewImg {
+  background: none;
+  // width: 100%;
 }

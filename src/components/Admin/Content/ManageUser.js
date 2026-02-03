@@ -88,7 +88,6 @@ const ManageUser = (props) => {
           <ModalCreateUser
             show={showmodalcreate}
             setShow={setShowModalCreate}
-            // fetchListUser={fetchListUser}
             fetchListUserPaginate={fetchListUserPaginate}
           />
           <ModalEditUser

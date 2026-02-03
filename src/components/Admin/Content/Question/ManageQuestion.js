@@ -10,6 +10,7 @@ import { v4 as uuidv4 } from "uuid";
 import { add, filter, remove } from "lodash";
 
 import _ from "lodash";
+import ModalPreviewImg from "./ModalPreviewImg";
 const ManageQuestion = () => {
   const options = [
     { value: "chocolate", label: "Chocolate" },
@@ -18,6 +19,9 @@ const ManageQuestion = () => {
   ];
 
   const [selectedOption, setSelectedOption] = useState({});
+
+  const [showModalPreviewImg, setShowModalPreviewImg] = useState(false);
+  const [dataPreviewImg, setDataPreviewimg] = useState();
 
   const [questions, setQuestions] = useState([
     {
@@ -122,6 +126,10 @@ const ManageQuestion = () => {
     }
   };
 
+  const handleShowPreviewImg = () => {
+    setShowModalPreviewImg(true);
+  };
+
   const handleOnChangeFileQuestion = (questionId, event) => {
     let cloneQuestions = _.cloneDeep(questions);
 
@@ -134,9 +142,11 @@ const ManageQuestion = () => {
       event.target.files[0]
     ) {
       let file = event.target.files[0];
-      console.log(">>>>check file", file);
 
-      // cloneQuestions[index].imageFile = file;
+      cloneQuestions[index].imageFile = file;
+      cloneQuestions[index].imageName = file.name;
+      setDataPreviewimg(URL.createObjectURL(file));
+
       setQuestions(cloneQuestions);
     }
   };
@@ -186,7 +196,7 @@ const ManageQuestion = () => {
                             }
                           />
                         </div>
-                        {!question.imageFile && (
+                        {!question.imageFile ? (
                           <div className="col-2 upload-img">
                             <label
                               className="form-label label-upload"
@@ -205,6 +215,33 @@ const ManageQuestion = () => {
                               }
                             />
                           </div>
+                        ) : (
+                          <>
+                            <div className="col-2 upload-img">
+                              <div
+                                className="preview"
+                                onClick={() => {
+                                  handleShowPreviewImg();
+                                }}
+                              >
+                                {question.imageName}
+                              </div>
+                              <label
+                                className="form-label label-upload"
+                                htmlFor="labelUpload"
+                              >
+                                <FcUpload />
+                              </label>
+                              <input
+                                type="file"
+                                id="labelUpload"
+                                hidden
+                                onChange={(event) =>
+                                  handleOnChangeFileQuestion(question.id, event)
+                                }
+                              />
+                            </div>
+                          </>
                         )}
 
                         <div className="col-1 button">
@@ -292,6 +329,11 @@ const ManageQuestion = () => {
           </div>
         </div>
       </div>
+      <ModalPreviewImg
+        show={showModalPreviewImg}
+        setShow={setShowModalPreviewImg}
+        data={dataPreviewImg}
+      />
     </>
   );
 };
