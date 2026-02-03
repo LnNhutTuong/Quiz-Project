@@ -3,7 +3,7 @@ import { FcUpload } from "react-icons/fc";
 import { FaTimesCircle } from "react-icons/fa";
 
 import Select from "react-select";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../../../../assets/styles/Manage/ManageQuestion.scss";
 
 import { v4 as uuidv4 } from "uuid";
@@ -11,14 +11,34 @@ import { add, filter, remove } from "lodash";
 
 import _ from "lodash";
 import ModalPreviewImg from "./ModalPreviewImg";
-const ManageQuestion = () => {
-  const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-  ];
 
-  const [selectedOption, setSelectedOption] = useState({});
+import {
+  getAllQuiz,
+  postNewQuestion,
+  postNewAnswer,
+} from "../../../../API/services/admin.service";
+
+const ManageQuestion = () => {
+  const [selectedQuiz, setSelectedQuiz] = useState({});
+
+  const [listQuiz, setListQuiz] = useState([]);
+
+  useEffect(() => {
+    fetchAllQuiz();
+  }, []);
+
+  const fetchAllQuiz = async () => {
+    const res = await getAllQuiz();
+    if (res && res.EC === 0) {
+      let newQuiz = res.DT.map((item) => {
+        return {
+          value: item.id,
+          label: `${item.id} - ${item.description}`,
+        };
+      });
+      setListQuiz(newQuiz);
+    }
+  };
 
   const [showModalPreviewImg, setShowModalPreviewImg] = useState(false);
   const [dataPreviewImg, setDataPreviewimg] = useState();
@@ -156,8 +176,24 @@ const ManageQuestion = () => {
     }
   };
 
-  const hanldeSave = () => {
-    console.log(">>>>Check question: ", questions);
+  const hanldeSave = async () => {
+    //validate
+
+    console.log(">>>>Check question: ", questions, selectedQuiz);
+
+    //submit questions
+    const createQuestions = questions.map(async (question) => {
+      const q = await postNewQuestion(
+        +selectedQuiz.value,
+        question.description,
+        question.imageFile,
+      );
+      return q;
+    });
+
+    let hung = await Promise.all(createQuestions);
+    console.log(">>>check hung: ", hung);
+    //submit answer
   };
 
   return (
@@ -171,9 +207,9 @@ const ManageQuestion = () => {
               <div className="col-7">
                 <label>Create new Quiz:</label>
                 <Select
-                  defaultValue={selectedOption}
-                  onChange={setSelectedOption}
-                  options={options}
+                  defaultValue={selectedQuiz}
+                  onChange={setSelectedQuiz}
+                  options={listQuiz}
                 />
               </div>
             </div>
