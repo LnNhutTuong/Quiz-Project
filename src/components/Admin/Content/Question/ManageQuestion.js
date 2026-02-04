@@ -3,13 +3,15 @@ import { FcUpload } from "react-icons/fc";
 import { FaTimesCircle } from "react-icons/fa";
 import Lightbox from "yet-another-react-lightbox";
 import Captions from "yet-another-react-lightbox/plugins/captions";
+import { toast } from "react-toastify";
+
 import "yet-another-react-lightbox/plugins/captions.css";
 
 import Select from "react-select";
 import { useState, useEffect } from "react";
 import "../../../../assets/styles/Manage/ManageQuestion.scss";
 
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4, validate } from "uuid";
 
 import { add, remove } from "lodash";
 import _ from "lodash";
@@ -19,6 +21,7 @@ import {
   postNewQuestion,
   postNewAnswer,
 } from "../../../../API/services/admin.service";
+import { Toast } from "bootstrap";
 
 const ManageQuestion = () => {
   const [selectedQuiz, setselectedQuiz] = useState({});
@@ -41,28 +44,36 @@ const ManageQuestion = () => {
     }
   };
 
+  //tiet kiem
   const [open, setOpen] = useState({ open: false, src: "", title: "" });
 
-  const [questions, setQuestions] = useState([
+  //Khoi tao
+  const initQuestions = [
     {
       id: uuidv4(),
       description: "",
       imageFile: "",
       imageName: "",
+      isValid: true, //khi tao luon dung
+      isTouched: false, // khi tao chua dung vo
       answers: [
         {
           id: uuidv4(),
           description: "",
           isCorrect: false,
+          isValid: null,
         },
         {
           id: uuidv4(),
           description: "",
           isCorrect: false,
+          isValid: null,
         },
       ],
     },
-  ]);
+  ];
+
+  const [questions, setQuestions] = useState(initQuestions);
 
   const handleAddRemoveQuestion = (type, id) => {
     if (type === add) {
@@ -81,7 +92,6 @@ const ManageQuestion = () => {
       };
 
       setQuestions([...questions, newQuestion]);
-      console.log(">>>Check question after add: ", questions);
     }
     if (type === remove) {
       let cloneQuestions = _.cloneDeep(questions);
@@ -98,6 +108,7 @@ const ManageQuestion = () => {
         id: uuidv4(),
         description: "",
         isCorrect: false,
+        isValid: null,
       };
 
       let index = cloneQuestions.findIndex((item) => item.id === questionID);
@@ -143,7 +154,6 @@ const ManageQuestion = () => {
 
       cloneQuestions[index].imageFile = file;
       cloneQuestions[index].imageName = file.name;
-      // (URL.createObjectURL(file));
 
       setQuestions(cloneQuestions);
     }
@@ -174,6 +184,34 @@ const ManageQuestion = () => {
 
   const hanldeSave = async () => {
     //validate
+    if (_.isEmpty(selectedQuiz)) {
+      toast.error("Please choose a Quiz!");
+      return;
+    }
+
+    //bien toan cuc vi khi cua loi
+    let questionErrorIndex = -1;
+
+    const validateQuestion = questions.map((question, indexQ) => {
+      const isInValid = question.description.trim() === ""; //=> true
+      // cai thang nay no la THUC HIEN SO SANH khong phai GAN
+      // cai bien Boolean
+      // co nghia khi valid bat dau chay no se la false
+
+      if (isInValid && questionErrorIndex === -1) {
+        questionErrorIndex = indexQ; // lay ra duoc vi tri cua thang bi loi
+      }
+
+      return { ...question, isInValid, isTouched: true };
+    });
+
+    //neu co loi thi set cai thang ques thanh cai thang co loi
+    if (questionErrorIndex !== -1) {
+      setQuestions(validateQuestion);
+      toast.error(`Question: ${questionErrorIndex + 1} is empty`);
+      return;
+    }
+    //submit questions
     for (let question of questions) {
       let q = await postNewQuestion(
         +selectedQuiz.value,
@@ -181,12 +219,16 @@ const ManageQuestion = () => {
         question.imageFile,
       );
 
+      //submit answers
       for (let answer of question.answers) {
         await postNewAnswer(answer.description, answer.isCorrect, q.DT.id);
       }
     }
-    console.log(">>>>Check ques: ", listQuiz);
+
+    toast.success("Create questions and answers success!");
+    setQuestions(initQuestions);
   };
+
   return (
     <>
       <div className="managequestion-container">
@@ -223,7 +265,9 @@ const ManageQuestion = () => {
                           </label>
                           <input
                             type="text"
-                            className="form-control"
+                            className={`form-control ${
+                              question.isValid === true ? "is-invalid" : ""
+                            }`}
                             placeholder={question.description}
                             onChange={(event) =>
                               handleOnChange(
@@ -250,6 +294,7 @@ const ManageQuestion = () => {
                             />
                             <FcUpload />
                           </label>
+
                           <span>
                             {question.imageName ? (
                               <span
