@@ -218,53 +218,58 @@ const ManageQuestion = () => {
       }
     }
 
-    setQuestions(cloneQuestion);
-
     //neu co loi thi set cai thang ques thanh cai thang co loi
     if (questionErrorIndex !== -1) {
+      setQuestions(cloneQuestion);
       toast.error(`Question: ${questionErrorIndex + 1} is empty`);
-      console.log(">>>>Check index: ", questionErrorIndex + 1);
       return;
     }
 
     //validate Answer
-    // let answerError = null;
+    let answerError = null;
+    let indexQ = -1,
+      indexA = -1;
+    for (let i = 0; i < cloneQuestion.length; i++) {
+      for (let j = 0; j < cloneQuestion[i].answers.length; j++) {
+        if (!cloneQuestion[i].answers[j].description) {
+          answerError = true;
+          cloneQuestion[i].answers[j].isValid = false;
+          cloneQuestion[i].answers[j].isTouched = true;
+          indexQ = i;
+          indexA = j;
+          break;
+        } else {
+          cloneQuestion[i].answers[j].isValid = true;
+          cloneQuestion[i].answers[j].isTouched = true;
+        }
+      }
+      if (answerError) {
+        break;
+      }
+    }
 
-    // const validateAll = validateQuestion.map((question, indexQ) => {
-    //   const answers = question.answers.map((answer, indexA) => {
-    //     let isValid = answer.description.trim() !== "";
-    //     if (!isValid && !answerError) {
-    //       answerError = { indexQ, indexA };
-    //     }
-    //     return { ...answer, isValid, isTouched: true };
-    //   });
-    //   return { ...question, answers };
-    // });
+    if (answerError) {
+      setQuestions(cloneQuestion);
+      toast.error(`Answer ${indexA + 1} of Question ${indexQ + 1} is Empty`);
+      return;
+    }
 
-    // if (answerError) {
-    //   setQuestions(validateAll);
-    //   toast.error(
-    //     `Answer ${answerError.indexA + 1} of Question ${answerError.indexQ + 1} is EMPTY`,
-    //   );
-    //   return;
-    // }
+    // submit questions
+    for (let question of questions) {
+      let q = await postNewQuestion(
+        +selectedQuiz.value,
+        question.description,
+        question.imageFile,
+      );
 
-    //submit questions
-    // for (let question of questions) {
-    //   let q = await postNewQuestion(
-    //     +selectedQuiz.value,
-    //     question.description,
-    //     question.imageFile,
-    //   );
+      //submit answers
+      for (let answer of question.answers) {
+        await postNewAnswer(answer.description, answer.isCorrect, q.DT.id);
+      }
+    }
 
-    //   //submit answers
-    //   for (let answer of question.answers) {
-    //     await postNewAnswer(answer.description, answer.isCorrect, q.DT.id);
-    //   }
-    // }
-
-    // toast.success("Create questions and answers success!");
-    // setQuestions(initQuestions);
+    toast.success("Create questions and answers success!");
+    setQuestions(initQuestions);
   };
 
   return (
@@ -396,7 +401,6 @@ const ManageQuestion = () => {
                                         ? ""
                                         : "is-invalid"
                                     }`}
-                                    placeholder="describe this answer"
                                     onChange={(event) =>
                                       handleAnswerQuestion(
                                         "input",
