@@ -1,6 +1,9 @@
 import { FaPlusCircle } from "react-icons/fa";
 import { FcUpload } from "react-icons/fc";
 import { FaTimesCircle } from "react-icons/fa";
+import Lightbox from "yet-another-react-lightbox";
+import Captions from "yet-another-react-lightbox/plugins/captions";
+import "yet-another-react-lightbox/plugins/captions.css";
 
 import Select from "react-select";
 import { useState, useEffect } from "react";
@@ -8,10 +11,9 @@ import "../../../../assets/styles/Manage/ManageQuestion.scss";
 
 import { v4 as uuidv4 } from "uuid";
 
-import { add, filter, remove } from "lodash";
+import { add, remove } from "lodash";
 import _ from "lodash";
 
-import ModalPreviewImg from "./ModalPreviewImg";
 import {
   getAllQuiz,
   postNewQuestion,
@@ -39,8 +41,7 @@ const ManageQuestion = () => {
     }
   };
 
-  const [showModalPreviewImg, setShowModalPreviewImg] = useState(false);
-  const [dataPreviewImg, setDataPreviewimg] = useState();
+  const [open, setOpen] = useState({ open: false, src: "", title: "" });
 
   const [questions, setQuestions] = useState([
     {
@@ -127,10 +128,6 @@ const ManageQuestion = () => {
     }
   };
 
-  const handleShowPreviewImg = () => {
-    setShowModalPreviewImg(true);
-  };
-
   const handleOnChangeFileQuestion = (questionId, event) => {
     let cloneQuestions = _.cloneDeep(questions);
 
@@ -146,6 +143,7 @@ const ManageQuestion = () => {
 
       cloneQuestions[index].imageFile = file;
       cloneQuestions[index].imageName = file.name;
+      // (URL.createObjectURL(file));
 
       setQuestions(cloneQuestions);
     }
@@ -236,54 +234,42 @@ const ManageQuestion = () => {
                             }
                           />
                         </div>
-                        {!question.imageFile ? (
-                          <div className="col-2 upload-img">
-                            <label
-                              className="form-label label-upload"
-                              htmlFor="labelUpload"
-                            >
-                              Upload image
-                              <br />
-                              <FcUpload />
-                            </label>
+
+                        <div className="col-2 upload-img">
+                          <label
+                            className="form-label label-upload"
+                            htmlFor={`${question.id}`}
+                          >
                             <input
                               type="file"
-                              id="labelUpload"
+                              id={`${question.id}`}
                               hidden
                               onChange={(event) =>
                                 handleOnChangeFileQuestion(question.id, event)
                               }
                             />
-                          </div>
-                        ) : (
-                          <>
-                            <div className="col-2 upload-img">
-                              <div
-                                className="preview"
+                            <FcUpload />
+                          </label>
+                          <span>
+                            {question.imageName ? (
+                              <span
                                 onClick={() => {
-                                  handleShowPreviewImg();
+                                  setOpen({
+                                    open: true,
+                                    src: URL.createObjectURL(
+                                      question.imageFile,
+                                    ),
+                                    title: question.imageName,
+                                  });
                                 }}
                               >
                                 {question.imageName}
-                              </div>
-                              <label
-                                className="form-label label-upload"
-                                htmlFor="labelUpload"
-                              >
-                                <FcUpload />
-                              </label>
-                              <input
-                                type="file"
-                                id="labelUpload"
-                                hidden
-                                onChange={(event) =>
-                                  handleOnChangeFileQuestion(question.id, event)
-                                }
-                              />
-                            </div>
-                          </>
-                        )}
-
+                              </span>
+                            ) : (
+                              " Upload image"
+                            )}
+                          </span>
+                        </div>
                         <div className="col-1 button">
                           <div
                             className="btn-add"
@@ -382,21 +368,26 @@ const ManageQuestion = () => {
                   </>
                 );
               })}
-
             <div
               className="btn-save btn btn-primary mt-3"
               onClick={() => hanldeSave()}
             >
               Save questions
             </div>
+            <Lightbox
+              open={open.open}
+              close={() => setOpen({ ...open, open: false })}
+              plugins={[Captions]}
+              slides={[
+                {
+                  src: open.src,
+                  title: open.title,
+                },
+              ]}
+            />
           </div>
         </div>
       </div>
-      <ModalPreviewImg
-        show={showModalPreviewImg}
-        setShow={setShowModalPreviewImg}
-        data={dataPreviewImg}
-      />
     </>
   );
 };
