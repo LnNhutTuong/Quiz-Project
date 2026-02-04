@@ -13,7 +13,7 @@ import "../../../../assets/styles/Manage/ManageQuestion.scss";
 
 import { v4 as uuidv4, validate } from "uuid";
 
-import { add, remove } from "lodash";
+import { add, clone, remove } from "lodash";
 import _ from "lodash";
 
 import {
@@ -21,7 +21,6 @@ import {
   postNewQuestion,
   postNewAnswer,
 } from "../../../../API/services/admin.service";
-import { Toast } from "bootstrap";
 
 const ManageQuestion = () => {
   const [selectedQuiz, setselectedQuiz] = useState({});
@@ -61,13 +60,15 @@ const ManageQuestion = () => {
           id: uuidv4(),
           description: "",
           isCorrect: false,
-          isValid: null,
+          isValid: true,
+          isTouched: false,
         },
         {
           id: uuidv4(),
           description: "",
           isCorrect: false,
-          isValid: null,
+          isValid: true,
+          isTouched: false,
         },
       ],
     },
@@ -79,14 +80,25 @@ const ManageQuestion = () => {
     if (type === add) {
       const newQuestion = {
         id: uuidv4(),
-        description: "describe this question",
+        description: "",
         imageFile: "",
         imageName: "",
+        isValid: true, //khi tao luon dung
+        isTouched: false, // khi tao chua dung vo
         answers: [
           {
             id: uuidv4(),
             description: "",
             isCorrect: false,
+            isValid: true, //khi tao luon dung
+            isTouched: false, // khi tao chua dung vo
+          },
+          {
+            id: uuidv4(),
+            description: "",
+            isCorrect: false,
+            isValid: true, //khi tao luon dung
+            isTouched: false, // khi tao chua dung vo
           },
         ],
       };
@@ -189,44 +201,70 @@ const ManageQuestion = () => {
       return;
     }
 
-    //bien toan cuc vi khi cua loi
+    //validate Question
     let questionErrorIndex = -1;
+    const cloneQuestion = _.cloneDeep(questions);
+    for (let i = 0; i < cloneQuestion.length; i++) {
+      if (cloneQuestion[i].description.trim() === "") {
+        cloneQuestion[i].isValid = false;
+        cloneQuestion[i].isTouched = true;
 
-    const validateQuestion = questions.map((question, indexQ) => {
-      const isInValid = question.description.trim() === ""; //=> true
-      // cai thang nay no la THUC HIEN SO SANH khong phai GAN
-      // cai bien Boolean
-      // co nghia khi valid bat dau chay no se la false
-
-      if (isInValid && questionErrorIndex === -1) {
-        questionErrorIndex = indexQ; // lay ra duoc vi tri cua thang bi loi
+        if (questionErrorIndex === -1) {
+          questionErrorIndex = i;
+        }
+      } else {
+        cloneQuestion[i].isValid = true;
+        cloneQuestion[i].isTouched = true;
       }
+    }
 
-      return { ...question, isInValid, isTouched: true };
-    });
+    setQuestions(cloneQuestion);
 
     //neu co loi thi set cai thang ques thanh cai thang co loi
     if (questionErrorIndex !== -1) {
-      setQuestions(validateQuestion);
       toast.error(`Question: ${questionErrorIndex + 1} is empty`);
+      console.log(">>>>Check index: ", questionErrorIndex + 1);
       return;
     }
+
+    //validate Answer
+    // let answerError = null;
+
+    // const validateAll = validateQuestion.map((question, indexQ) => {
+    //   const answers = question.answers.map((answer, indexA) => {
+    //     let isValid = answer.description.trim() !== "";
+    //     if (!isValid && !answerError) {
+    //       answerError = { indexQ, indexA };
+    //     }
+    //     return { ...answer, isValid, isTouched: true };
+    //   });
+    //   return { ...question, answers };
+    // });
+
+    // if (answerError) {
+    //   setQuestions(validateAll);
+    //   toast.error(
+    //     `Answer ${answerError.indexA + 1} of Question ${answerError.indexQ + 1} is EMPTY`,
+    //   );
+    //   return;
+    // }
+
     //submit questions
-    for (let question of questions) {
-      let q = await postNewQuestion(
-        +selectedQuiz.value,
-        question.description,
-        question.imageFile,
-      );
+    // for (let question of questions) {
+    //   let q = await postNewQuestion(
+    //     +selectedQuiz.value,
+    //     question.description,
+    //     question.imageFile,
+    //   );
 
-      //submit answers
-      for (let answer of question.answers) {
-        await postNewAnswer(answer.description, answer.isCorrect, q.DT.id);
-      }
-    }
+    //   //submit answers
+    //   for (let answer of question.answers) {
+    //     await postNewAnswer(answer.description, answer.isCorrect, q.DT.id);
+    //   }
+    // }
 
-    toast.success("Create questions and answers success!");
-    setQuestions(initQuestions);
+    // toast.success("Create questions and answers success!");
+    // setQuestions(initQuestions);
   };
 
   return (
@@ -260,15 +298,16 @@ const ManageQuestion = () => {
                     >
                       <div className="question row">
                         <div className="col-9">
-                          <label class="form-label">
+                          <label className="form-label">
                             Question {index + 1}:
                           </label>
                           <input
                             type="text"
                             className={`form-control ${
-                              question.isValid === true ? "is-invalid" : ""
+                              question.isValid === true ? "" : "is-invalid"
                             }`}
-                            placeholder={question.description}
+                            value={question.description}
+                            placeholder="describe this question"
                             onChange={(event) =>
                               handleOnChange(
                                 "q",
@@ -345,13 +384,18 @@ const ManageQuestion = () => {
                                 className="answers row ms-5 "
                               >
                                 <div className="col-7 form-check">
-                                  <label class="form-label">
+                                  <label className="form-label">
                                     Answer {index + 1}:
                                   </label>
                                   <input
                                     value={answer.description}
+                                    placeholder="describe this question"
                                     type="text"
-                                    className="form-control"
+                                    className={`form-control ${
+                                      answer.isValid === true
+                                        ? ""
+                                        : "is-invalid"
+                                    }`}
                                     placeholder="describe this answer"
                                     onChange={(event) =>
                                       handleAnswerQuestion(
