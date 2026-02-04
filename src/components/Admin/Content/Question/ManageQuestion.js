@@ -146,7 +146,6 @@ const ManageQuestion = () => {
 
       cloneQuestions[index].imageFile = file;
       cloneQuestions[index].imageName = file.name;
-      setDataPreviewimg(URL.createObjectURL(file));
 
       setQuestions(cloneQuestions);
     }
