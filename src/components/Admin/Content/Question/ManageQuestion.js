@@ -1,5 +1,5 @@
 import { FaPlusCircle } from "react-icons/fa";
-import { FcUpload } from "react-icons/fc";
+import { FaFileUpload } from "react-icons/fa";
 import { FaTimesCircle } from "react-icons/fa";
 import Lightbox from "yet-another-react-lightbox";
 import Captions from "yet-another-react-lightbox/plugins/captions";
@@ -23,7 +23,7 @@ import {
 } from "../../../../API/services/admin.service";
 
 const ManageQuestion = () => {
-  const [selectedQuiz, setselectedQuiz] = useState({});
+  const [selectedQuiz, setselectedQuiz] = useState(null);
   const [listQuiz, setListQuiz] = useState([]);
 
   useEffect(() => {
@@ -105,6 +105,7 @@ const ManageQuestion = () => {
 
       setQuestions([...questions, newQuestion]);
     }
+
     if (type === remove) {
       let cloneQuestions = _.cloneDeep(questions);
       cloneQuestions = cloneQuestions.filter((item) => item.id !== id);
@@ -281,9 +282,17 @@ const ManageQuestion = () => {
           <div className="add-new-quiz">
             <div className="quiz-content row form-group ms-3">
               <div className="col-7">
-                <label>Create new Quiz:</label>
+                <label>Select QUIZ</label>
                 <Select
-                  defaultValue={selectedQuiz}
+                  menuPortalTarget={document.body}
+                  styles={{
+                    menuPortal: (base) => ({
+                      ...base,
+                      zIndex: 1056,
+                    }),
+                  }}
+                  placeholder="Select..."
+                  value={selectedQuiz}
                   onChange={(option) => {
                     setselectedQuiz(option);
                   }}
@@ -292,175 +301,188 @@ const ManageQuestion = () => {
               </div>
             </div>
 
-            {questions &&
-              questions.length > 0 &&
-              questions.map((question, index) => {
-                return (
-                  <>
-                    <div
-                      key={question.id}
-                      className="qa-content mt-3 ms-5 col-8 "
-                    >
-                      <div className="question row">
-                        <div className="col-9">
-                          <label className="form-label">
-                            Question {index + 1}:
-                          </label>
-                          <input
-                            type="text"
-                            className={`form-control ${
-                              question.isValid === true ? "" : "is-invalid"
-                            }`}
-                            value={question.description}
-                            placeholder="describe this question"
-                            onChange={(event) =>
-                              handleOnChange(
-                                "q",
-                                question.id,
-                                event.target.value,
-                              )
-                            }
-                          />
-                        </div>
-
-                        <div className="col-2 upload-img">
-                          <label
-                            className="form-label label-upload"
-                            htmlFor={`${question.id}`}
-                          >
+            <div className="mt-2">
+              <label> Add questions</label>
+              {questions &&
+                questions.length > 0 &&
+                questions.map((question, index) => {
+                  return (
+                    <>
+                      <div
+                        key={question.id}
+                        className="qa-content mt-3 ms-5 col-8 "
+                      >
+                        <div className="question row ">
+                          <div className="col-9 form-floating">
                             <input
-                              type="file"
-                              id={`${question.id}`}
-                              hidden
+                              id={`floatingQuestion-${question.id}`}
+                              type="text"
+                              className={`form-control ${
+                                question.isValid === true ? "" : "is-invalid"
+                              }`}
+                              value={question.description}
+                              placeholder=""
                               onChange={(event) =>
-                                handleOnChangeFileQuestion(question.id, event)
+                                handleOnChange(
+                                  "q",
+                                  question.id,
+                                  event.target.value,
+                                )
                               }
                             />
-                            <FcUpload />
-                          </label>
-
-                          <span>
-                            {question.imageName ? (
-                              <span
-                                onClick={() => {
-                                  setOpen({
-                                    open: true,
-                                    src: URL.createObjectURL(
-                                      question.imageFile,
-                                    ),
-                                    title: question.imageName,
-                                  });
-                                }}
-                              >
-                                {question.imageName}
-                              </span>
-                            ) : (
-                              " Upload image"
-                            )}
-                          </span>
-                        </div>
-                        <div className="col-1 button">
-                          <div
-                            className="btn-add"
-                            onClick={() => handleAddRemoveQuestion(add, "")}
-                          >
-                            <FaPlusCircle />
+                            <label htmlFor={`floatingQuestion-${question.id}`}>
+                              Question {index + 1}'s description
+                            </label>
                           </div>
-                          {questions.length > 1 && (
-                            <div
-                              className="btn-delete"
-                              onClick={() =>
-                                handleAddRemoveQuestion(remove, question.id)
-                              }
+
+                          <div className="col-2 upload-img">
+                            <label
+                              className="form-label label-upload"
+                              htmlFor={`upload-${question.id}`}
                             >
-                              <FaTimesCircle />
-                            </div>
-                          )}
-                        </div>
-                      </div>
-
-                      {question.answers &&
-                        question.answers.length > 0 &&
-                        question.answers.map((answer, index) => {
-                          return (
-                            <>
-                              <div
-                                key={answer.id}
-                                className="answers row ms-5 "
-                              >
-                                <div className="col-7 form-check">
-                                  <label className="form-label">
-                                    Answer {index + 1}:
-                                  </label>
-                                  <input
-                                    value={answer.description}
-                                    placeholder="describe this question"
-                                    type="text"
-                                    className={`form-control ${
-                                      answer.isValid === true
-                                        ? ""
-                                        : "is-invalid"
-                                    }`}
-                                    onChange={(event) =>
-                                      handleAnswerQuestion(
-                                        "input",
-                                        answer.id,
-                                        question.id,
-                                        event.target.value,
-                                      )
-                                    }
-                                  />
-                                  <input
-                                    class="form-check-input"
-                                    type="checkbox"
-                                    check={answer.isCorrect}
-                                    onChange={(event) =>
-                                      handleAnswerQuestion(
-                                        "checkbox",
-                                        answer.id,
-                                        question.id,
-                                        event.target.checked,
-                                      )
-                                    }
-                                  />
-                                </div>
-
-                                <div className="col-1 button">
-                                  <div
-                                    className="btn-add"
-                                    onClick={() =>
-                                      handleAddRemoveAnswer(
-                                        add,
-                                        question.id,
-                                        "",
-                                      )
-                                    }
+                              <input
+                                type="file"
+                                id={`upload-${question.id}`}
+                                hidden
+                                onChange={(event) =>
+                                  handleOnChangeFileQuestion(question.id, event)
+                                }
+                              />
+                              <FaFileUpload />
+                              <span>
+                                {question.imageName ? (
+                                  <span
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                      setOpen({
+                                        open: true,
+                                        src: URL.createObjectURL(
+                                          question.imageFile,
+                                        ),
+                                        title: question.imageName,
+                                      });
+                                    }}
+                                    className="exist-img"
                                   >
-                                    <FaPlusCircle />
+                                    {question.imageName}
+                                  </span>
+                                ) : (
+                                  "Upload image"
+                                )}
+                              </span>
+                            </label>
+                          </div>
+
+                          <div className="col-1 button ms-2">
+                            <div
+                              className="btn-add"
+                              onClick={() => handleAddRemoveQuestion(add, "")}
+                            >
+                              <FaPlusCircle />
+                            </div>
+                            {questions.length > 1 && (
+                              <div
+                                className="btn-delete"
+                                onClick={() =>
+                                  handleAddRemoveQuestion(remove, question.id)
+                                }
+                              >
+                                <FaTimesCircle />
+                              </div>
+                            )}
+                          </div>
+                        </div>
+
+                        {question.answers &&
+                          question.answers.length > 0 &&
+                          question.answers.map((answer, index) => {
+                            return (
+                              <>
+                                <div
+                                  key={answer.id}
+                                  className="answers row ms-5 align-items-center"
+                                >
+                                  <div className="col-auto">
+                                    <input
+                                      className="form-check-input mt-2 p-2"
+                                      type="checkbox"
+                                      checked={answer.isCorrect}
+                                      onChange={(event) =>
+                                        handleAnswerQuestion(
+                                          "checkbox",
+                                          answer.id,
+                                          question.id,
+                                          event.target.checked,
+                                        )
+                                      }
+                                    />
                                   </div>
-                                  {question.answers.length > 1 && (
+
+                                  <div className="col-7 form-floating mt-3">
+                                    <input
+                                      id={`floatingAnswer-${answer.id}`}
+                                      type="text"
+                                      value={answer.description}
+                                      placeholder={`Answer ${index + 1}`}
+                                      className={`form-control ${
+                                        answer.isValid === false
+                                          ? "is-invalid"
+                                          : ""
+                                      }`}
+                                      onChange={(event) =>
+                                        handleAnswerQuestion(
+                                          "input",
+                                          answer.id,
+                                          question.id,
+                                          event.target.value,
+                                        )
+                                      }
+                                    />
+                                    <label
+                                      htmlFor={`floatingAnswer-${answer.id}`}
+                                    >
+                                      Answer {index + 1}
+                                    </label>
+                                  </div>
+
+                                  <div className="col-1 button">
                                     <div
-                                      className="btn-delete"
+                                      className="btn-add"
                                       onClick={() =>
                                         handleAddRemoveAnswer(
-                                          remove,
+                                          add,
                                           question.id,
-                                          answer.id,
+                                          "",
                                         )
                                       }
                                     >
-                                      <FaTimesCircle />
+                                      <FaPlusCircle />
                                     </div>
-                                  )}
+                                    {question.answers.length > 1 && (
+                                      <div
+                                        className="btn-delete"
+                                        onClick={() =>
+                                          handleAddRemoveAnswer(
+                                            remove,
+                                            question.id,
+                                            answer.id,
+                                          )
+                                        }
+                                      >
+                                        <FaTimesCircle />
+                                      </div>
+                                    )}
+                                  </div>
                                 </div>
-                              </div>
-                            </>
-                          );
-                        })}
-                    </div>
-                  </>
-                );
-              })}
+                              </>
+                            );
+                          })}
+                      </div>
+                    </>
+                  );
+                })}
+            </div>
+
             <div
               className="btn-save btn btn-primary mt-3"
               onClick={() => hanldeSave()}
