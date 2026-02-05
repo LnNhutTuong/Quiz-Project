@@ -6,6 +6,7 @@ import { FcPlus } from "react-icons/fc";
 import ModalCreateQuiz from "./ModalCreateQuiz";
 import ModalEditQuiz from "./ModalEditQuiz";
 import ModalDeleteQuiz from "./ModalDeleteQuiz";
+import ModalUpdateQaQuiz from "./ModalUpdateQA";
 import "../../../../assets/styles/Manage/ManageQuiz.scss";
 const ManagerQuiz = (props) => {
   const [listQuiz, setListQuiz] = useState([]);
@@ -59,13 +60,14 @@ const ManagerQuiz = (props) => {
             <FcPlus /> Create new QUIZ
           </div>
         </div>
-        <div className="btn-create btn btn-dark">
+
+        <div className="btn-update btn btn-dark">
           <div
             onClick={() => {
               setShowModalCreateQuiz(true);
             }}
           >
-            <FcPlus /> About QUIZ
+            <FcPlus /> Update QA Quiz
           </div>
         </div>
 
@@ -98,6 +100,7 @@ const ManagerQuiz = (props) => {
         setShowEdit={setShowModalEditQuiz}
         fetchAllQuiz={fetchAllQuiz}
       />
+      <ModalUpdateQaQuiz />
     </div>
   );
 };
