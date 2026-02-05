@@ -227,13 +227,16 @@ const ManageQuestion = () => {
     }
 
     //validate Answer
-    let answerError = null;
+    let answerErrorDescription = null;
+    let answerErrorisCorrect = null;
     let indexQ = -1,
       indexA = -1;
     for (let i = 0; i < cloneQuestion.length; i++) {
+      let hasCorrect = false; //flag
       for (let j = 0; j < cloneQuestion[i].answers.length; j++) {
+        //validate description
         if (!cloneQuestion[i].answers[j].description) {
-          answerError = true;
+          answerErrorDescription = true;
           cloneQuestion[i].answers[j].isValid = false;
           cloneQuestion[i].answers[j].isTouched = true;
           indexQ = i;
@@ -243,15 +246,33 @@ const ManageQuestion = () => {
           cloneQuestion[i].answers[j].isValid = true;
           cloneQuestion[i].answers[j].isTouched = true;
         }
+
+        //validate isCorrect
+        if (cloneQuestion[i].answers[j].isCorrect) {
+          hasCorrect = true;
+        }
       }
-      if (answerError) {
+
+      if (!hasCorrect) {
+        answerErrorisCorrect = true;
+        indexQ = i;
+        // indexA = -1;
+        break;
+      }
+      if (answerErrorisCorrect || answerErrorDescription) {
         break;
       }
     }
 
-    if (answerError) {
+    if (answerErrorDescription) {
       setQuestions(cloneQuestion);
-      toast.error(`Answer ${indexA + 1} of Question ${indexQ + 1} is Empty`);
+      toast.error(`Answer ${+indexA + 1} of Question ${indexQ + 1} is Empty`);
+      return;
+    }
+
+    if (answerErrorisCorrect) {
+      setQuestions(cloneQuestion);
+      toast.error(`Question ${indexQ + 1} isn't have choose correct `);
       return;
     }
 

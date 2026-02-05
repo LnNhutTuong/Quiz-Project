@@ -71,7 +71,7 @@ const ModalCreateQuiz = (props) => {
         className="modal-addnewuser"
       >
         <Modal.Header closeButton>
-          <Modal.Title>Add new user</Modal.Title>
+          <Modal.Title>Create new QUIZ:</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form className="row g-3">

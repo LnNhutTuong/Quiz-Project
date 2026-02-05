@@ -56,9 +56,19 @@ const ManagerQuiz = (props) => {
               setShowModalCreateQuiz(true);
             }}
           >
-            <FcPlus /> Create new user
+            <FcPlus /> Create new QUIZ
           </div>
         </div>
+        <div className="btn-create btn btn-dark">
+          <div
+            onClick={() => {
+              setShowModalCreateQuiz(true);
+            }}
+          >
+            <FcPlus /> About QUIZ
+          </div>
+        </div>
+
         <div className="table-quiz">
           <TableUser
             listQuiz={listQuiz}
