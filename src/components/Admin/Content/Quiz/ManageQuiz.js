@@ -17,6 +17,9 @@ const ManagerQuiz = (props) => {
   //Edit quiz
   const [showModalEditQuiz, setShowModalEditQuiz] = useState(false);
 
+  //Update QA content
+  const [showModalUpdateQaQuiz, setShowModalUpdateQaQuiz] = useState(false);
+
   //data view
   const [dataView, setDataView] = useState(``);
 
@@ -40,6 +43,10 @@ const ManagerQuiz = (props) => {
     setDataView(quiz);
   };
 
+  const handleViewQaContent = () => {
+    setShowModalUpdateQaQuiz(true);
+  };
+
   const handleDeleteQuiz = (quizId, quizName) => {
     setDataDelete({ quizId, quizName });
     setShowModalEditQuiz(false);
@@ -61,10 +68,10 @@ const ManagerQuiz = (props) => {
           </div>
         </div>
 
-        <div className="btn-update btn btn-dark">
+        <div className="btn-update-QA-content btn btn-dark">
           <div
             onClick={() => {
-              setShowModalCreateQuiz(true);
+              handleViewQaContent();
             }}
           >
             <FcPlus /> Update QA Quiz
@@ -100,7 +107,10 @@ const ManagerQuiz = (props) => {
         setShowEdit={setShowModalEditQuiz}
         fetchAllQuiz={fetchAllQuiz}
       />
-      <ModalUpdateQaQuiz />
+      <ModalUpdateQaQuiz
+        show={showModalUpdateQaQuiz}
+        setShow={setShowModalUpdateQaQuiz}
+      />
     </div>
   );
 };

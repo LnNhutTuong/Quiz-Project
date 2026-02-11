@@ -68,6 +68,7 @@ const ModalCreateQuiz = (props) => {
         onHide={handleClose}
         size="xl"
         backdrop="static"
+        centered
         className="modal-addnewuser"
       >
         <Modal.Header closeButton>
@@ -75,7 +76,7 @@ const ModalCreateQuiz = (props) => {
         </Modal.Header>
         <Modal.Body>
           <form className="row g-3">
-            <div className="col-md-6">
+            <div className="col-md-6 mt-0">
               <label className="form-label">Name quiz</label>
               <input
                 type="text"
@@ -86,7 +87,7 @@ const ModalCreateQuiz = (props) => {
                 }}
               />
             </div>
-            <div className="col-md-6">
+            <div className="col-md-6 mt-0">
               <label className="form-label">Description</label>
               <input
                 type="text"
