@@ -98,8 +98,8 @@ const ModalUpdateQaQuiz = (props) => {
     const res = await getQuestionById(quiz_id);
     if (res && res.EC === 0) {
       let rawData = res.DT;
-      console.log(rawData);
 
+      console.log(rawData);
       let data = rawData.map((question) => ({
         id: question.id,
         description: question.description,
@@ -115,6 +115,7 @@ const ModalUpdateQaQuiz = (props) => {
           isTouched: false,
         })),
       }));
+
       setQuestions(data);
     }
   };
