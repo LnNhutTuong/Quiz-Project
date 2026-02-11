@@ -21,6 +21,7 @@ import {
   getQuestionById,
   putAnswer,
 } from "../../../../API/services/admin.service";
+import { data } from "react-router-dom";
 
 const ModalUpdateQaQuiz = (props) => {
   //Khoi tao
@@ -77,7 +78,6 @@ const ModalUpdateQaQuiz = (props) => {
     fetchAllQuiz();
     if (selectedQuiz) {
       fetchQuestionById(selectedQuiz.value);
-      console.log(">>>id quiz: ", selectedQuiz.value);
     }
   }, [selectedQuiz]);
 
@@ -97,7 +97,25 @@ const ModalUpdateQaQuiz = (props) => {
   const fetchQuestionById = async (quiz_id) => {
     const res = await getQuestionById(quiz_id);
     if (res && res.EC === 0) {
-      console.log(">>>>data", res.DT);
+      let rawData = res.DT;
+      console.log(rawData);
+
+      let data = rawData.map((question) => ({
+        id: question.id,
+        description: question.description,
+        imageFile: null,
+        imageName: question.image,
+        isValid: true,
+        isTouched: false,
+        answers: question.answers.map((answer) => ({
+          id: answer.id,
+          description: answer.description,
+          isCorrect: answer.isCorrect,
+          isValid: true,
+          isTouched: false,
+        })),
+      }));
+      setQuestions(data);
     }
   };
 
