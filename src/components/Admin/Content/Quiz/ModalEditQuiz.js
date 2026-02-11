@@ -100,8 +100,6 @@ const ModalEditQuiz = (props) => {
       quizImage,
     );
 
-    console.log(">>>>RES: ", res);
-
     if (res && res.EC === 0) {
       toast.success(res.EM);
       setIsEditing(false);

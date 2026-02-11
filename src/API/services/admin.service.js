@@ -101,6 +101,23 @@ const postNewAnswer = (description, correct_answer, question_id) => {
   return axios.post(`/api/v1/answer`, data);
 };
 
+const getQuestionById = (quiz_id) => {
+  return axios.get(`/api/v1/questions-by-quiz?quizId=${quiz_id}`, {
+    data: { id: quiz_id },
+  });
+};
+
+const putAnswer = (description, correct_answer, question_id, answer_id) => {
+  const data = new FormData();
+
+  data.append(`description`, description);
+  data.append(`correct_answer`, correct_answer);
+  data.append(`question_id`, question_id);
+  data.append(`answer_id`, answer_id);
+
+  return axios.put("/api/v1/answer", data);
+};
+
 export {
   postCreateNewUser,
   getAllUser,
@@ -114,4 +131,6 @@ export {
   putUpdateQuiz,
   postNewQuestion,
   postNewAnswer,
+  getQuestionById,
+  putAnswer,
 };

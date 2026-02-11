@@ -4,10 +4,6 @@ import { FaTimesCircle } from "react-icons/fa";
 import Lightbox from "yet-another-react-lightbox";
 import Captions from "yet-another-react-lightbox/plugins/captions";
 import Button from "react-bootstrap/Button";
-import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
-import Row from "react-bootstrap/Row";
 import { toast } from "react-toastify";
 import Modal from "react-bootstrap/Modal";
 
@@ -15,46 +11,18 @@ import "yet-another-react-lightbox/plugins/captions.css";
 import Select from "react-select";
 import { useState, useEffect } from "react";
 
-import "../../../../assets/styles/Manage/ManageQuestion.scss";
+import "../../../../assets/styles/Question/ModalUpdateQaContent.scss";
 import { v4 as uuidv4 } from "uuid";
 import { add, remove } from "lodash";
 import _ from "lodash";
 
 import {
   getAllQuiz,
-  postNewQuestion,
-  postNewAnswer,
+  getQuestionById,
+  putAnswer,
 } from "../../../../API/services/admin.service";
 
 const ModalUpdateQaQuiz = (props) => {
-  const { show, setShow } = props;
-  const handleClose = () => {
-    setShow(false);
-  };
-
-  const [selectedQuiz, setselectedQuiz] = useState(null);
-  const [listQuiz, setListQuiz] = useState([]);
-
-  useEffect(() => {
-    fetchAllQuiz();
-  }, []);
-
-  const fetchAllQuiz = async () => {
-    const res = await getAllQuiz();
-    if (res && res.EC === 0) {
-      let newQuiz = res.DT.map((item) => {
-        return {
-          value: item.id,
-          label: `${item.id} - ${item.description}`,
-        };
-      });
-      setListQuiz(newQuiz);
-    }
-  };
-
-  //tiet kiem
-  const [open, setOpen] = useState({ open: false, src: "", title: "" });
-
   //Khoi tao
   const initQuestions = [
     {
@@ -83,7 +51,55 @@ const ModalUpdateQaQuiz = (props) => {
     },
   ];
 
+  //khi tao moi no se la init
   const [questions, setQuestions] = useState(initQuestions);
+
+  const [selectedQuiz, setselectedQuiz] = useState(null);
+
+  const [listQuiz, setListQuiz] = useState([]);
+
+  //tiet kiem
+  const [open, setOpen] = useState({ open: false, src: "", title: "" });
+
+  const { show, setShow, dataQA, setDataQA } = props;
+
+  const handleClose = () => {
+    setShow(false);
+  };
+
+  const resetData = () => {
+    setQuestions(initQuestions);
+    setselectedQuiz(null);
+    setOpen({ open: false, src: "", title: "" });
+  };
+
+  useEffect(() => {
+    fetchAllQuiz();
+    if (selectedQuiz) {
+      fetchQuestionById(selectedQuiz.value);
+      console.log(">>>id quiz: ", selectedQuiz.value);
+    }
+  }, [selectedQuiz]);
+
+  const fetchAllQuiz = async () => {
+    const res = await getAllQuiz();
+    if (res && res.EC === 0) {
+      let newQuiz = res.DT.map((item) => {
+        return {
+          value: item.id,
+          label: `${item.id} - ${item.description}`,
+        };
+      });
+      setListQuiz(newQuiz);
+    }
+  };
+
+  const fetchQuestionById = async (quiz_id) => {
+    const res = await getQuestionById(quiz_id);
+    if (res && res.EC === 0) {
+      console.log(">>>>data", res.DT);
+    }
+  };
 
   const handleAddRemoveQuestion = (type, id) => {
     if (type === add) {
@@ -287,7 +303,7 @@ const ModalUpdateQaQuiz = (props) => {
 
     // submit questions
     for (let question of questions) {
-      let q = await postNewQuestion(
+      let q = await getQuestionById(
         +selectedQuiz.value,
         question.description,
         question.imageFile,
@@ -295,7 +311,7 @@ const ModalUpdateQaQuiz = (props) => {
 
       //submit answers
       for (let answer of question.answers) {
-        await postNewAnswer(answer.description, answer.isCorrect, q.DT.id);
+        await putAnswer(answer.description, answer.isCorrect, q.DT.id);
       }
     }
 
@@ -305,16 +321,13 @@ const ModalUpdateQaQuiz = (props) => {
 
   return (
     <>
-      {/* <Button variant="primary" onClick={handleShow}>
-        Launch demo modal
-      </Button> */}
-
       <Modal
         show={show}
         onHide={handleClose}
         size="xl"
         backdrop="static"
-        centered="true"
+        scrollable
+        onExited={resetData}
         className="modal-update-qa-content"
       >
         <Modal.Header closeButton>
@@ -322,9 +335,9 @@ const ModalUpdateQaQuiz = (props) => {
         </Modal.Header>
         <Modal.Body>
           <form className=" row g-3">
-            <div className="quiz-content">
-              <div className="col-ml-12">
-                <label>Select QUIZ</label>
+            <div className="quiz-content mt-0">
+              <div className="col-ml-8">
+                <label className="form-label">Select QUIZ</label>
                 <Select
                   menuPortalTarget={document.body}
                   styles={{
@@ -343,8 +356,8 @@ const ModalUpdateQaQuiz = (props) => {
               </div>
             </div>
 
-            <div className="mt-2">
-              <label> Add questions</label>
+            <div className="mt-1">
+              <label className="form-label">Add questions</label>
               {questions &&
                 questions.length > 0 &&
                 questions.map((question, index) => {
@@ -352,10 +365,10 @@ const ModalUpdateQaQuiz = (props) => {
                     <>
                       <div
                         key={question.id}
-                        className="qa-content mt-3 ms-5 col-8 "
+                        className="qa-content mt-2 ms-5 col-auto "
                       >
                         <div className="question row ">
-                          <div className="col-9 form-floating">
+                          <div className="col-8 form-floating">
                             <input
                               id={`floatingQuestion-${question.id}`}
                               type="text"
@@ -415,7 +428,7 @@ const ModalUpdateQaQuiz = (props) => {
                             </label>
                           </div>
 
-                          <div className="col-1 button ms-2">
+                          <div className="col-2 button ms-2">
                             <div
                               className="btn-add"
                               onClick={() => handleAddRemoveQuestion(add, "")}

@@ -19,7 +19,7 @@ const ManagerQuiz = (props) => {
 
   //Update QA content
   const [showModalUpdateQaQuiz, setShowModalUpdateQaQuiz] = useState(false);
-
+  const [dataQA, setDataQA] = useState(``);
   //data view
   const [dataView, setDataView] = useState(``);
 
@@ -110,6 +110,8 @@ const ManagerQuiz = (props) => {
       <ModalUpdateQaQuiz
         show={showModalUpdateQaQuiz}
         setShow={setShowModalUpdateQaQuiz}
+        dataQA={dataQA}
+        setDataQA={setDataQA}
       />
     </div>
   );
