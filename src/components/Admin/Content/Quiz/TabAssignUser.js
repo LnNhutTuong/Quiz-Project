@@ -1,6 +1,11 @@
 import Select from "react-select";
 import { useState, useEffect } from "react";
-import { getAllQuiz, getAllUser } from "../../../../API/services/admin.service";
+import {
+  getAllQuiz,
+  getAllUser,
+  postAssignUser,
+} from "../../../../API/services/admin.service";
+import { toast } from "react-toastify";
 
 const TabAssignUser = (props) => {
   const [selectedQuiz, setselectedQuiz] = useState(null);
@@ -20,7 +25,7 @@ const TabAssignUser = (props) => {
       let newQuiz = res.DT.map((item) => {
         return {
           value: item.id,
-          label: `${item.id} - ${item.description}`,
+          label: `${item.id} - ${item.name}`,
         };
       });
       setListQuiz(newQuiz);
@@ -37,6 +42,15 @@ const TabAssignUser = (props) => {
         };
       });
       setListUser(newUser);
+    }
+  };
+
+  const handleAssign = async () => {
+    let res = await postAssignUser(selectedQuiz.value, selectedUser.value);
+    if (res && res.EC === 0) {
+      toast.success(res.EM);
+    } else {
+      toast.error(res.EM);
     }
   };
 
@@ -81,9 +95,12 @@ const TabAssignUser = (props) => {
         />
       </div>
       <div className="mt-2">
-        <button className="btn btn-primary">Assign user</button>
+        <button className="btn btn-primary" onClick={() => handleAssign()}>
+          Assign user
+        </button>
       </div>
     </div>
   );
 };
+
 export default TabAssignUser;

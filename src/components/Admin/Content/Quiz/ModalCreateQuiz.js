@@ -108,6 +108,7 @@ const ModalCreateQuiz = (props) => {
                 }}
               >
                 <option value="Easy">Easy</option>
+                <option value="Medium">Medium</option>
                 <option selected value="Hard">
                   Hard
                 </option>

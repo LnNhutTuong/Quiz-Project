@@ -118,6 +118,13 @@ const putAnswer = (description, correct_answer, question_id, answer_id) => {
   return axios.put("/api/v1/answer", data);
 };
 
+const postAssignUser = (quizId, userId) => {
+  return axios.post("/api/v1/quiz-assign-to-user", {
+    quizId,
+    userId,
+  });
+};
+
 export {
   postCreateNewUser,
   getAllUser,
@@ -133,4 +140,5 @@ export {
   postNewAnswer,
   getQuestionById,
   putAnswer,
+  postAssignUser,
 };

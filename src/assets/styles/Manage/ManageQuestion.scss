@@ -5,8 +5,6 @@
     margin-bottom: 10px;
   }
   .content {
-    .quiz-content {
-    }
     .qa-content {
       .question {
         .col-9 {
@@ -86,38 +84,38 @@
       }
 
       .answers {
-        .col-7 {
-          label {
-            margin: 0;
-            padding-left: 20px;
-            color: black;
-            // opacity: 1;
-            // font-weight: bold;
-          }
+      }
+      .col-7 {
+        label {
+          margin: 0;
+          padding-left: 20px;
+          color: black;
+          // opacity: 1;
+          // font-weight: bold;
         }
-        .button {
-          cursor: pointer;
-          padding: 0;
-          display: flex;
-          font-size: 34px;
-          padding-top: 19px;
-          .btn-add {
-            text-align: center;
-            svg {
-              color: rgba(76, 175, 79, 0.77);
-              &:hover {
-                color: rgb(76, 175, 79);
-              }
+      }
+      .button {
+        cursor: pointer;
+        padding: 0;
+        display: flex;
+        font-size: 34px;
+        padding-top: 19px;
+        .btn-add {
+          text-align: center;
+          svg {
+            color: rgba(76, 175, 79, 0.77);
+            &:hover {
+              color: rgb(76, 175, 79);
             }
           }
-          .btn-delete {
-            text-align: center;
-            svg {
-              color: rgba(251, 2, 2, 0.736);
+        }
+        .btn-delete {
+          text-align: center;
+          svg {
+            color: rgba(251, 2, 2, 0.736);
 
-              &:hover {
-                color: red;
-              }
+            &:hover {
+              color: red;
             }
           }
         }

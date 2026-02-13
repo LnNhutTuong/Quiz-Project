@@ -322,17 +322,14 @@ const ManageQuestion = () => {
               </div>
             </div>
 
-            <div className="mt-2">
+            <div className="mt-2 col-8  ms-5">
               <label> Add questions</label>
               {questions &&
                 questions.length > 0 &&
                 questions.map((question, index) => {
                   return (
                     <>
-                      <div
-                        key={question.id}
-                        className="qa-content mt-3 ms-5 col-8 "
-                      >
+                      <div key={question.id} className="qa-content mt-3  ">
                         <div className="question row ">
                           <div className="col-9 form-floating">
                             <input
