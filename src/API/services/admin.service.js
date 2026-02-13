@@ -64,9 +64,7 @@ const getAllQuiz = () => {
 };
 
 const deleteQuiz = (quizId) => {
-  return axios.delete(`/api/v1/quiz/${quizId}`, {
-    data: { id: quizId },
-  });
+  return axios.delete(`/api/v1/quiz/${quizId}`);
 };
 
 const putUpdateQuiz = (id, description, name, difficulty, quizImage) => {
@@ -101,10 +99,8 @@ const postNewAnswer = (description, correct_answer, question_id) => {
   return axios.post(`/api/v1/answer`, data);
 };
 
-const getQuestionById = (quiz_id) => {
-  return axios.get(`/api/v1/questions-by-quiz?quizId=${quiz_id}`, {
-    data: { id: quiz_id },
-  });
+const getQuizWithQA = (quizId) => {
+  return axios.get(`/api/v1/quiz-with-qa/${quizId}`);
 };
 
 const putAnswer = (description, correct_answer, question_id, answer_id) => {
@@ -138,7 +134,7 @@ export {
   putUpdateQuiz,
   postNewQuestion,
   postNewAnswer,
-  getQuestionById,
+  getQuizWithQA,
   putAnswer,
   postAssignUser,
 };

@@ -11,15 +11,16 @@ import Select from "react-select";
 import { useState, useEffect } from "react";
 import "../../../../assets/styles/Manage/ManageQuestion.scss";
 
-import { v4 as uuidv4, validate } from "uuid";
+import { v4 as uuidv4 } from "uuid";
 
-import { add, clone, remove } from "lodash";
+import { add, remove } from "lodash";
 import _ from "lodash";
 
 import {
   getAllQuiz,
   postNewQuestion,
   postNewAnswer,
+  getQuizWithQA,
 } from "../../../../API/services/admin.service";
 
 const TabEditQA = () => {
@@ -40,6 +41,59 @@ const TabEditQA = () => {
         };
       });
       setListQuiz(newQuiz);
+    }
+  };
+
+  useEffect(() => {
+    if (selectedQuiz && selectedQuiz.value) {
+      fetchQuestionById();
+    }
+  }, [selectedQuiz]);
+
+  //convert base64 string to file object
+  const urlToFile = (url, filename, mimeType) => {
+    return fetch(url)
+      .then(function (res) {
+        return res.arrayBuffer();
+      })
+      .then(function (buf) {
+        return new File([buf], filename, { type: mimeType });
+      });
+  };
+
+  const fetchQuestionById = async () => {
+    let res = await getQuizWithQA(selectedQuiz.value);
+    if (res && res.EC === 0) {
+      let rawData = res.DT.qa;
+
+      let newQA = [];
+
+      for (let i = 0; i < res.DT.qa.length; i++) {
+        let qa = res.DT.qa[i];
+        if (qa.imageFile) {
+          qa.imageName = `Question-${qa.id}.png`;
+          qa.imageFile = await urlToFile(
+            `data:image/png;base64,${qa.imageFile}`,
+            `Question-${qa.id}.png`,
+            "image/png",
+          );
+        }
+        newQA.push(qa);
+        console.log(">>>>check new QA: ", newQA);
+      }
+      //chu y syntax vi day, phai tra ve nhung ma tap viet tat di :D
+      let formatted = rawData.map((question) => ({
+        ...question,
+        isValid: true,
+        isTouched: false,
+        answers: question.answers.map((answer) => ({
+          ...answer,
+          isValid: true,
+          isTouched: false,
+        })),
+      }));
+
+      setQuestions(formatted);
     }
   };
 
@@ -322,17 +376,14 @@ const TabEditQA = () => {
               </div>
             </div>
 
-            <div className="mt-2">
+            <div className="mt-2 ms-5 col-8">
               <label> Add questions</label>
               {questions &&
                 questions.length > 0 &&
                 questions.map((question, index) => {
                   return (
                     <>
-                      <div
-                        key={question.id}
-                        className="qa-content mt-3 ms-5 col-8 "
-                      >
+                      <div key={question.id} className="qa-content mt-3  ">
                         <div className="question row ">
                           <div className="col-9 form-floating">
                             <input
