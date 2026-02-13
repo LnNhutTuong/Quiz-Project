@@ -14,11 +14,13 @@
 
     .question-content {
       margin-left: 10px;
-
       .ques-img {
+        height: 300px;
+        // height:;
         text-align: center;
         img {
           max-width: 444px;
+          max-height: 290px;
         }
       }
 

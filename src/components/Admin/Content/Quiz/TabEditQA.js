@@ -21,6 +21,7 @@ import {
   postNewQuestion,
   postNewAnswer,
   getQuizWithQA,
+  postUpsertQA,
 } from "../../../../API/services/admin.service";
 
 const TabEditQA = () => {
@@ -79,8 +80,8 @@ const TabEditQA = () => {
           );
         }
         newQA.push(qa);
-        console.log(">>>>check new QA: ", newQA);
       }
+
       //chu y syntax vi day, phai tra ve nhung ma tap viet tat di :D
       let formatted = rawData.map((question) => ({
         ...question,
@@ -249,6 +250,14 @@ const TabEditQA = () => {
     }
   };
 
+  const toBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = reject;
+    });
+
   const hanldeSave = async () => {
     //validate
     if (_.isEmpty(selectedQuiz)) {
@@ -331,21 +340,25 @@ const TabEditQA = () => {
     }
 
     // submit questions
-    for (let question of questions) {
-      let q = await postNewQuestion(
-        +selectedQuiz.value,
-        question.description,
-        question.imageFile,
-      );
-
-      //submit answers
-      for (let answer of question.answers) {
-        await postNewAnswer(answer.description, answer.isCorrect, q.DT.id);
+    let QuestionClone = _.cloneDeep(questions);
+    for (let i = 0; i < QuestionClone.length; i++) {
+      if (QuestionClone[i].imageFile) {
+        QuestionClone[i].imageFile = await toBase64(QuestionClone[i].imageFile);
       }
     }
 
-    toast.success("Create questions and answers success!");
-    setQuestions(initQuestions);
+    let res = await postUpsertQA({
+      quizId: selectedQuiz.value,
+      questions: QuestionClone,
+    });
+
+    if (res && res.EC === 0) {
+      toast.success(res.EM);
+    }
+
+    console.log(">>>>check res: ", res);
+
+    // setQuestions(initQuestions);
   };
 
   return (

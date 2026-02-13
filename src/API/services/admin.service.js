@@ -121,6 +121,10 @@ const postAssignUser = (quizId, userId) => {
   });
 };
 
+const postUpsertQA = (data) => {
+  return axios.post("/api/v1/quiz-upsert-qa", { ...data });
+};
+
 export {
   postCreateNewUser,
   getAllUser,
@@ -137,4 +141,5 @@ export {
   getQuizWithQA,
   putAnswer,
   postAssignUser,
+  postUpsertQA,
 };
