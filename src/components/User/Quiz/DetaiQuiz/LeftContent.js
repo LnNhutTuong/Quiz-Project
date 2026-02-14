@@ -4,6 +4,7 @@ import {
   getDataQuiz,
   postSubmitQuiz,
 } from "../../../../API/services/quiz.service";
+
 import "../../../../assets/styles/Quiz/DetailQuiz.scss";
 import _ from "lodash";
 import Questions from "../Questions";
