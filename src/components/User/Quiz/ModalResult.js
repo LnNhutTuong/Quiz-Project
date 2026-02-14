@@ -1,8 +1,5 @@
-import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { toast } from "react-toastify";
-import { deleteUser } from "../../../API/services/admin.service";
 
 const ModalResult = (props) => {
   const { show, setShow, dataRessult } = props;

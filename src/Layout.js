@@ -1,5 +1,5 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { ToastContainer, toast, Flip } from "react-toastify";
+import { Route, Routes } from "react-router-dom";
+import { ToastContainer, Flip } from "react-toastify";
 
 import App from "./App";
 import Admin from "./components/Admin/Admin";
@@ -11,14 +11,14 @@ import ManageQuiz from "./components/Admin/Content/Quiz/ManageQuiz";
 import Login from "./components/Auth/Login";
 import SignUp from "./components/Auth/SignUp";
 import ListQuiz from "./components/User/Quiz/ListQuiz";
-import DetailQuiz from "./components/User/Quiz/DetailQuiz";
+import MainDetailQuiz from "./components/User/Quiz/DetaiQuiz/MainDetailQuiz";
 import ManageQuestion from "./components/Admin/Content/Question/ManageQuestion";
 
 const NotFound = () => {
   return <div className="container mt-5 alert alert-danger">404 Not Foud</div>;
 };
 
-const Layout = (props) => {
+const Layout = () => {
   return (
     <>
       <Routes>
@@ -26,7 +26,7 @@ const Layout = (props) => {
           <Route index element={<HomePage />} />
           <Route path="user" element={<ListQuiz />} />
         </Route>
-        <Route path="quiz/:id" element={<DetailQuiz />} />
+        <Route path="quiz/:id" element={<MainDetailQuiz />} />
         <Route path="admin" element={<Admin />}>
           <Route index element={<Dashboard />} />
           <Route path="manage-user" element={<ManageUser />} />

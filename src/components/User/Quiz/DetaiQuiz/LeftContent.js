@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
-import { useParams, useLocation, data } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import {
   getDataQuiz,
   postSubmitQuiz,
-} from "../../../API/services/quiz.service";
-import "../../../assets/styles/Quiz/DetailQuiz.scss";
+} from "../../../../API/services/quiz.service";
+import "../../../../assets/styles/Quiz/DetailQuiz.scss";
 import _ from "lodash";
-import Questions from "./Questions";
-import ModalResult from "./ModalResult";
-const DetailQuiz = (props) => {
+import Questions from "../Questions";
+import ModalResult from "../ModalResult";
+
+const LeftContent = () => {
   const params = new useParams();
   const location = useLocation();
 
@@ -19,6 +20,7 @@ const DetailQuiz = (props) => {
 
   const [isShowModalResult, setIsShowModalResult] = useState(false);
   const [dataRessult, setDataResult] = useState({});
+
   const fetchQuestion = async () => {
     const res = await getDataQuiz(quizId);
 
@@ -81,7 +83,6 @@ const DetailQuiz = (props) => {
   };
 
   const handleFinish = async () => {
-    //Khai bao theo Backend
     let payload = {
       quizId: +quizId,
       answers: [],
@@ -127,50 +128,46 @@ const DetailQuiz = (props) => {
   };
 
   return (
-    <div className="detail-quiz-container container">
-      <div className="left-content">
-        <div className="title">
-          Quiz {quizId}: {location?.state?.quiztitle?.title}
-        </div>
-        <hr />
-        <div className="question-content">
-          <Questions
-            index={index}
-            dataQues={dataQues && dataQues.length > 0 ? dataQues[index] : []}
-            handleChoosen={handleChoosen}
-          />
-        </div>
-
-        <div className="question-footer">
-          <button
-            className="btn-prev"
-            onClick={() => {
-              handlePrev();
-            }}
-          >
-            Prev
-          </button>
-          <button
-            className="btn-next"
-            onClick={() => {
-              handleNext();
-            }}
-          >
-            Next
-          </button>
-
-          <button
-            className="btn-finish"
-            onClick={() => {
-              handleFinish();
-            }}
-          >
-            Finish
-          </button>
-        </div>
+    <div className="left-content-container">
+      <div className="title">
+        Quiz {quizId}: {location?.state?.quiztitle?.title}
       </div>
 
-      <div className="right-content">count down</div>
+      <div className="question-content">
+        <Questions
+          index={index}
+          dataQues={dataQues && dataQues.length > 0 ? dataQues[index] : []}
+          handleChoosen={handleChoosen}
+        />
+      </div>
+
+      <div className="question-footer">
+        <button
+          className="btn-prev"
+          onClick={() => {
+            handlePrev();
+          }}
+        >
+          Prev
+        </button>
+        <button
+          className="btn-next"
+          onClick={() => {
+            handleNext();
+          }}
+        >
+          Next
+        </button>
+
+        <button
+          className="btn-finish"
+          onClick={() => {
+            handleFinish();
+          }}
+        >
+          Finish
+        </button>
+      </div>
       <ModalResult
         show={isShowModalResult}
         setShow={setIsShowModalResult}
@@ -180,4 +177,4 @@ const DetailQuiz = (props) => {
   );
 };
 
-export default DetailQuiz;
+export default LeftContent;

@@ -1,7 +1,14 @@
 import _ from "lodash";
-import { data } from "react-router-dom";
+import Lightbox from "yet-another-react-lightbox";
+import Captions from "yet-another-react-lightbox/plugins/captions";
+
+import { useState } from "react";
+
 const Questions = (props) => {
   const { dataQues, index } = props;
+
+  const [open, setOpen] = useState({ open: false, src: "", title: "" });
+  const [isPreview, setIsPreview] = useState(false);
 
   if (_.isEmpty(dataQues)) {
     return <></>;
@@ -13,6 +20,7 @@ const Questions = (props) => {
     props.handleChoosen(aId, qId);
   };
 
+  console.log(">>>check data: ", dataQues);
   return (
     <>
       <div className="ques-img">
@@ -20,6 +28,14 @@ const Questions = (props) => {
           <img
             src={`data: image/jpeg;base64,${dataQues.imageQuestion}`}
             alt="ques-image"
+            onClick={(e) => {
+              e.preventDefault();
+              setOpen({
+                open: true,
+                src: `data: image/jpeg;base64,${dataQues.imageQuestion}`,
+                title: dataQues.questionDescription,
+              });
+            }}
           />
         ) : (
           <></>
@@ -56,6 +72,21 @@ const Questions = (props) => {
             );
           })}
       </div>
+      <Lightbox
+        open={open.open}
+        close={() => setOpen({ ...open, open: false })}
+        plugins={[Captions]}
+        slides={[
+          {
+            src: open.src,
+            title: open.title,
+          },
+        ]}
+        render={{
+          buttonPrev: () => null,
+          buttonNext: () => null,
+        }}
+      />
     </>
   );
 };
