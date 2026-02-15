@@ -5,7 +5,7 @@ import Captions from "yet-another-react-lightbox/plugins/captions";
 import { useState } from "react";
 
 const Questions = (props) => {
-  const { dataQues, index } = props;
+  const { dataQues, indexA } = props;
 
   const [open, setOpen] = useState({ open: false, src: "", title: "" });
   const [isPreview, setIsPreview] = useState(false);
@@ -20,7 +20,7 @@ const Questions = (props) => {
     props.handleChoosen(aId, qId);
   };
 
-  console.log(">>>check data: ", dataQues);
+  // console.log(">>>check data: ", dataQues);|
   return (
     <>
       <div className="ques-img">
@@ -42,7 +42,7 @@ const Questions = (props) => {
         )}
       </div>
       <div className="question">
-        Question {index + 1}: {dataQues.questionDescription}
+        Question {indexA + 1}: {dataQues.questionDescription}
       </div>
       <div className="answers">
         {answer &&

@@ -3,18 +3,20 @@ import {
   postSubmitQuiz,
 } from "../../../../API/services/quiz.service";
 import { useParams, useLocation, data } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import ModalResult from "../ModalResult";
 
 import _ from "lodash";
 
-const RightContent = () => {
+const RightContent = (props) => {
+  const { dataQues, setDataQues, indexA, setIndexA } = props;
+
   const params = new useParams();
-  const location = useLocation();
   const quizId = params.id;
 
-  const [dataQues, setDataQues] = useState([]);
-  const [count, setCount] = useState(5);
+  const refDiv = useRef([]);
+
+  const [count, setCount] = useState(300);
   const [dataRessult, setDataResult] = useState({});
   const [isShowModalResult, setIsShowModalResult] = useState(false);
 
@@ -76,7 +78,6 @@ const RightContent = () => {
 
       //submit api
       let res = await postSubmitQuiz(payload);
-      console.log("res: ", res);
       if (res && res.EC === 0) {
         setDataResult({
           countCorrect: res.DT.countCorrect,
@@ -125,6 +126,36 @@ const RightContent = () => {
     handleFinish();
   };
 
+  const getClassQuestion = (question, index) => {
+    if (question && question.answer.length > 0) {
+      let isAnswer = question.answer.find((a) => a.isSelected === true);
+      if (isAnswer) {
+        return "question selected";
+      }
+    }
+    return "question";
+  };
+
+  const handleClickQuestion = (question, index) => {
+    setIndexA(index);
+    if (refDiv.current) {
+      refDiv.current.forEach((item) => {
+        if (item && item.className === "question clicked") {
+          item.className = "question";
+        }
+      });
+    }
+
+    if (question && question.answer.length > 0) {
+      let isAnswer = question.answer.find((a) => a.isSelected === true);
+      if (isAnswer) {
+        return "question selectedAclicked";
+      }
+    }
+
+    refDiv.current[index].className = "question clicked";
+  };
+
   return (
     <div className="right-content-Container">
       <div className="count-down" onTimeUp={onTimeUp}>
@@ -135,7 +166,14 @@ const RightContent = () => {
           dataQues.length > 0 &&
           dataQues.map((question, index) => {
             return (
-              <div className="question" key={question.id}>
+              <div
+                className={getClassQuestion(question, index)}
+                onClick={() => {
+                  handleClickQuestion(question, index);
+                }}
+                key={question.id}
+                ref={(el) => (refDiv.current[index] = el)}
+              >
                 {index + 1}
               </div>
             );

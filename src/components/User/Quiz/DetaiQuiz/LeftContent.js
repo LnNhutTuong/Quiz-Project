@@ -10,14 +10,12 @@ import _ from "lodash";
 import Questions from "../Questions";
 import ModalResult from "../ModalResult";
 
-const LeftContent = () => {
+const LeftContent = (props) => {
+  const { dataQues, setDataQues, indexA, setIndexA } = props;
   const params = new useParams();
   const location = useLocation();
 
   const quizId = params.id;
-
-  const [dataQues, setDataQues] = useState([]);
-  const [index, setIndex] = useState(0);
 
   const [isShowModalResult, setIsShowModalResult] = useState(false);
   const [dataRessult, setDataResult] = useState({});
@@ -75,12 +73,12 @@ const LeftContent = () => {
   }, [quizId]);
 
   const handlePrev = () => {
-    if (index - 1 < 0) return;
-    setIndex(index - 1);
+    if (indexA - 1 < 0) return;
+    setIndexA(indexA - 1);
   };
 
   const handleNext = () => {
-    if (dataQues && dataQues.length > index + 1) setIndex(index + 1);
+    if (dataQues && dataQues.length > indexA + 1) setIndexA(indexA + 1);
   };
 
   const handleFinish = async () => {
@@ -136,8 +134,8 @@ const LeftContent = () => {
 
       <div className="question-content">
         <Questions
-          index={index}
-          dataQues={dataQues && dataQues.length > 0 ? dataQues[index] : []}
+          indexA={indexA}
+          dataQues={dataQues && dataQues.length > 0 ? dataQues[indexA] : []}
           handleChoosen={handleChoosen}
         />
       </div>
