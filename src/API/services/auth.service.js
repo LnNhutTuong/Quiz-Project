@@ -17,4 +17,11 @@ const postSignUp = (email, username, password) => {
   });
 };
 
-export  { postLogin, postSignUp };
+const postLogOut = (email, refresh_token) => {
+  return axios.post(`/api/v1/logout`, {
+    email,
+    refresh_token,
+  });
+};
+
+export { postLogin, postSignUp, postLogOut };

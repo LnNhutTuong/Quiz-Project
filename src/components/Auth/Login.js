@@ -49,6 +49,12 @@ const Login = (props) => {
     navigate(`/`);
   };
 
+  const handleKeyDown = (event) => {
+    if (event && event.key === "Enter") {
+      handleLogin();
+    }
+  };
+
   return (
     <div className="login-container container mx-auto">
       <div className="header">
@@ -89,6 +95,9 @@ const Login = (props) => {
                     value={password}
                     onChange={(event) => {
                       setPassword(event.target.value);
+                    }}
+                    onKeyDown={(event) => {
+                      handleKeyDown(event);
                     }}
                   />
 
