@@ -13,6 +13,7 @@ import SignUp from "./components/Auth/SignUp";
 import ListQuiz from "./components/User/Quiz/ListQuiz";
 import MainDetailQuiz from "./components/User/Quiz/DetaiQuiz/MainDetailQuiz";
 import ManageQuestion from "./components/Admin/Content/Question/ManageQuestion";
+import PrivateRoute from "./Routes/PrivateRoute";
 
 const NotFound = () => {
   return <div className="container mt-5 alert alert-danger">404 Not Foud</div>;
@@ -24,10 +25,24 @@ const Layout = () => {
       <Routes>
         <Route path="/" element={<App />}>
           <Route index element={<HomePage />} />
-          <Route path="user" element={<ListQuiz />} />
+          <Route
+            path="user"
+            element={
+              <PrivateRoute>
+                <ListQuiz />
+              </PrivateRoute>
+            }
+          />
         </Route>
         <Route path="quiz/:id" element={<MainDetailQuiz />} />
-        <Route path="admin" element={<Admin />}>
+        <Route
+          path="admin"
+          element={
+            <PrivateRoute>
+              <Admin />
+            </PrivateRoute>
+          }
+        >
           <Route index element={<Dashboard />} />
           <Route path="manage-user" element={<ManageUser />} />
           <Route path="manage-quiz" element={<ManageQuiz />} />
@@ -35,6 +50,7 @@ const Layout = () => {
         </Route>
         <Route path="login" element={<Login />}></Route>
         <Route path="signup" element={<SignUp />}></Route>
+        <Route path="test" element={<PrivateRoute />}></Route>
         <Route path="*" element={<NotFound />}></Route>
       </Routes>
 
