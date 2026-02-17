@@ -84,6 +84,14 @@ const BasicExample = () => {
                 </NavDropdown.Item>
               </NavDropdown>
             )}
+            <NavDropdown
+              title="Việt Nam"
+              id="basic-nav-dropdown "
+              className="dropdown-language"
+            >
+              <NavDropdown.Item>English</NavDropdown.Item>
+              <NavDropdown.Item>Việt Nam</NavDropdown.Item>
+            </NavDropdown>
           </Nav>
         </Navbar.Collapse>
       </Container>
