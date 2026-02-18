@@ -1,0 +1,15 @@
+{
+  "header-homepage": {
+    "home": "Home",
+    "user": "User",
+    "login": "Login",
+    "signup": "Đăng ký",
+    "user-infor": "User infor",
+    "logout": "Logout"
+  },
+  "homepage": {
+    "title": "Don't stop here",
+    "description": "Success is not about starting, it is about not giving up. Every small step you take today either moves you closer to your goal or takes you further away from it.",
+    "btn-next": "Continue"
+  }
+}

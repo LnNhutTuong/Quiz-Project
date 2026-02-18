@@ -14,14 +14,14 @@ import ListQuiz from "./components/User/Quiz/ListQuiz";
 import MainDetailQuiz from "./components/User/Quiz/DetaiQuiz/MainDetailQuiz";
 import ManageQuestion from "./components/Admin/Content/Question/ManageQuestion";
 import PrivateRoute from "./Routes/PrivateRoute";
-
+import { Suspense } from "react";
 const NotFound = () => {
   return <div className="container mt-5 alert alert-danger">404 Not Foud</div>;
 };
 
 const Layout = () => {
   return (
-    <>
+    <Suspense fallback={<>Loading...</>}>
       <Routes>
         <Route path="/" element={<App />}>
           <Route index element={<HomePage />} />
@@ -67,7 +67,7 @@ const Layout = () => {
         theme="dark"
         transition={Flip}
       />
-    </>
+    </Suspense>
   );
 };
 export default Layout;

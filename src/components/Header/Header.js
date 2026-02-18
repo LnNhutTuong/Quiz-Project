@@ -8,10 +8,14 @@ import { postLogOut } from "../../API/services/auth.service";
 import { doLogOut } from "../../redux/action/userAction";
 import { toast } from "react-toastify";
 import Language from "./Language";
+import { useTranslation } from "react-i18next";
+
 const BasicExample = () => {
   const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
   const account = useSelector((state) => state.user.account);
   console.log(">>>>>Check account: ", account);
+
+  const { t } = useTranslation();
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -42,13 +46,13 @@ const BasicExample = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <NavLink to="/" className="nav-link">
-              Home
+              {t("header-homepage.home")}
             </NavLink>
             <NavLink to="Admin" className="nav-link ">
               Admin
             </NavLink>
             <NavLink to="User" className="nav-link ">
-              User
+              {t("header-homepage.user")}
             </NavLink>
           </Nav>
           <Nav>
@@ -60,7 +64,7 @@ const BasicExample = () => {
                     handleLogin();
                   }}
                 >
-                  Login
+                  {t("header-homepage.login")}
                 </button>
                 <button
                   className=" btn-signup"
@@ -68,19 +72,21 @@ const BasicExample = () => {
                     handleSignUp();
                   }}
                 >
-                  Sign up
+                  {t("header-homepage.login")}
                 </button>
               </>
             ) : (
               <NavDropdown title="Settings" id="basic-nav-dropdown">
-                <NavDropdown.Item>User infor</NavDropdown.Item>
+                <NavDropdown.Item>
+                  {t("header-homepage.user-infor")}
+                </NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item
                   onClick={() => {
                     handleLogout();
                   }}
                 >
-                  Logout
+                  {t("header-homepage.logout")}
                 </NavDropdown.Item>
               </NavDropdown>
             )}

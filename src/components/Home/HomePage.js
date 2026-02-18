@@ -1,11 +1,14 @@
 import videoHomePage from "../../assets/video/homepage.mp4";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const HomePage = () => {
   const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
 
   const navigate = new useNavigate();
+
+  const { t } = useTranslation();
 
   const handleAuthenticatedClick = () => {
     navigate(`/user`);
@@ -23,22 +26,19 @@ const HomePage = () => {
       </div>
 
       <div className="homepage-content">
-        <div className="title">Đừng dừng lại ở đây</div>
-        <div className="mota">
-          Thành công không đến từ việc bắt đầu, mà từ việc không bỏ cuộc. Mỗi
-          bước nhỏ hôm nay đều đưa bạn tiến gần hơn tới mục tiêu hoặc không.
-        </div>
+        <div className="title">{t("homepage.title")}</div>
+        <div className="description">{t("homepage.description")}</div>
 
         {isAuthenticated === true ? (
           <div className="btn-title" onClick={() => handleAuthenticatedClick()}>
-            <button>Tiếp tục</button>
+            <button>{t("homepage.btn-next")}</button>
           </div>
         ) : (
           <div
             className="btn-title"
             onClick={() => handleNotAuthenticatedClick()}
           >
-            <button>Tiếp tục</button>
+            <button>{t("homepage.btn-next")}</button>
           </div>
         )}
       </div>

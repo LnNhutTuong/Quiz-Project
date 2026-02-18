@@ -1,0 +1,15 @@
+{
+  "header-homepage": {
+    "home": "Trang chủ",
+    "user": "Người dùng",
+    "login": "Đăng nhập",
+    "signup": "Đăng ký",
+    "user-infor": "Trang cá nhân",
+    "logout": "Đăng xuất"
+  },
+  "homepage": {
+    "title": "Đừng dừng lại ở đây",
+    "description": "Thành công không đến từ việc bắt đầu, mà từ việc không bỏ cuộc. Mỗi bước nhỏ hôm nay đều đưa bạn tiến gần hơn tới mục tiêu hoặc không.",
+    "btn-next": "Tiếp tục"
+  }
+}
