@@ -17,7 +17,7 @@ import { ToastContainer, toast, Flip } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { doLogin } from "../../redux/action/userAction";
 import { ImSpinner2 } from "react-icons/im";
-
+import Language from "../Header/Language";
 const Login = (props) => {
   const [email, setEmail] = useState(``);
   const [password, setPassword] = useState(``);
@@ -45,6 +45,7 @@ const Login = (props) => {
   const handleSignUp = () => {
     navigate(`/signup`);
   };
+
   const handleGoBack = () => {
     navigate(`/`);
   };
@@ -57,11 +58,14 @@ const Login = (props) => {
 
   return (
     <div className="login-container container mx-auto">
-      <div className="header">
+      <div className="header-login">
         {/* <div className="logo">
           <img src={Logo} alt="logo" />
         </div> */}
         <div className="name">XimenT</div>
+        <div className="change-language ">
+          <Language />
+        </div>
       </div>
       <div className="form-content col-4 mx-auto">
         <MDBContainer fluid>
@@ -71,7 +75,7 @@ const Login = (props) => {
                 className="bg-dark text-white my-5 mx-auto"
                 style={{ borderRadius: "1rem", maxWidth: "400px" }}
               >
-                <MDBCardBody className="p-5 d-flex flex-column align-items-center mx-auto w-100">
+                <MDBCardBody className="p-4 d-flex flex-column align-items-center mx-auto w-100">
                   <h2 className="fw-bold mb-2 text-uppercase">Login</h2>
                   <p className="text-white-50 mb-5">
                     Please enter your login and password!
