@@ -72,7 +72,7 @@ const BasicExample = () => {
                     handleSignUp();
                   }}
                 >
-                  {t("header-homepage.login")}
+                  {t("header-homepage.signup")}
                 </button>
               </>
             ) : (
