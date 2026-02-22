@@ -138,10 +138,37 @@
       rgba(0, 0, 0, 0.12) 0px -12px 30px,
       rgba(0, 0, 0, 0.12) 0px 4px 6px,
       rgba(0, 0, 0, 0.17) 0px 12px 13px;
+
     .admin-header {
       height: 66px;
+      width: 100%;
       border-radius: 22px;
       box-shadow: rgba(0, 0, 0, 0.25) 0px 7px 55px;
+
+      display: flex;
+      align-items: center;
+      padding-left: 3px;
+      padding-right: 10px;
+      .search-bar {
+        width: 40%;
+        .form-floating {
+          input {
+            height: 30px !important;
+            border-radius: 60px;
+          }
+        }
+      }
+      .left-content {
+        width: 60%;
+        display: flex;
+        justify-content: end;
+        gap: 22px;
+
+        svg {
+          width: 30px;
+          height: 30px;
+        }
+      }
     }
     .admin-main {
       padding-top: 10px;
