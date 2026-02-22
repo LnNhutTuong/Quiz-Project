@@ -140,7 +140,7 @@
       rgba(0, 0, 0, 0.17) 0px 12px 13px;
 
     .admin-header {
-      height: 66px;
+      height: 10%;
       width: 100%;
       border-radius: 22px;
       box-shadow: rgba(0, 0, 0, 0.25) 0px 7px 55px;
@@ -170,8 +170,45 @@
         }
       }
     }
+
     .admin-main {
       padding-top: 10px;
+      height: 90%;
+      .dashboard-container {
+        border: 1px solid red;
+        .title {
+          height: 30%;
+          border: 1px solid blue;
+
+          padding: 10px;
+          font-size: 32px;
+          font-weight: 600;
+        }
+        .content {
+          margin-top: 10px;
+          height: 70%;
+          border: 1px solid green;
+          .analys {
+            display: flex;
+            justify-content: center;
+            gap: 33px;
+            .total {
+              width: 250px;
+              height: 150px;
+              border: 1px solid purple;
+              border-radius: 17px;
+
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              text-align: center;
+
+              font-size: 22px;
+              font-weight: 400;
+            }
+          }
+        }
+      }
     }
   }
 }

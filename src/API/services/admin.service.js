@@ -60,7 +60,7 @@ const postCreateNewQuiz = (description, name, difficulty, quizImage) => {
 };
 
 const getAllQuiz = () => {
-  return axios.get(`/api/v1/quiz/all`, data);
+  return axios.get(`/api/v1/quiz/all`);
 };
 
 const deleteQuiz = (quizId) => {
@@ -125,6 +125,10 @@ const postUpsertQA = (data) => {
   return axios.post("/api/v1/quiz-upsert-qa", { ...data });
 };
 
+const getOverview = () => {
+  return axios.get("/api/v1/overview");
+};
+
 export {
   postCreateNewUser,
   getAllUser,
@@ -142,4 +146,5 @@ export {
   putAnswer,
   postAssignUser,
   postUpsertQA,
+  getOverview,
 };
