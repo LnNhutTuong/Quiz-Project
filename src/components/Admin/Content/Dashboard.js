@@ -2,8 +2,18 @@ import { useEffect, useState } from "react";
 import { getOverview } from "../../../API/services/admin.service";
 import { toast } from "react-toastify";
 
+import { FaUser } from "react-icons/fa";
+import { SiQuizlet } from "react-icons/si";
+import { FaQuestion } from "react-icons/fa";
+import { RiQuestionAnswerFill } from "react-icons/ri";
+import { FaArrowRight } from "react-icons/fa";
+
+import { useNavigate } from "react-router-dom";
+
 const Dashboard = (props) => {
   const [dataView, setDataView] = useState(``);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchOverview();
@@ -21,6 +31,22 @@ const Dashboard = (props) => {
     console.log(">>>Check data: ", dataView);
   };
 
+  const handleUsers = () => {
+    navigate("/admin/manage-user");
+  };
+
+  const handleQuizzes = () => {
+    navigate("/admin/manage-quiz");
+  };
+
+  const handleQuestions = () => {
+    navigate("/admin/manage-question");
+  };
+
+  const handleAnswers = () => {
+    navigate("/admin/manage-question");
+  };
+
   return (
     <div className="dashboard-container">
       <div className="header">
@@ -31,39 +57,67 @@ const Dashboard = (props) => {
         <div className="analys">
           <div className="total users">
             <div className="info">
-              <span>{dataView?.users?.total}</span>
-              <br />
-              Total User
+              <div className="total">
+                {dataView?.users?.total}
+                <br />
+                Total User
+              </div>
+              <div className="logo">
+                <FaUser />
+              </div>
             </div>
-            <div className="btn more-info">More info</div>
+            <div className="btn more-info" onClick={() => handleUsers()}>
+              More info <FaArrowRight />
+            </div>
           </div>
 
           <div className="total quizzes">
             <div className="info">
-              <span>{dataView?.others?.countQuiz}</span>
-              <br />
-              Total Quizzes
+              <div className="total">
+                {dataView?.others?.countQuiz}
+                <br />
+                Total Quizzes
+              </div>
+              <div className="logo">
+                <SiQuizlet />
+              </div>
             </div>
-            <div className="btn more-info">More info</div>
+            <div className="btn more-info" onClick={() => handleQuizzes()}>
+              More info <FaArrowRight />
+            </div>
           </div>
 
           <div className="total questions">
             <div className="info">
-              <span> {dataView?.others?.countQuestions}</span>
-              <br />
-              Total Questions
+              <div className="total">
+                {dataView?.others?.countQuestions}
+                <br />
+                Total Questions
+              </div>
+              <div className="logo">
+                <FaQuestion />
+              </div>
             </div>
-
-            <div className="btn more-info">More info</div>
+            <div className="btn more-info" onClick={() => handleQuestions()}>
+              More info <FaArrowRight />
+            </div>
           </div>
+
           <div className="total answers">
             <div className="info">
-              {dataView?.others?.countAnswers}
-              <br />
-              Total Answer
+              <div className="total">
+                {dataView?.others?.countAnswers}
+                <br />
+                Total Answer
+              </div>
+              <div className="logo">
+                <RiQuestionAnswerFill />
+              </div>
             </div>
 
-            <div className="btn more-info">More info</div>
+            <div className="btn more-info" onClick={() => handleAnswers()}>
+              More info <FaArrowRight />
+            </div>
           </div>
         </div>
       </div>

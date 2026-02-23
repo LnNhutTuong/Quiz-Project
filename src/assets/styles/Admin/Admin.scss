@@ -216,7 +216,7 @@
             .total {
               width: 270px;
               height: 145px;
-              border: 1px solid purple;
+              // border: 1px solid purple;
               border-radius: 14px;
 
               display: flex;
@@ -227,11 +227,31 @@
                 color: white;
                 .info {
                   display: flex;
-                  align-items: center;
                   height: 80%;
-                  padding-left: 10px;
                   font-size: 20px;
                   font-weight: 400;
+                  .total {
+                    height: 100%;
+                    width: 50%;
+                    display: flex;
+                    justify-content: center;
+                    padding-left: 10px;
+                  }
+                  .logo {
+                    width: 50%;
+                    height: 100%;
+                    display: flex;
+                    // justify-items: center;
+                    align-items: center;
+                    color: #89c3cc;
+                    svg {
+                      height: 80%;
+                      width: 100%;
+                    }
+                    &:hover {
+                      transform: translateY(-4px);
+                    }
+                  }
                 }
                 .more-info {
                   background-color: rgb(56, 145, 159);
@@ -248,11 +268,31 @@
                 color: white;
                 .info {
                   display: flex;
-                  align-items: center;
                   height: 80%;
-                  padding-left: 10px;
                   font-size: 20px;
                   font-weight: 400;
+                  .total {
+                    height: 100%;
+                    width: 50%;
+                    display: flex;
+                    justify-content: center;
+                    padding-left: 10px;
+                  }
+                  .logo {
+                    width: 50%;
+                    height: 100%;
+                    display: flex;
+                    // justify-items: center;
+                    align-items: center;
+                    color: #47c063;
+                    svg {
+                      height: 80%;
+                      width: 100%;
+                    }
+                    &:hover {
+                      transform: translateY(-4px);
+                    }
+                  }
                 }
                 .more-info {
                   background-color: #23943e;
@@ -262,42 +302,82 @@
                   border-radius: 0px 0px 14px 14px;
                   height: 20%;
                 }
+              }
 
-                
               &.questions {
-                background-color: #28a745;
+                background-color: #f5c229;
                 color: white;
                 .info {
                   display: flex;
-                  align-items: center;
                   height: 80%;
-                  padding-left: 10px;
                   font-size: 20px;
                   font-weight: 400;
+                  .total {
+                    height: 100%;
+                    width: 50%;
+                    display: flex;
+                    justify-content: center;
+                    padding-left: 10px;
+                  }
+                  .logo {
+                    width: 50%;
+                    height: 100%;
+                    display: flex;
+                    // justify-items: center;
+                    align-items: center;
+                    color: #eacb6c;
+                    svg {
+                      height: 80%;
+                      width: 100%;
+                    }
+                    &:hover {
+                      transform: translateY(-4px);
+                    }
+                  }
                 }
                 .more-info {
-                  background-color: #23943e;
+                  background-color: #e6ae06;
                   color: white;
                   font-weight: 500;
                   border: 1px solid #007bff;
                   border-radius: 0px 0px 14px 14px;
                   height: 20%;
                 }
+              }
 
-                
               &.answers {
-                background-color: #28a745;
+                background-color: #dc3545 !important;
                 color: white;
                 .info {
                   display: flex;
-                  align-items: center;
                   height: 80%;
-                  padding-left: 10px;
                   font-size: 20px;
                   font-weight: 400;
+                  .total {
+                    height: 100%;
+                    width: 50%;
+                    display: flex;
+                    justify-content: center;
+                    padding-left: 10px;
+                  }
+                  .logo {
+                    width: 50%;
+                    height: 100%;
+                    display: flex;
+                    // justify-items: center;
+                    align-items: center;
+                    color: #ed6774;
+                    svg {
+                      height: 80%;
+                      width: 100%;
+                    }
+                    &:hover {
+                      transform: translateY(-4px);
+                    }
+                  }
                 }
                 .more-info {
-                  background-color: #23943e;
+                  background-color: #c8303f;
                   color: white;
                   font-weight: 500;
                   border: 1px solid #007bff;
