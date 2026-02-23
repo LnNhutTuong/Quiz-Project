@@ -9,8 +9,6 @@ import { postCreateNewUser } from "../../../API/services/admin.service";
 const ModalCreateUser = (props) => {
   const { show, setShow, currentPage } = props;
 
-  // const [show, setShow] = useState(false);
-
   const handleClose = () => {
     setShow(false);
     setEmail("");
@@ -20,8 +18,6 @@ const ModalCreateUser = (props) => {
     setImage("");
     setPreviewimg("");
   };
-
-  // const handleShow = () => setShow(true);
 
   const [email, setEmail] = useState(``);
   const [password, setPassword] = useState(``);
@@ -41,7 +37,7 @@ const ModalCreateUser = (props) => {
 
   const validateEmail = (email) => {
     return email.match(
-      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
     );
   };
 

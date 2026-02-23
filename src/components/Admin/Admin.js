@@ -14,11 +14,15 @@ import { doLogOut } from "../../redux/action/userAction";
 import { FaCircleUser } from "react-icons/fa6";
 
 import Language from "../Header/Language";
+import { useState } from "react";
 
+import ModalUserInfor from "../User/ModalUserInfor";
 const Admin = (props) => {
   const account = useSelector((state) => state.user.account);
 
-  console.log(">>>check account: ", account);
+  const [show, setShow] = useState(false);
+  const [dataUser, setDataUser] = useState("");
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -29,6 +33,11 @@ const Admin = (props) => {
       navigate("");
       toast.success(res.EM);
     }
+  };
+
+  const handleUserInfor = () => {
+    setShow(true);
+    setDataUser(account);
   };
 
   return (
@@ -57,8 +66,16 @@ const Admin = (props) => {
             </div>
             <div className="admin-infor">
               <NavDropdown title={<FaCircleUser />} id="basic-nav-dropdown">
-                <NavDropdown.Item>{account.username}</NavDropdown.Item>
+                <NavDropdown.Item>Tên: {account.username}</NavDropdown.Item>
+                <NavDropdown.Item>Email: {account.email}</NavDropdown.Item>
                 <NavDropdown.Divider />
+                <NavDropdown.Item
+                  onClick={() => {
+                    handleUserInfor();
+                  }}
+                >
+                  Trang cá nhân
+                </NavDropdown.Item>
                 <NavDropdown.Item
                   onClick={() => {
                     handleLogout();
@@ -74,6 +91,7 @@ const Admin = (props) => {
           <Outlet />
         </div>
       </div>
+      <ModalUserInfor show={show} setShow={setShow} dataUser={dataUser} />
     </div>
   );
 };

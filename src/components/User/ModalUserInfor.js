@@ -2,31 +2,17 @@ import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { FcPlus } from "react-icons/fc";
-import { ToastContainer, toast, Flip } from "react-toastify";
-import { putUpdateUser } from "../../../API/services/admin.service";
+import { toast } from "react-toastify";
 import _ from "lodash";
 
-const ModalUpdateUser = (props) => {
-  const { show, setShow, dataupdate, currentPage } = props;
+const ModalUserInfor = (props) => {
+  const { show, setShow, dataUser } = props;
 
   const handleClose = (reset = true) => {
     setShow(false);
-    if (reset) {
-      setShow(false);
-      setEmail("");
-      setPassword("");
-      setUsername("");
-      setRole("USER");
-      setImage("");
-      setPreviewimg("");
-      setIsDisable(true);
-      setIsEditing(false);
-      props.setDataUpdate();
-    }
   };
 
   const [email, setEmail] = useState(``);
-  const [password, setPassword] = useState(``);
   const [username, setUsername] = useState(``);
   const [role, setRole] = useState(`USER`);
   const [image, setImage] = useState(``);
@@ -36,18 +22,18 @@ const ModalUpdateUser = (props) => {
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
-    if (!_.isEmpty(dataupdate)) {
-      setEmail(dataupdate.email);
-      setUsername(dataupdate.username);
-      setRole(dataupdate.role);
+    if (!_.isEmpty(dataUser)) {
+      setEmail(dataUser.email);
+      setUsername(dataUser.username);
+      setRole(dataUser.role);
       setImage("");
-      if (dataupdate.image) {
-        setPreviewimg(`data:image/jpeg;base64,${dataupdate.image}`);
+      if (dataUser.image) {
+        setPreviewimg(`data:image/jpeg;base64,${dataUser.image}`);
       } else {
         setPreviewimg("");
       }
     }
-  }, [dataupdate]);
+  }, [dataUser]);
 
   const handleUploadImage = (event) => {
     if (event.target && event.target.files && event.target.files[0]) {
@@ -65,17 +51,6 @@ const ModalUpdateUser = (props) => {
       toast.error("Invalid username");
       return;
     }
-
-    let data = await putUpdateUser(dataupdate.id, username, role, image);
-
-    if (data && data.EC == 0) {
-      toast.success("Update a new user success!");
-      handleClose();
-      await props.fetchListUserPaginate(currentPage);
-    }
-    if (data && data.EC !== 0) {
-      toast.error("Update a new user fail!");
-    }
   };
 
   return (
@@ -83,12 +58,12 @@ const ModalUpdateUser = (props) => {
       <Modal
         show={show}
         onHide={handleClose}
-        size="xl"
+        size="s"
         backdrop="static"
         className="modal-addnewuser"
       >
         <Modal.Header closeButton>
-          <Modal.Title>Update a user</Modal.Title>
+          <Modal.Title>Trang cá nhân</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form className="row g-3">
@@ -162,17 +137,17 @@ const ModalUpdateUser = (props) => {
                   setIsDisable(false);
                 }}
               >
-                Edit
+                Change password
               </Button>
               <Button
-                className="btn-danger "
+                className="btn-danger"
                 variant="primary"
                 onClick={() => {
-                  props.handleBtnDeleteUser(dataupdate.id, email);
+                  props.handleBtnDeleteUser(dataUser.id, email);
                   handleClose(false);
                 }}
               >
-                Delete
+                Edit
               </Button>
             </div>
           )}
@@ -208,4 +183,4 @@ const ModalUpdateUser = (props) => {
   );
 };
 
-export default ModalUpdateUser;
+export default ModalUserInfor;

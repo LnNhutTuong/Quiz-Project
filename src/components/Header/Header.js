@@ -2,18 +2,21 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import { NavLink, useNavigate } from "react-router-dom";
+import { data, NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { postLogOut } from "../../API/services/auth.service";
 import { doLogOut } from "../../redux/action/userAction";
 import { toast } from "react-toastify";
 import Language from "./Language";
 import { useTranslation } from "react-i18next";
-
+import ModalUserInfor from "../User/ModalUserInfor";
+import { useState } from "react";
 const BasicExample = () => {
   const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
   const account = useSelector((state) => state.user.account);
-  console.log(">>>>>Check account: ", account);
+
+  const [show, setShow] = useState(false);
+  const [dataUser, setDataUser] = useState(``);
 
   const { t } = useTranslation();
 
@@ -25,6 +28,11 @@ const BasicExample = () => {
 
   const handleSignUp = () => {
     navigate("/signup");
+  };
+
+  const handleUserInfor = () => {
+    setShow(true);
+    setDataUser(account);
   };
 
   const handleLogout = async () => {
@@ -76,24 +84,39 @@ const BasicExample = () => {
                 </button>
               </>
             ) : (
-              <NavDropdown title="Settings" id="basic-nav-dropdown">
-                <NavDropdown.Item>
-                  {t("header-homepage.user-infor")}
-                </NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item
-                  onClick={() => {
-                    handleLogout();
-                  }}
+              <>
+                <NavDropdown
+                  title={`${t("header-homepage.hello")}, ${account.username}`}
+                  id="basic-nav-dropdown"
                 >
-                  {t("header-homepage.logout")}
-                </NavDropdown.Item>
-              </NavDropdown>
+                  <NavDropdown.Item
+                    onClick={() => {
+                      handleUserInfor();
+                    }}
+                  >
+                    {t("header-homepage.user-infor")}
+                  </NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item
+                    onClick={() => {
+                      handleLogout();
+                    }}
+                  >
+                    {t("header-homepage.logout")}
+                  </NavDropdown.Item>
+                </NavDropdown>
+              </>
             )}
             <Language />
           </Nav>
         </Navbar.Collapse>
       </Container>
+      <ModalUserInfor
+        show={show}
+        setShow={setShow}
+        dataUser={dataUser}
+        setDataUser={setDataUser}
+      />
     </Navbar>
   );
 };

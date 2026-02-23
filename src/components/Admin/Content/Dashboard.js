@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getOverview } from "../../../API/services/admin.service";
 import { toast } from "react-toastify";
+import Breadcrumb from "react-bootstrap/Breadcrumb";
 
 import { FaUser } from "react-icons/fa";
 import { SiQuizlet } from "react-icons/si";
@@ -8,12 +9,16 @@ import { FaQuestion } from "react-icons/fa";
 import { RiQuestionAnswerFill } from "react-icons/ri";
 import { FaArrowRight } from "react-icons/fa";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink, useLocation } from "react-router-dom";
+import { BreadcrumbItem } from "react-bootstrap";
 
 const Dashboard = (props) => {
   const [dataView, setDataView] = useState(``);
 
   const navigate = useNavigate();
+  const location = useLocation();
+
+  console.log(">>>Check location: ", location);
 
   useEffect(() => {
     fetchOverview();
@@ -21,7 +26,6 @@ const Dashboard = (props) => {
 
   const fetchOverview = async () => {
     const res = await getOverview();
-    console.log(">>>>Check res: ", res);
     if (res && res.EC === 0) {
       toast.success("Have a good day!");
       setDataView(res.DT);
@@ -51,7 +55,14 @@ const Dashboard = (props) => {
     <div className="dashboard-container">
       <div className="header">
         <div className="title">Dashboard</div>
-        <div className="breadcumb">Dashboad/skibidi</div>
+        <div className="breadcrumb">
+          <Breadcrumb>
+            <NavLink to="/admin" className="breadcrumb-item">
+              Home
+            </NavLink>
+            <Breadcrumb.Item active>Dashboard</Breadcrumb.Item>
+          </Breadcrumb>
+        </div>
       </div>
       <div className="content">
         <div className="analys">

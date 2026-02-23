@@ -175,32 +175,25 @@
       padding-top: 10px;
       height: 90%;
       .dashboard-container {
-        border: 1px solid red;
         .header {
           display: flex;
           width: 100%;
+          justify-content: space-between;
+          align-items: center;
           .title {
             height: 30%;
             width: 30%;
-            border: 1px solid blue;
 
             padding: 10px;
             font-size: 27px;
             font-weight: 500;
           }
-          .breadcumb {
-            width: 70%;
-            display: flex;
-            justify-content: end;
-            align-items: center;
-            padding-right: 10px;
-            font-size: 17px;
-            font-weight: 400;
-            opacity: 1;
-            color: #6c757d;
 
-            &here {
-              color: #007bff;
+          .breadcrumb {
+            font-size: 17px;
+            padding-right: 10px;
+            a {
+              color: #007bff !important;
             }
           }
         }
@@ -208,7 +201,7 @@
         .content {
           margin-top: 10px;
           height: 70%;
-          border: 1px solid green;
+
           .analys {
             display: flex;
             justify-content: center;
@@ -216,7 +209,7 @@
             .total {
               width: 270px;
               height: 145px;
-              // border: 1px solid purple;
+
               border-radius: 14px;
 
               display: flex;
@@ -257,7 +250,7 @@
                   background-color: rgb(56, 145, 159);
                   color: white;
                   font-weight: 500;
-                  border: 1px solid #007bff;
+
                   border-radius: 0px 0px 14px 14px;
                   height: 20%;
                 }
@@ -298,7 +291,7 @@
                   background-color: #23943e;
                   color: white;
                   font-weight: 500;
-                  border: 1px solid #007bff;
+
                   border-radius: 0px 0px 14px 14px;
                   height: 20%;
                 }
@@ -339,7 +332,7 @@
                   background-color: #e6ae06;
                   color: white;
                   font-weight: 500;
-                  border: 1px solid #007bff;
+
                   border-radius: 0px 0px 14px 14px;
                   height: 20%;
                 }
@@ -380,7 +373,7 @@
                   background-color: #c8303f;
                   color: white;
                   font-weight: 500;
-                  border: 1px solid #007bff;
+
                   border-radius: 0px 0px 14px 14px;
                   height: 20%;
                 }
