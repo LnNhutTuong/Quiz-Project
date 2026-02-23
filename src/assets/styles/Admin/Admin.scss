@@ -176,14 +176,35 @@
       height: 90%;
       .dashboard-container {
         border: 1px solid red;
-        .title {
-          height: 30%;
-          border: 1px solid blue;
+        .header {
+          display: flex;
+          width: 100%;
+          .title {
+            height: 30%;
+            width: 30%;
+            border: 1px solid blue;
 
-          padding: 10px;
-          font-size: 32px;
-          font-weight: 600;
+            padding: 10px;
+            font-size: 27px;
+            font-weight: 500;
+          }
+          .breadcumb {
+            width: 70%;
+            display: flex;
+            justify-content: end;
+            align-items: center;
+            padding-right: 10px;
+            font-size: 17px;
+            font-weight: 400;
+            opacity: 1;
+            color: #6c757d;
+
+            &here {
+              color: #007bff;
+            }
+          }
         }
+
         .content {
           margin-top: 10px;
           height: 70%;
@@ -193,18 +214,97 @@
             justify-content: center;
             gap: 33px;
             .total {
-              width: 250px;
-              height: 150px;
+              width: 270px;
+              height: 145px;
               border: 1px solid purple;
-              border-radius: 17px;
+              border-radius: 14px;
 
               display: flex;
-              justify-content: center;
-              align-items: center;
-              text-align: center;
+              flex-direction: column;
 
-              font-size: 22px;
-              font-weight: 400;
+              &.users {
+                background-color: #3db1c3;
+                color: white;
+                .info {
+                  display: flex;
+                  align-items: center;
+                  height: 80%;
+                  padding-left: 10px;
+                  font-size: 20px;
+                  font-weight: 400;
+                }
+                .more-info {
+                  background-color: rgb(56, 145, 159);
+                  color: white;
+                  font-weight: 500;
+                  border: 1px solid #007bff;
+                  border-radius: 0px 0px 14px 14px;
+                  height: 20%;
+                }
+              }
+
+              &.quizzes {
+                background-color: #28a745;
+                color: white;
+                .info {
+                  display: flex;
+                  align-items: center;
+                  height: 80%;
+                  padding-left: 10px;
+                  font-size: 20px;
+                  font-weight: 400;
+                }
+                .more-info {
+                  background-color: #23943e;
+                  color: white;
+                  font-weight: 500;
+                  border: 1px solid #007bff;
+                  border-radius: 0px 0px 14px 14px;
+                  height: 20%;
+                }
+
+                
+              &.questions {
+                background-color: #28a745;
+                color: white;
+                .info {
+                  display: flex;
+                  align-items: center;
+                  height: 80%;
+                  padding-left: 10px;
+                  font-size: 20px;
+                  font-weight: 400;
+                }
+                .more-info {
+                  background-color: #23943e;
+                  color: white;
+                  font-weight: 500;
+                  border: 1px solid #007bff;
+                  border-radius: 0px 0px 14px 14px;
+                  height: 20%;
+                }
+
+                
+              &.answers {
+                background-color: #28a745;
+                color: white;
+                .info {
+                  display: flex;
+                  align-items: center;
+                  height: 80%;
+                  padding-left: 10px;
+                  font-size: 20px;
+                  font-weight: 400;
+                }
+                .more-info {
+                  background-color: #23943e;
+                  color: white;
+                  font-weight: 500;
+                  border: 1px solid #007bff;
+                  border-radius: 0px 0px 14px 14px;
+                  height: 20%;
+                }
+              }
             }
           }
         }

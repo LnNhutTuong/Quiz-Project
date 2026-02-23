@@ -23,27 +23,47 @@ const Dashboard = (props) => {
 
   return (
     <div className="dashboard-container">
-      <div className="title">Xin chào, my boy ♥</div>
+      <div className="header">
+        <div className="title">Dashboard</div>
+        <div className="breadcumb">Dashboad/skibidi</div>
+      </div>
       <div className="content">
         <div className="analys">
-          <div className="total">
-            Total User <br />
-            {dataView?.users?.total}
+          <div className="total users">
+            <div className="info">
+              <span>{dataView?.users?.total}</span>
+              <br />
+              Total User
+            </div>
+            <div className="btn more-info">More info</div>
           </div>
-          <div className="total">
-            Total Quizzes
-            <br />
-            {dataView?.others?.countQuiz}
+
+          <div className="total quizzes">
+            <div className="info">
+              <span>{dataView?.others?.countQuiz}</span>
+              <br />
+              Total Quizzes
+            </div>
+            <div className="btn more-info">More info</div>
           </div>
-          <div className="total">
-            Total Questions
-            <br />
-            {dataView?.others?.countQuestions}
+
+          <div className="total questions">
+            <div className="info">
+              <span> {dataView?.others?.countQuestions}</span>
+              <br />
+              Total Questions
+            </div>
+
+            <div className="btn more-info">More info</div>
           </div>
-          <div className="total">
-            Total Answer
-            <br />
-            {dataView?.others?.countAnswers}
+          <div className="total answers">
+            <div className="info">
+              {dataView?.others?.countAnswers}
+              <br />
+              Total Answer
+            </div>
+
+            <div className="btn more-info">More info</div>
           </div>
         </div>
       </div>
