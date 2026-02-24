@@ -1,4 +1,3 @@
-import { data } from "react-router-dom";
 import axios from "../axiosCustomize";
 
 const postLogin = (email, password, delay) => {
@@ -24,4 +23,11 @@ const postLogOut = (email, refresh_token) => {
   });
 };
 
-export { postLogin, postSignUp, postLogOut };
+const postChangePassword = (current_password, new_password) => {
+  return axios.post(`/api/v1/change-password`, {
+    current_password,
+    new_password,
+  });
+};
+
+export { postLogin, postSignUp, postLogOut, postChangePassword };

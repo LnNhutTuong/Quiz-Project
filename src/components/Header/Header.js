@@ -44,6 +44,10 @@ const BasicExample = () => {
     }
   };
 
+  const handleChangePassword = () => {
+    alert("modal");
+  };
+
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
@@ -97,6 +101,9 @@ const BasicExample = () => {
                     {t("header-homepage.user-infor")}
                   </NavDropdown.Item>
                   <NavDropdown.Divider />
+                  <NavDropdown.Item onClick={() => handleChangePassword()}>
+                    Đổi mật khẩu
+                  </NavDropdown.Item>
                   <NavDropdown.Item
                     onClick={() => {
                       handleLogout();

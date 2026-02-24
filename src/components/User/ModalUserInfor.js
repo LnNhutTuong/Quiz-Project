@@ -5,19 +5,25 @@ import { FcPlus } from "react-icons/fc";
 import { toast } from "react-toastify";
 import _ from "lodash";
 
+import { postUpdateProfile } from "../../API/services/user.service";
+import { doUpdateUserProfile } from "../../redux/action/userAction";
+import { useDispatch } from "react-redux";
 const ModalUserInfor = (props) => {
-  const { show, setShow, dataUser } = props;
+  const { show, setShow, dataUser, setDataUser } = props;
 
-  const handleClose = (reset = true) => {
+  const dispatch = useDispatch();
+
+  console.log(">>>check data: ", dataUser);
+  const handleClose = () => {
     setShow(false);
+    setIsDisable(true);
+    setIsEditing(false);
   };
 
   const [email, setEmail] = useState(``);
   const [username, setUsername] = useState(``);
-  const [role, setRole] = useState(`USER`);
   const [image, setImage] = useState(``);
   const [previewimg, setPreviewimg] = useState(``);
-
   const [isDisable, setIsDisable] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -25,7 +31,6 @@ const ModalUserInfor = (props) => {
     if (!_.isEmpty(dataUser)) {
       setEmail(dataUser.email);
       setUsername(dataUser.username);
-      setRole(dataUser.role);
       setImage("");
       if (dataUser.image) {
         setPreviewimg(`data:image/jpeg;base64,${dataUser.image}`);
@@ -50,6 +55,18 @@ const ModalUserInfor = (props) => {
     if (!username) {
       toast.error("Invalid username");
       return;
+    }
+
+    const res = await postUpdateProfile(username, image);
+    if (res && res.EC === 0) {
+      toast.success("Chỉnh sửa thành công");
+      dispatch(doUpdateUserProfile(res.DT));
+      setIsDisable(true);
+      setIsEditing(false);
+    } else {
+      toast.error("Chỉnh sửa không thành công");
+      setIsDisable(true);
+      setIsEditing(false);
     }
   };
 
@@ -87,20 +104,7 @@ const ModalUserInfor = (props) => {
                 onChange={(event) => setUsername(event.target.value)}
               />
             </div>
-            <div className="col-md-4">
-              <label className="form-label">Role</label>
-              <select
-                className="form-select"
-                onChange={(event) => setRole(event.target.value)}
-                value={role}
-                disabled={isDisable}
-              >
-                <option value="USER">User</option>
-                <option selected value="ADMIN">
-                  Admin
-                </option>
-              </select>
-            </div>
+
             <div className="col-md-12">
               <label
                 className="form-label label-upload"
@@ -135,16 +139,6 @@ const ModalUserInfor = (props) => {
                 onClick={() => {
                   setIsEditing(true);
                   setIsDisable(false);
-                }}
-              >
-                Change password
-              </Button>
-              <Button
-                className="btn-danger"
-                variant="primary"
-                onClick={() => {
-                  props.handleBtnDeleteUser(dataUser.id, email);
-                  handleClose(false);
                 }}
               >
                 Edit
