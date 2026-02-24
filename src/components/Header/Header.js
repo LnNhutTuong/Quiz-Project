@@ -1,22 +1,30 @@
+import { useState } from "react";
+
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import { data, NavLink, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { NavLink, useNavigate } from "react-router-dom";
+
 import { postLogOut } from "../../API/services/auth.service";
+
+import { useDispatch, useSelector } from "react-redux";
 import { doLogOut } from "../../redux/action/userAction";
 import { toast } from "react-toastify";
-import Language from "./Language";
 import { useTranslation } from "react-i18next";
+
+import Language from "./Language";
 import ModalUserInfor from "../User/ModalUserInfor";
-import { useState } from "react";
+import ModalChangePass from "../Auth/ModalChangePass";
+
 const BasicExample = () => {
   const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
   const account = useSelector((state) => state.user.account);
 
-  const [show, setShow] = useState(false);
+  const [showModalUserInfor, setShowModalUserInfor] = useState(false);
   const [dataUser, setDataUser] = useState(``);
+
+  const [showModalChangePass, setShowModalChangePass] = useState(false);
 
   const { t } = useTranslation();
 
@@ -31,7 +39,7 @@ const BasicExample = () => {
   };
 
   const handleUserInfor = () => {
-    setShow(true);
+    setShowModalUserInfor(true);
     setDataUser(account);
   };
 
@@ -45,7 +53,7 @@ const BasicExample = () => {
   };
 
   const handleChangePassword = () => {
-    alert("modal");
+    setShowModalChangePass(true);
   };
 
   return (
@@ -119,10 +127,14 @@ const BasicExample = () => {
         </Navbar.Collapse>
       </Container>
       <ModalUserInfor
-        show={show}
-        setShow={setShow}
+        show={showModalUserInfor}
+        setShow={setShowModalUserInfor}
         dataUser={dataUser}
         setDataUser={setDataUser}
+      />
+      <ModalChangePass
+        show={showModalChangePass}
+        setShow={setShowModalChangePass}
       />
     </Navbar>
   );
