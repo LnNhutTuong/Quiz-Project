@@ -13,7 +13,6 @@ const ModalUserInfor = (props) => {
 
   const dispatch = useDispatch();
 
-  console.log(">>>check data: ", dataUser);
   const handleClose = () => {
     setShow(false);
     setIsDisable(true);
