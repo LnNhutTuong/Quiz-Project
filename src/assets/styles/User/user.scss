@@ -3,6 +3,8 @@
   width: 100%;
   display: flex;
   gap: 30px;
+  overflow: hidden;
+
   .right {
     height: 50%;
     width: 20%;
@@ -27,7 +29,6 @@
       }
       .info {
         text-align: center;
-        // border: 1px solid black;
         font-size: 18px;
         height: 30%;
         width: fit-content;
@@ -36,13 +37,35 @@
     }
   }
   .left {
+    height: 100%;
     width: 80%;
+    display: flex;
+    flex-direction: column;
     border-radius: 22px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    .title {
-      padding-left: 10px;
-      font-size: 30px;
-      font-weight: 500;
+    overflow: hidden;
+
+    .tab-list {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      padding: 10px;
+
+      .title {
+        flex-shrink: 0;
+        border: 1px solid black;
+        padding-left: 10px;
+        font-size: 30px;
+        font-weight: 500;
+        margin-bottom: 10px;
+      }
+
+      .list {
+        flex: 1;
+        overflow-y: auto;
+        border: 1px solid red;
+        padding-bottom: 40px;
+      }
     }
   }
 }

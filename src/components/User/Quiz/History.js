@@ -1,30 +1,21 @@
-import { useEffect, useState } from "react";
-import { getQuizByUsers } from "../../../API/services/quiz.service";
+import { getHistory } from "../../../API/services/user.service";
+import { useEffect } from "react";
 import "../../../assets/styles/Quiz/ListQuiz.scss";
-import { useNavigate } from "react-router-dom";
 
-const ListQuiz = (props) => {
-  const [arrayQuiz, setArrayQuiz] = useState(``);
-  const navigate = new useNavigate();
-  const handleClick = (id, title) => {
-    navigate(`/quiz/${id}`, { state: { quiztitle: { title } } });
-  };
-
+const History = (props) => {
   useEffect(() => {
-    getQuizData();
+    history();
   }, []);
 
-  const getQuizData = async () => {
-    const data = await getQuizByUsers();
-    console.log(">>>check data: ", data);
-    if (data && data.EC === 0) {
-      setArrayQuiz(data.DT);
-    }
+  const history = async () => {
+    const res = await getHistory();
+
+    console.log(">>>check res: ", res);
   };
 
   return (
     <div className="list-quiz-container">
-      {arrayQuiz &&
+      {/* {arrayQuiz &&
         arrayQuiz.length > 0 &&
         arrayQuiz.map((quiz, index) => {
           return (
@@ -54,9 +45,9 @@ const ListQuiz = (props) => {
               </div>
             </>
           );
-        })}
+        })} */}
     </div>
   );
 };
 
-export default ListQuiz;
+export default History;

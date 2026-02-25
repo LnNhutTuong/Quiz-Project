@@ -1,10 +1,10 @@
-import * as React from "react";
+import { useState } from "react";
 import { Tabs, Tab, Box } from "@mui/material";
 import TabManageQuiz from "./TabManageQuiz";
 import TabEditQA from "./TabEditQA";
 import TabAssignUser from "./TabAssignUser";
 const ManagerQuiz = () => {
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
