@@ -10,7 +10,7 @@ import ManageUser from "./components/Admin/Content/ManageUser";
 import ManageQuiz from "./components/Admin/Content/Quiz/ManageQuiz";
 import Login from "./components/Auth/Login";
 import SignUp from "./components/Auth/SignUp";
-import ListQuiz from "./components/User/Quiz/ListQuiz";
+// import ListQuiz from "./components/User/Quiz/ListQuiz";
 import MainDetailQuiz from "./components/User/Quiz/DetaiQuiz/MainDetailQuiz";
 import ManageQuestion from "./components/Admin/Content/Question/ManageQuestion";
 import PrivateRoute from "./Routes/PrivateRoute";
@@ -29,7 +29,7 @@ const Layout = () => {
             path="user"
             element={
               <PrivateRoute>
-                <ListQuiz />
+                <User />
               </PrivateRoute>
             }
           />

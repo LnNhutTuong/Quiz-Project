@@ -23,7 +23,7 @@ const ListQuiz = (props) => {
   };
 
   return (
-    <div className="list-quiz-container container">
+    <div className="list-quiz-container">
       {arrayQuiz &&
         arrayQuiz.length > 0 &&
         arrayQuiz.map((quiz, index) => {

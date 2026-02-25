@@ -13,4 +13,8 @@ const postUpdateProfile = (username, userImage) => {
   return axios.post(`/api/v1/profile`, data);
 };
 
-export { postUpdateProfile };
+const getHistory = () => {
+  return axios.get("/api/v1/history");
+};
+
+export { postUpdateProfile, getHistory };
