@@ -21,10 +21,14 @@
       align-items: center;
       padding: 10px;
       .avatar {
-        border: 1px solid brown;
+        // border: 1px solid brown;
         height: 70%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         img {
           max-height: 100%;
+          max-width: 90%;
         }
       }
       .info {
@@ -51,20 +55,28 @@
       height: 100%;
       padding: 10px;
 
-      .title {
-        flex-shrink: 0;
-        border: 1px solid black;
-        padding-left: 10px;
-        font-size: 30px;
-        font-weight: 500;
-        margin-bottom: 10px;
-      }
-
       .list {
         flex: 1;
         overflow-y: auto;
-        border: 1px solid red;
+
         padding-bottom: 40px;
+      }
+    }
+
+    .tab-history {
+      height: 100%;
+      .history-container {
+        height: 100%;
+        overflow-y: auto;
+        table {
+          thead {
+            position: sticky;
+            top: 0;
+            z-index: 2;
+            background: white;
+          }
+        }
+        padding-bottom: 60px;
       }
     }
   }

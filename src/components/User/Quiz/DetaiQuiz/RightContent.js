@@ -11,13 +11,13 @@ import _ from "lodash";
 const RightContent = (props) => {
   const { dataQues, setDataQues, indexA, setIndexA } = props;
 
-  const params = new useParams();
+  const params = useParams();
   const quizId = params.id;
 
   const refDiv = useRef([]);
 
   const [count, setCount] = useState(300);
-  const [dataRessult, setDataResult] = useState({});
+  const [dataResult, setDataResult] = useState({});
   const [isShowModalResult, setIsShowModalResult] = useState(false);
 
   const fetchQuestion = async () => {
@@ -183,7 +183,7 @@ const RightContent = (props) => {
       <ModalResult
         show={isShowModalResult}
         setShow={setIsShowModalResult}
-        dataRessult={dataRessult}
+        dataResult={dataResult}
       />
     </div>
   );

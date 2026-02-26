@@ -5,27 +5,29 @@ import { Tabs, Tab, Box } from "@mui/material";
 import ListQuiz from "./Quiz/ListQuiz";
 import History from "./Quiz/History";
 import "../../assets/styles/User/user.scss";
-import sleepingBoy from "../../assets/img/sleepingboy.png";
 
 const User = (props) => {
   const [value, setValue] = useState(0);
+
+  const account = useSelector((state) => state.user.account);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  const account = useSelector((state) => state.user.account);
-  console.log(">>>check account: ", account);
   return (
     <div className="user-container container">
       <div className="right">
         <div className="information">
           <div className="avatar">
-            <img src={sleepingBoy} alt="your avatar" />
+            <img
+              src={`data:image/jpeg;base64,${account.image}`}
+              alt="your avatar"
+            />
           </div>
           <div className="info">
-            <div className="name">Tên: Tôi là tôi</div>
-            <div className="email">Email: skibidi@gmail.com</div>
+            <div className="name">Tên: {account.username}</div>
+            <div className="email">Email: {account.email}</div>
           </div>
         </div>
       </div>
@@ -34,7 +36,7 @@ const User = (props) => {
         <Box
           sx={{
             width: "100%",
-            height: "100%", // QUAN TRỌNG: Phải có chiều cao để con nó tính toán
+            height: "100%",
             display: "flex",
             flexDirection: "column",
           }}
@@ -46,22 +48,21 @@ const User = (props) => {
 
           <Box
             sx={{
-              flex: 1, // Chiếm toàn bộ phần còn lại sau khi trừ đi thanh Tabs
-              overflow: "hidden", // Ngăn nội dung tràn ra ngoài Box này
+              flex: 1,
+              overflow: "hidden",
               display: "flex",
               flexDirection: "column",
             }}
           >
             {value === 0 && (
               <div className="tab-list">
-                <div className="title">Quiz của bạn:</div>
                 <div className="list">
                   <ListQuiz />
                 </div>
               </div>
             )}
             {value === 1 && (
-              <div>
+              <div className="tab-history">
                 <History />
               </div>
             )}

@@ -2,7 +2,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
 const ModalResult = (props) => {
-  const { show, setShow, dataRessult } = props;
+  const { show, setShow, dataResult } = props;
 
   const handleClose = () => {
     setShow(false);
@@ -19,9 +19,9 @@ const ModalResult = (props) => {
           <Modal.Title>Your Result</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Modal.Body>Total question : {dataRessult.countTotal}</Modal.Body>
+          <Modal.Body>Total question : {dataResult.countTotal}</Modal.Body>
           <Modal.Body>
-            Total correct answers: {dataRessult.countCorrect}
+            Total correct answers: {dataResult.countCorrect}
           </Modal.Body>
         </Modal.Body>
         <Modal.Footer>

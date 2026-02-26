@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getQuizByUsers } from "../../../API/services/quiz.service";
 import "../../../assets/styles/Quiz/ListQuiz.scss";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const ListQuiz = (props) => {
   const [arrayQuiz, setArrayQuiz] = useState(``);
@@ -19,6 +20,9 @@ const ListQuiz = (props) => {
     console.log(">>>check data: ", data);
     if (data && data.EC === 0) {
       setArrayQuiz(data.DT);
+      toast.success("Hãy tiếp tục cố gắng!");
+    } else {
+      toast.success("Đừng bỏ cuộc!");
     }
   };
 

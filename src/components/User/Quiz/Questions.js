@@ -5,7 +5,7 @@ import Captions from "yet-another-react-lightbox/plugins/captions";
 import { useState } from "react";
 
 const Questions = (props) => {
-  const { dataQues, indexA } = props;
+  const { dataQues, indexA, dataResult, isFinish } = props;
 
   const [open, setOpen] = useState({ open: false, src: "", title: "" });
   const [isPreview, setIsPreview] = useState(false);
@@ -20,7 +20,20 @@ const Questions = (props) => {
     props.handleChoosen(aId, qId);
   };
 
-  // console.log(">>>check data: ", dataQues);|
+  console.log(">>>check result: ", dataResult);
+
+  const setClassAnswer = (item, isFinish) => {
+    if (!isFinish) {
+      return item.isSelected ? "selected" : "";
+    }
+
+    if (item.isCorrect) return "correct";
+    // if (item.systemAnswers.correct_answer) return "correct";
+    if (item.isSelected && !item.isCorrect) return "wrong";
+
+    return "disable";
+  };
+
   return (
     <>
       <div className="ques-img">
@@ -52,17 +65,13 @@ const Questions = (props) => {
               <div className="answer">
                 <div
                   key={`${index}-quiz`}
-                  className="choose"
+                  className={`choose ${setClassAnswer(item, isFinish)}`}
                   onClick={() => {
                     handleChoose(
                       String.fromCharCode(64 + item.id),
                       item.id, // id tra loi
                       dataQues.id, // id cau hoi
                     );
-                  }}
-                  style={{
-                    backgroundColor: item.isSelected ? "#3b3bfe" : "",
-                    color: item.isSelected ? "white" : "",
                   }}
                 >
                   {String.fromCharCode(65 + index)}.

@@ -5,20 +5,22 @@ import {
   postSubmitQuiz,
 } from "../../../../API/services/quiz.service";
 
-import "../../../../assets/styles/Quiz/DetailQuiz.scss";
+// import "../../../../assets/styles/Quiz/DetailQuiz.scss";
 import _ from "lodash";
 import Questions from "../Questions";
 import ModalResult from "../ModalResult";
 
 const LeftContent = (props) => {
-  const { dataQues, setDataQues, indexA, setIndexA } = props;
-  const params = new useParams();
+  const { dataQues, setDataQues, indexA, setIndexA, isFinish, setIsFinish } =
+    props;
+  const params = useParams();
   const location = useLocation();
 
   const quizId = params.id;
 
   const [isShowModalResult, setIsShowModalResult] = useState(false);
-  const [dataRessult, setDataResult] = useState({});
+
+  const [dataResult, setDataResult] = useState({});
 
   const fetchQuestion = async () => {
     const res = await getDataQuiz(quizId);
@@ -82,13 +84,12 @@ const LeftContent = (props) => {
   };
 
   const handleFinish = async () => {
+    setIsFinish(true);
     let payload = {
       quizId: +quizId,
       answers: [],
     };
 
-    // tao 1 mang nhung cau tra loi theo tung cau hoi
-    // theo Backend
     let answer = [];
 
     if (dataQues && dataQues.length > 0) {
@@ -119,6 +120,7 @@ const LeftContent = (props) => {
           countTotal: res.DT.countTotal,
           quizData: res.DT.quizData,
         });
+
         setIsShowModalResult(true);
       } else {
         alert("Something went wrong...");
@@ -137,6 +139,8 @@ const LeftContent = (props) => {
           indexA={indexA}
           dataQues={dataQues && dataQues.length > 0 ? dataQues[indexA] : []}
           handleChoosen={handleChoosen}
+          isFinish={isFinish}
+          dataResult={dataResult.quizData}
         />
       </div>
 
@@ -170,7 +174,7 @@ const LeftContent = (props) => {
       <ModalResult
         show={isShowModalResult}
         setShow={setIsShowModalResult}
-        dataRessult={dataRessult}
+        dataResult={dataResult}
       />
     </div>
   );
